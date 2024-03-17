@@ -136,18 +136,22 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <button class="btn btn-primary" id="nextButton">ต่อไป<i
+                                        <div class="cif-modal-footer pb-0">
+                                            <button class="btn btn-primary" id="nextButton">ต่อไป<i
                                                 class="fas fa-angle-double-right ml-1"></i></button>
+                                        </div>
                                     </div>
                                     <div id="information-part" class="content" role="tabpanel"
                                         aria-labelledby="information-part-trigger">
                                         <div class="form-group">
                                             <input type="file" id="file-inputs" style="display: none;" multiple>
                                         </div>
-                                        <button class="btn btn-primary" onclick="stepper.previous()"><i
+                                        <div class="cif-modal-footer pb-0">
+                                            <button class="btn btn-primary" onclick="stepper.previous()"><i
                                                 class="fas fa-angle-double-left mr-1"></i>กลับ</button>
-                                        <button type="button" class="btn btn-success"
-                                            id="import_file_inputs">เลือกไฟล์และนำเข้า</button>
+                                            <button type="button" class="btn btn-success"
+                                                id="import_file_inputs">เลือกไฟล์และนำเข้า</button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

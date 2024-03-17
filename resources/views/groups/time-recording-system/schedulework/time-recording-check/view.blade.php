@@ -45,6 +45,8 @@
                                 <button class="btn btn-header" id="add_note"><i class="fas fa-comments mr-2"></i>
                                     เพิ่มโน้ต</button>
                                 @endif
+                                {{--  --}}
+                                <div class="radio-group">
                                     <div class="form-check form-check-inline">
                                         <input class="form-check-input" type="radio" name="options" id="option_0" autocomplete="off" checked="">
                                         <label class="form-check-label" for="option_0">ทั้งหมด</label>
@@ -57,6 +59,7 @@
                                         <input class="form-check-input" type="radio" name="options" id="option_2" autocomplete="off">
                                         <label class="form-check-label" for="option_2">ผิดพลาด</label>
                                     </div>
+                                </div>
                             </div>
                         </div>
                         <div>

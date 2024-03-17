@@ -57,12 +57,12 @@
                                         </td>
                                         <td>
                                             @if (isset($shiftsAdded) && $shiftsAdded->original['expired'])
-                                            <span class="badge bg-gray" style="padding: 8px 12px;"">หมดเวลา</span>
+                                            <span class="badge bg-danger" style="padding: 8px 12px;"">หมดเวลา</span>
                                             @else
                                             @if(isset($shiftsAdded) && $shiftsAdded->original['assigned'] )
                                             <span class="badge bg-success" style="padding: 8px 12px;"">เพิ่มแล้ว</span>
                                             @else
-                                            <span class="badge bg-danger" style="padding: 8px 12px;"">ยังไม่ได้เพิ่ม</span>
+                                            <span class="badge bg-warning" style="padding: 8px 12px;"">ยังไม่ได้เพิ่ม</span>
                                             @endif
                                             {{-- @elseif ($shiftsAdded)
                                             <span class="badge bg-success">เพิ่มแล้ว</span>

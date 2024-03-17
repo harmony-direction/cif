@@ -81,22 +81,22 @@
             @endif
 
             <td class="text-end">
+                @if (strpos($workScheduleAssignmentUser->workScheduleAssignment->shift->code, '_H') === false &&
+                    strpos($workScheduleAssignmentUser->workScheduleAssignment->shift->code, '_TH') === false)
+                    @if (empty($workScheduleAssignmentUser->time_in) || empty($workScheduleAssignmentUser->time_out))
+                    <a class="btn btn-delete btn-action btn-sm btnAttachment" data-id="{{$workScheduleAssignmentUser->id}}">
+                        <i class="fas fa-link"></i>
+                    </a>
+                    @endif
+                    @endif
+                    @if (!empty($workScheduleAssignmentUser->getAttachmentForDate()))
+                    <a class="btn btn-warning btn-sm show-leave-attachment" data-id="{{$workScheduleAssignmentUser->id}}">
+                        <i class="fas fa-leaf"></i>
+                    </a>
+                @endif
                 <a class="btn btn-links btn-action btn-sm btnSaveBtn">
                     <i class="far fa-save"></i>
                 </a>
-                @if (strpos($workScheduleAssignmentUser->workScheduleAssignment->shift->code, '_H') === false &&
-                strpos($workScheduleAssignmentUser->workScheduleAssignment->shift->code, '_TH') === false)
-                @if (empty($workScheduleAssignmentUser->time_in) || empty($workScheduleAssignmentUser->time_out))
-                <a class="btn btn-delete btn-action btn-sm btnAttachment" data-id="{{$workScheduleAssignmentUser->id}}">
-                    <i class="fas fa-link"></i>
-                </a>
-                @endif
-                @endif
-                @if (!empty($workScheduleAssignmentUser->getAttachmentForDate()))
-                <a class="btn btn-warning btn-sm show-leave-attachment" data-id="{{$workScheduleAssignmentUser->id}}">
-                    <i class="fas fa-leaf"></i>
-                </a>
-                @endif
             </td>
         </tr>
         @endforeach

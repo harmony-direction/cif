@@ -108,7 +108,7 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-12 text-end mt-2">
+                                    <div class="cif-modal-footer mt-2">
                                         @if ($permission->create)
                                         <button type="submit"
                                             class="btn btn-primary">บันทึก</button>

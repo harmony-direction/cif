@@ -121,7 +121,7 @@
                                         </div>
                                     </div> --}}
                                 </div>
-                                    <div class="cit-modal-footer">
+                                    <div class="cit-modal-footer mt-2">
                                         @if ($permission->create)
                                         <button type="submit"
                                             class="btn btn-primary">บันทึก</button>

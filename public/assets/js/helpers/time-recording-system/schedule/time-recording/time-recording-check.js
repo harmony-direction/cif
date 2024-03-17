@@ -106,7 +106,7 @@ $(document).on('change', '#hour', function () {
 $(document).on('click', '.btnSaveBtn', function (e) {
     // Prevent the default click behavior (if necessary)
     e.preventDefault();
-    var filter = $('.btn-group-toggle input[type="radio"]:checked').attr('id').split('_')[1];
+    var filter = $('.radio-group input[type="radio"]:checked').attr('id').split('_')[1];
     // var page = $(this).attr('href').split('page=')[1];
 
     // Get the corresponding row of the clicked button
@@ -360,7 +360,7 @@ $(document).on('click', '.show-leave-attachment', function (e) {
 
 $(document).on('click', '.pagination a', function (e) {
     e.preventDefault();
-    var filter = $('.btn-group-toggle input[type="radio"]:checked').attr('id').split('_')[1];
+    var filter = $('.radio-group input[type="radio"]:checked').attr('id').split('_')[1];
     var page = $(this).attr('href').split('page=')[1];
     var data = {
         'startDate': $('#startDate').val(),
@@ -384,7 +384,7 @@ $(document).on('click', '.pagination a', function (e) {
         });
 });
 
-$('.btn-group-toggle input[type="radio"]').on('change', function () {
+$('.radio-group input[type="radio"]').on('change', function () {
     var filter = $(this).attr('id').split('_')[1];
     var data = {
         'startDate': $('#startDate').val(),
