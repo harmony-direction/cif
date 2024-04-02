@@ -134,9 +134,9 @@
                         <tbody>
                             <tr>
                                 <td style="padding: 8px 2px 2px 8px;">1. เงินเดือน ค่าจ้าง เบี้ยเลี้ยง โบนัส ฯลฯ ตามมาตรา 40 (1)</td>
-                                <td style="padding: 8px 2px 2px 0px; text-align: center;">2023</td>
-                                <td style="padding: 8px 2px 2px 0px; text-align: center;">1,534,000.00</td>
-                                <td style="padding: 8px 2px 2px 0px; text-align: center;">139,500.00</td>
+                                <td style="padding: 8px 2px 2px 0px; text-align: center;">{{ isset($year) ? $year:'' }}</td>
+                                <td style="padding: 8px 2px 2px 0px; text-align: center;">{{ isset($data->salarySummary($data->id)['salary']) ? $data->salarySummary($data->id)['salary']:'0' }}</td>
+                                <td style="padding: 8px 2px 2px 0px; text-align: center;">{{-- 139,500.00 --}}0.00</td>
                             </tr>
                             <tr>
                                 <td style="padding: 2px 2px 2px 8px;">2. ค่าธรรมเนียม ค่านายหน้า ฯลฯ ตามมาตรา 40(2)</td>
@@ -187,7 +187,7 @@
                                 <td style="padding: 2px;"></td>
                             </tr>
                             <tr>
-                                <td style="padding: 2px 2px 2px 8px;">          (1.4) อัตราอื่นๆ (ระบุ)<span style="font-size: 15px; color: #000; border-bottom: 1px dotted #000;">  999  </span>ของกำไรสุทธิ</td>
+                                <td style="padding: 2px 2px 2px 8px;">          (1.4) อัตราอื่นๆ (ระบุ)<span style="font-size: 15px; color: #000; border-bottom: 1px dotted #000;">  {{-- 999 --}}  </span>ของกำไรสุทธิ</td>
                                 <td style="padding: 2px; text-align: center;"></td>
                                 <td style="padding: 2px;"></td>
                                 <td style="padding: 2px;"></td>
@@ -223,21 +223,21 @@
                                 <td style="padding: 2px;"></td>
                             </tr>
                             <tr>
-                                <td style="padding: 2px 2px 2px 8px;">5. การจ่ายเงินได้ที่ต้องหักภาษี ณ ที่จ่าย ตามคำสั่งกรมสรรพากรที่ออกตามมาตรา 3 เตรส (ระบุ)<span style="font-size: 15px; color: #000; border-bottom: 1px dotted #000;">  ทดสอบระบุ  </span></td>
+                                <td style="padding: 2px 2px 2px 8px;">5. การจ่ายเงินได้ที่ต้องหักภาษี ณ ที่จ่าย ตามคำสั่งกรมสรรพากรที่ออกตามมาตรา 3 เตรส (ระบุ)<span style="font-size: 15px; color: #000; border-bottom: 1px dotted #000;">  {{-- ทดสอบระบุ --}}  </span></td>
                                 <td style="padding: 2px; text-align: center;"></td>
                                 <td style="padding: 2px;"></td>
                                 <td style="padding: 2px;"></td>
                             </tr>
                             <tr style="border-bottom: 1px solid #000;">
-                                <td style="padding: 2px 2px 8px 8px; border-bottom: 1px solid #000;">6. อื่นๆ (ระบุ)<span style="font-size: 15px; color: #000; border-bottom: 1px dotted #000;">  ทดสอบระบุ  </span></td>
+                                <td style="padding: 2px 2px 8px 8px; border-bottom: 1px solid #000;">6. อื่นๆ (ระบุ)<span style="font-size: 15px; color: #000; border-bottom: 1px dotted #000;">  {{-- ทดสอบระบุ --}}  </span></td>
                                 <td style="padding: 2px 0px 8px 0px; text-align: center;"></td>
                                 <td style="padding: 2px 0px 8px 0px;"></td>
                                 <td style="padding: 2px 0px 8px 0px;"></td>
                             </tr>
                             <tr>
                                 <td colspan="2" style="padding: 2px; text-align: center;">รวมเงินที่จ่ายและภาษีที่หักนำส่ง</td>
-                                <td style="padding: 2px; text-align: center; border: 1px solid #000;">1,534,000.00</td>
-                                <td style="padding: 2px; text-align: center; border: 1px solid #000;">139,500.00</td>
+                                <td style="padding: 2px; text-align: center; border: 1px solid #000;">{{ isset($data->salarySummary($data->id)['salary']) ? $data->salarySummary($data->id)['salary']:'0' }}</td>
+                                <td style="padding: 2px; text-align: center; border: 1px solid #000;">{{-- 139,500.00 --}}</td>
                             </tr>
                             <tr>
                                 <td colspan="4" style="padding: 2px 2px 2px 8px;">
@@ -254,15 +254,15 @@
                         </div>
                         <div style="display: inline-block; float: left; width: 38%;">
                             <span style="font-size: 16px;">กบข./กสจ./กองทุนสงเคราะห์ครูโรงเรียนเอกชน </span>
-                            <span style="font-size: 15px; border-bottom: 1px dotted #000;">999,999.00 บาท</span>
+                            <span style="font-size: 15px; border-bottom: 1px dotted #000;">{{-- 999,999.00 --}} บาท</span>
                         </div>
                         <div style="display: inline-block; float: left; width: 27%;">
                             <span style="font-size: 16px;">กองทุนประกันสังคม </span>
-                            <span style="font-size: 15px; border-bottom: 1px dotted #000;">999,000.00 บาท</span>
+                            <span style="font-size: 15px; border-bottom: 1px dotted #000;">{{ isset($data->salarySummary($data->id)['socialSecurityFivePercent']) ? $data->salarySummary($data->id)['socialSecurityFivePercent']:'0' }} บาท</span>
                         </div>
                         <div style="display: inline-block; left; width: 27%;">
                             <span style="font-size: 16px;">กองทุนสำรองเลี้ยงชีพ </span>
-                            <span style="font-size: 15px; border-bottom: 1px dotted #000;">999,990.00 บาท</span>
+                            <span style="font-size: 15px; border-bottom: 1px dotted #000;">{{-- 999,990.00 --}} บาท</span>
                         </div>
                     </div>
                 </div>
@@ -300,7 +300,7 @@
                         <div style="width: 95%; display: block; text-align: center;">
                             <p>ขอรับรองว่าข้อความและตัวเลขดังกล่าวข้างต้นถูกต้องตรงกับความเป็นจริงทุกประการ</p>
                             <span>ลงชื่อ</span>
-                            <span style="border-bottom: 1px dotted #000;">    นายทดสอบ นามสกุลทดสอบ    </span>
+                            <span style="border-bottom: 1px dotted #000;">                                        {{-- {{ (isset($data->name) ? $data->name:'').'  '.(isset($data->lastname) ? $data->lastname:'') }} --}}    </span>
                             <span>ผู้จ่ายเงิน</span>
                             <br>
                             <div style="margin: 8px 0px 0px 0px;">

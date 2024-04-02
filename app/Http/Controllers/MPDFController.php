@@ -2,33 +2,35 @@
 
 namespace App\Http\Controllers;
 
-use App\Exports\BankDataExport;
-use App\Exports\CustomPndExport;
-use App\Exports\EmployeeSsoExport;
-use App\Helpers\ActivityLogger;
-use App\Helpers\AddDefaultWorkScheduleAssignment;
-use App\Http\Controllers\Controller;
-use App\Models\CompanyDepartment;
+use Carbon\Carbon;
 use App\Models\Job;
-use App\Models\Module;
+use App\Models\User;
 use App\Models\Month;
+use App\Models\Shift;
+use App\Models\Module;
 use App\Models\Payday;
+use App\Models\UserPayday;
 use App\Models\PaydayDetail;
+use App\Models\WorkSchedule;
+use Illuminate\Http\Request;
 use App\Models\RoleGroupJson;
 use App\Models\SalarySummary;
-use App\Models\Shift;
+use App\Exports\BankDataExport;
+use App\Helpers\ActivityLogger;
 
-use App\Models\User;
-use App\Models\WorkSchedule;
-use App\Services\UpdatedRoleGroupCollectionService;
-use Carbon\Carbon;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use App\Exports\CustomPndExport;
+use App\Models\CompanyDepartment;
+use PhpOffice\PhpWord\Writer\PDF;
+use App\Exports\EmployeeSsoExport;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Response;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
-use Maatwebsite\Excel\Excel as ExcelType;
 use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\Response;
+use Maatwebsite\Excel\Excel as ExcelType;
+use App\Helpers\AddDefaultWorkScheduleAssignment;
+use App\Services\UpdatedRoleGroupCollectionService;
 
 class MPDFController extends Controller
 {
@@ -98,36 +100,10 @@ class MPDFController extends Controller
         $mpdf->Output();
         return $mpdf->Output();
     }
-    public function bis50list()
+
+    public function getPage($year, $month)
     {
-        $action = 'show';
-        $groupUrl = strval(session('groupUrl'));
-        $permission = (object)[
-            'show' => true,
-            'create' => true,
-            'update' => true,
-            'delete' => true,
-        ];
-        /* 'groups.employee-system.employee' */
-        /* $updatedRoleGroupCollection = [
-            'module_prefix' => 'groups.employee-system.employee',
-            'code' => 'EMPLOYEE-MANAGE',
-            'name' => 'จัดการ',
-            'module_icon' => 'fa-user',
-        ]; */
-        $viewName = 'report.bis50index';
-        $users = User::paginate(50);
-        $years = WorkSchedule::distinct()->pluck('year');
-        return view($viewName, [
-            'groupUrl' => $groupUrl,
-            /* 'modules' => $updatedRoleGroupCollection, */
-            'permission' => $permission,
-            'users' => $users,
-            'years' => $years,
-        ]);
-    }
-    public function bis50($id)
-    {
+        $id = $year;
         include '../vendor/autoload.php';
         $defaultConfig = (new \Mpdf\Config\ConfigVariables())->getDefaults();
         $fontDirs = $defaultConfig['fontDir'];
@@ -159,7 +135,95 @@ class MPDFController extends Controller
         ob_start();
         $data = DB::table('users')->whereId($id)->first();
         if (isset($data) && $data) {
-            $html = view('report.bis50-2', compact('data'))->render();
+            $html = view('report.rd1', compact('data', 'id'))->render();
+
+            $stylesheet = file_get_contents(public_path('css/report/report-5.css'));
+            $mpdf->WriteHTML($stylesheet, 1);
+            $mpdf->WriteHTML($html, 2);
+
+            /* $pdfFilePath = "report_1.pdf";
+            $pdfFile = file_get_contents($pdfFilePath); */
+            $mpdf->Output("rd1.pdf", 'F');
+            ob_end_clean();
+
+
+            $pdfFilePath = "rd1.pdf";
+            $pdfFile = file_get_contents($pdfFilePath);
+
+            return Response::make($pdfFile, 200, [
+                'Content-Type' => 'application/pdf',
+                'Content-Disposition' => 'inline; filename="rd1.pdf"'
+            ]);
+        } else {
+            echo 'not found data';
+        }
+    }
+
+    public function bis50list(Request $request, $year = null)
+    {
+        $action = 'show';
+        $groupUrl = strval(session('groupUrl'));
+        $permission = (object)[
+            'show' => true,
+            'create' => true,
+            'update' => true,
+            'delete' => true,
+        ];
+        $viewName = 'report.bis50index';
+        if($year!=null){
+            $users = User::paginate(50);
+            $years = WorkSchedule::distinct()->pluck('year');
+            return view($viewName, [
+                'groupUrl' => $groupUrl,
+                'permission' => $permission,
+                'users' => $users,
+                'years' => $years,
+                'year' => $year,
+            ]);
+        }
+        $users = User::paginate(50);
+        $years = WorkSchedule::distinct()->pluck('year');
+        return view($viewName, [
+            'groupUrl' => $groupUrl,
+            'permission' => $permission,
+            'users' => $users,
+            'years' => $years,
+        ]);
+    }
+    public function bis50($id, $year)
+    {
+        include '../vendor/autoload.php';
+        $defaultConfig = (new \Mpdf\Config\ConfigVariables())->getDefaults();
+        $fontDirs = $defaultConfig['fontDir'];
+        $defaultFontConfig = (new \Mpdf\Config\FontVariables())->getDefaults();
+        $fontData = $defaultFontConfig['fontdata'];
+
+        $mpdf = new \Mpdf\Mpdf([
+            'fontDir' => array_merge($fontDirs, [
+                storage_path('fonts/'),
+            ]),
+            'fontdata' => $fontData + [
+                'sarabun' => [
+                    'R' => 'THSarabunNew.ttf',
+                    'I' => 'THSarabunNew Italic.ttf',
+                    'B' => 'THSarabunNew Bold.ttf',
+                ]
+            ],
+            'default_font' => 'sarabun',
+            'mode' => 'utf-8',
+            'format' => 'A4',
+            'margin_left' => 0,
+            'margin_right' => 0,
+            'margin_top' => 0,
+            'margin_bottom' => 0,
+            'margin_header' => 0,
+            'margin_footer' => 0
+        ]);
+
+        ob_start();
+        $data = User::whereId($id)->first();
+        if (isset($data) && $data) {
+            $html = view('report.bis50-2', compact('data', 'year'))->render();
 
             $stylesheet = file_get_contents(public_path('css/report/bis50.css'));
             $mpdf->WriteHTML($stylesheet, 1);
@@ -228,7 +292,6 @@ class MPDFController extends Controller
             'currentYear' => $currentYear,
             'currentMonth' => $currentMonth
         ]);
-        /* return view('report.rd1', compact('id')); */
     }
 
     public function pndindex()
@@ -344,7 +407,9 @@ class MPDFController extends Controller
                 ->whereNotNull('shift_id');
         })->get();
 
-
+        $currentYear = Carbon::now()->year;
+        $payDays = Payday::where('year',$currentYear)->get();
+        $distinctYears = Payday::distinct('year')->pluck('year');
 
         return view($viewName, [
             'groupUrl' => $groupUrl,
@@ -354,7 +419,11 @@ class MPDFController extends Controller
             'months' => $months,
             'workSchedules' => $workSchedules,
             'currentYear' => $currentYear,
-            'currentMonth' => $currentMonth
+            'currentMonth' => $currentMonth,
+            'distinctYears' => $distinctYears,
+            'paydays' => $payDays,
+            'years' => $distinctYears,
+            'selectedYear' => $currentYear,
         ]);
         /* return view('report.rd1', compact('id')); */
     }
@@ -407,7 +476,7 @@ class MPDFController extends Controller
         /* return view('report.rd1', compact('id')); */
     }
 
-    public function rd1($year, $month)
+    public function rd1($year, $month, $paydayDetailIds)
     {
         $id = $year;
         include '../vendor/autoload.php';
@@ -439,9 +508,24 @@ class MPDFController extends Controller
         ]);
 
         ob_start();
-        $data = DB::table('users')->whereId($id)->first();
-        if (isset($data) && $data) {
-            $html = view('report.rd1', compact('data', 'id'))->render();
+        $paydayDetail = PaydayDetail::find($paydayDetailIds);
+
+        $userIds = [];
+        $startDate = $paydayDetail->start_date;
+        $endDate = $paydayDetail->end_date;
+        $ids = $this->getUsersByWorkScheduleAssignment($startDate, $endDate)->pluck('id')->toArray();
+        $userPaydayIds = UserPayday::where('payday_id',$paydayDetail->payday_id)->pluck('user_id')->toArray();
+        $userIddiffs = array_intersect($ids, $userPaydayIds);
+
+        // $userIds = array_merge($userIds, $ids);
+        $userIds = array_unique($userIddiffs);
+        // $userIds = array_unique($userIds);
+        $users = User::whereIn('id', $userIds)->get();
+        $companyDepartmentIds = array_unique($users->pluck('company_department_id')->toArray());
+        $companyDepartments = CompanyDepartment::whereIn('id',$companyDepartmentIds)->get();
+
+        if (isset($users) && isset($companyDepartments) && isset($paydayDetail)) {
+            $html = view('report.rd1', compact('users', 'companyDepartments', 'paydayDetail'))->render();
 
             $stylesheet = file_get_contents(public_path('css/report/report-5.css'));
             $mpdf->WriteHTML($stylesheet, 1);
@@ -497,9 +581,24 @@ class MPDFController extends Controller
         ]);
 
         ob_start();
-        $data = DB::table('users')->whereId($year)->first();
-        if (isset($data) && $data) {
-            $html = view('report.rd1', compact('data', 'id'))->render();
+        $paydayDetail = PaydayDetail::whereYear('end_date',$year)->first();
+
+        $userIds = [];
+        $startDate = $paydayDetail->start_date;
+        $endDate = $paydayDetail->end_date;
+        $ids = $this->getUsersByWorkScheduleAssignment($startDate, $endDate)->pluck('id')->toArray();
+        $userPaydayIds = UserPayday::where('payday_id',$paydayDetail->payday_id)->pluck('user_id')->toArray();
+        $userIddiffs = array_intersect($ids, $userPaydayIds);
+
+        // $userIds = array_merge($userIds, $ids);
+        $userIds = array_unique($userIddiffs);
+        // $userIds = array_unique($userIds);
+        $users = User::whereIn('id', $userIds)->get();
+        $companyDepartmentIds = array_unique($users->pluck('company_department_id')->toArray());
+        $companyDepartments = CompanyDepartment::whereIn('id',$companyDepartmentIds)->get();
+
+        if (isset($users) && isset($companyDepartments) && isset($paydayDetail)) {
+            $html = view('report.rd1', compact('users', 'companyDepartments', 'paydayDetail'))->render();
 
             $stylesheet = file_get_contents(public_path('css/report/report-5.css'));
             $mpdf->WriteHTML($stylesheet, 1);
@@ -651,7 +750,15 @@ class MPDFController extends Controller
         ]);
 
         ob_start();
-        $data = DB::table('users')->whereId($id)->first();
+        $paydayIds = PaydayDetail::whereYear('end_date', $year)->where('month_id', $month)->pluck('id')->toArray();
+        $data = SalarySummary::whereIn('payday_detail_id', $paydayIds)->get();
+            $data = [
+                'employee' => $data->sum('employee'),
+                'sum_salary' => $data->sum('sum_salary'),
+                'sum_social_security' => $data->sum('sum_social_security'),
+                'sum_leave' => $data->sum('sum_leave'),
+            ];
+
         if (isset($data) && $data) {
             $html = view('report.rd2', compact('data', 'id'))->render();
 
@@ -710,7 +817,15 @@ class MPDFController extends Controller
         ]);
 
         ob_start();
-        $data = DB::table('users')->whereId($id)->first();
+        $paydayIds = PaydayDetail::whereYear('end_date', $year)->pluck('id')->toArray();
+        $data = SalarySummary::whereIn('payday_detail_id', $paydayIds)->get();
+            $data = [
+                'employee' => $data->sum('employee'),
+                'sum_salary' => $data->sum('sum_salary'),
+                'sum_social_security' => $data->sum('sum_social_security'),
+                'sum_leave' => $data->sum('sum_leave'),
+            ];
+
         if (isset($data) && $data) {
             $html = view('report.rd2', compact('data', 'id'))->render();
 
@@ -854,6 +969,48 @@ class MPDFController extends Controller
 
     public function ssoPayment($id)
     {
+        /* $paydayDetail = PaydayDetail::whereYear('end_date', $year)->pluck('payday_id')->toArray();
+
+        $userIds = [];
+        $startDate = $year.'-01-01';
+        $endDate = $year.'-12-31';
+        $ids = $this->getUsersByWorkScheduleAssignment($startDate, $endDate)->pluck('id')->toArray();
+        $userPaydayIds = UserPayday::whereIn('payday_id',$paydayDetail)->pluck('user_id')->toArray();
+        $userIddiffs = array_intersect($ids, $userPaydayIds);
+
+        //$userIds = array_merge($userIds, $ids);
+        $data = User::whereIn('id', $userIddiffs)->where('employee_type_id', 1)->get();
+        $summany = [
+            'workHour' => 0,
+            'absentCountSum' => 0,
+            'leaveCountSum' => 0,
+            'earlyHour' => 0,
+            'lateHour' => 0,
+            'overTime' => 0,
+            'deligenceAllowance' => 0,
+            'salary' => 0,
+            'overTimeCost' => 0,
+            'socialSecurityFivePercent' => 0,
+            'exceedOvertime' => 0,
+            'exceedOverTimeCost' => 0,
+        ];
+
+        foreach($data as $employee){
+            $dataSummary = $employee->salarySummary($employee->id);
+            $summany['workHour'] += isset($dataSummary['workHour']) ? $dataSummary['workHour']:0;
+            $summany['absentCountSum'] += isset($dataSummary['absentCountSum']) ? $dataSummary['absentCountSum']:0;
+            $summany['leaveCountSum'] += isset($dataSummary['leaveCountSum']) ? $dataSummary['leaveCountSum']:0;
+            $summany['earlyHour'] += isset($dataSummary['earlyHour']) ? $dataSummary['earlyHour']:0;
+            $summany['lateHour'] += isset($dataSummary['lateHour']) ? $dataSummary['lateHour']:0;
+            $summany['overTime'] += isset($dataSummary['overTime']) ? $dataSummary['overTime']:0;
+            $summany['deligenceAllowance'] += isset($dataSummary['deligenceAllowance']) ? $dataSummary['deligenceAllowance']:0;
+            $summany['salary'] += isset($dataSummary['salary']) ? $dataSummary['salary']:0;
+            $summany['overTimeCost'] += isset($dataSummary['overTimeCost']) ? $dataSummary['overTimeCost']:0;
+            $summany['socialSecurityFivePercent'] += isset($dataSummary['socialSecurityFivePercent']) ? $dataSummary['socialSecurityFivePercent']:0;
+            $summany['exceedOvertime'] += isset($dataSummary['exceedOvertime']) ? $dataSummary['exceedOvertime']:0;
+            $summany['exceedOverTimeCost'] += isset($dataSummary['exceedOverTimeCost']) ? $dataSummary['exceedOverTimeCost']:0;
+
+        } */
         return view('report.sso1', compact('id'));
     }
 
@@ -979,5 +1136,21 @@ class MPDFController extends Controller
     public function ipay($id)
     {
         return Excel::download(new BankDataExport, 'bank_data.xlsx');
+    }
+
+    public function getUsersByWorkScheduleAssignment($startDate,$endDate)
+    {
+        // Convert the start and end date to the correct format
+        $startDate = date('Y-m-d', strtotime($startDate));
+        $endDate = date('Y-m-d', strtotime($endDate));
+
+        // ค้นหาผู้ใช้ที่มีการกำหนดงานเรียกงานใน workScheduleId และ date_in อยู่ในช่วง startDate ถึง endDate
+        $users = User::whereHas('workScheduleAssignmentUsers', function ($query) use ($startDate, $endDate) {
+            $query->whereNotNull('date_in')
+                ->whereBetween('date_in', [$startDate, $endDate]);
+        })->get();
+
+        return $users;
+
     }
 }

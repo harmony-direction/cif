@@ -1,9 +1,11 @@
-@extends('layouts.app')
+<!DOCTYPE html>
+<html lang="th">
 
-@section('content')
-    {{-- Css --}}
+<head>
     <link href="{{ asset('/css/report/report-4.css?v=2') }}" rel="stylesheet">
+</head>
 
+<body>
     @php
         include '../vendor/autoload.php';
         $defaultConfig = (new \Mpdf\Config\ConfigVariables())->getDefaults();
@@ -28,8 +30,7 @@
         ]);
 
         ob_start();
-    @endphp
-
+        @endphp
     <div class="container" style="padding: 10px;">
         <div class="header" style="display: block; width: 100%; margin-top: 40px;">
             <div class="header-bg" style="width: 80%; float: left; background-color: #ebebeb; border-radius: 5px;">
@@ -57,7 +58,7 @@
                 <div style="border-bottom: 1px solid #000; padding-bottom: 15px;">
                     <span style="font-size: 16px; font-weight: bold;">เลขประจำตัวผู้เสียภาษีอากร(13หลัก)*</span>
                                 
-                    <span style="font-size: 15px; border-bottom: 1px dotted #000;">1-2345-67890-12-3</span>
+                    <span style="font-size: 15px; border-bottom: 1px dotted #000;">>1-2345-67890-12-3</span>
                     <br>
                                     <span style="font-size: 12px; color: #474747;">(ของผู้มีหน้าที่หักภาษี ณ ที่จ่าย)</span>
                     <br>
@@ -191,13 +192,13 @@
                             <tr>
                                 <td style="padding: 2px 0px; font-size: 18px;">1. เงินได้ตาม<span style="font-weight: bold;">มาตรา 40 (1)</span> เงินเดือน ค่าจ้าง ฯลฯ กรณีทั่วไป</td>
                                 <td style="padding: 2px 0px; text-align: center; font-size: 18px;">
-                                    Test
+                                    {{ $data['employee'] }}
                                 </td>
                                 <td style="padding: 2px 0px; text-align: center; font-size: 18px;">
-                                    Test
+                                    {{ number_format($data['sum_salary'],2) }}
                                 </td>
                                 <td style="padding: 2px 0px; text-align: center; font-size: 18px;">
-                                    Test
+                                    {{ $data['sum_social_security'] }}
                                 </td>
                             </tr>
                             <tr>
@@ -214,73 +215,73 @@
                                     <span style="font-size: 18px; border-bottom: 1px dotted #000;">18 มีนาคม พ.ศ. 2567)</span>
                                 </td>
                                 <td style="padding: 2px 0px; text-align: center; font-size: 18px;">
-                                    Test
+                                    0
                                 </td>
                                 <td style="padding: 2px 0px; text-align: center; font-size: 18px;">
-                                    Test
+                                    0
                                 </td>
                                 <td style="padding: 2px 0px; text-align: center; font-size: 18px;">
-                                    Test
+                                    0
                                 </td>
                             </tr>
                             <tr>
                                 <td style="padding: 2px 0px; font-size: 18px;">3. เงินได้ตาม<span style="font-weight: bold;">มาตรา 40 (1) (2)</span> กรณีนายจ้างจ่ายให้ครั้งเดียวเพราะเหตุออกจากงาน</td>
                                 <td style="padding: 2px 0px; text-align: center; font-size: 18px;">
-                                    Test
+                                    0
                                 </td>
                                 <td style="padding: 2px 0px; text-align: center; font-size: 18px;">
-                                    Test
+                                    0
                                 </td>
                                 <td style="padding: 2px 0px; text-align: center; font-size: 18px;">
-                                    Test
+                                    0
                                 </td>
                             </tr>
                             <tr>
                                 <td style="padding: 2px 0px; font-size: 18px;">4. เงินได้ตาม<span style="font-weight: bold;">มาตรา 40 (2)</span> กรณีผู้รับเงินได้เป็นผู้อยู่ในประเทศไทย</td>
                                 <td style="padding: 2px 0px; text-align: center; font-size: 18px;">
-                                    Test
+                                    0
                                 </td>
                                 <td style="padding: 2px 0px; text-align: center; font-size: 18px;">
-                                    Test
+                                    0
                                 </td>
                                 <td style="padding: 2px 0px; text-align: center; font-size: 18px;">
-                                    Test
+                                    0
                                 </td>
                             </tr>
                             <tr>
                                 <td style="padding: 2px 0px; font-size: 18px;">5. เงินได้ตาม<span style="font-weight: bold;">มาตรา40 (2)</span> กรณีผู้รับเงินได้มิได้เป็นผู้อยู่ในประเทศไทย</td>
                                 <td style="padding: 2px 0px; text-align: center; font-size: 18px;">
-                                    Test
+                                    0
                                 </td>
                                 <td style="padding: 2px 0px; text-align: center; font-size: 18px;">
-                                    Test
+                                    0
                                 </td>
                                 <td style="padding: 2px 0px; text-align: center; font-size: 18px;">
-                                    Test
+                                    0
                                 </td>
                             </tr>
                             <tr>
                                 <td style="padding: 2px 0px; font-size: 18px; font-weight: bold;">6. รวม</td>
                                 <td style="padding: 2px 0px; text-align: center; font-size: 18px;">
-                                    Test
+                                    0
                                 </td>
                                 <td style="padding: 2px 0px; text-align: center; font-size: 18px;">
-                                    Test
+                                    0
                                 </td>
                                 <td style="padding: 2px 0px; text-align: center; font-size: 18px;">
-                                    Test
+                                    0
                                 </td>
                             </tr>
                             <tr>
                                 <td colspan="3" style="padding: 2px 0px; font-size: 18px;">7. เงินเพิ่ม (ถ้ามี)</td>
                                 <td style="padding: 2px 0px; text-align: center; font-size: 18px;">
-                                    Test
+                                    0
                                 </td>
                             </tr>
                             <tr>
                                 <td colspan="3" style="padding: 2px 0px; font-size: 18px;">8. <span style="font-weight: bold;">รวม</span>ยอดภาษีที่นำส่งทั้งสิ้น และเงินเพิ่ม <span style="font-weight: bold;">(6. + 7.)</span></td>
                                 <td style="padding: 2px 0px; text-align: center; font-size: 18px;">
-                                    Test
+                                    0
                                 </td>
                             </tr>
                         </tbody>
@@ -294,7 +295,7 @@
                               <span style="font-size: 16px;">อนุมัติจากกรมสรรพากรให้หักอัตราร้อยละ 3</span>
                         <br>
                               <span style="font-size: 14px;">(ตามหนังสือที่</span>  
-                        <span style="font-size: 14px; border-bottom: 1px dotted #000;">Test Test</span>  
+                        <span style="font-size: 14px; border-bottom: 1px dotted #000;">0 0</span>  
                         <span style="font-size: 14px;">ลงวันที่</span>  
                         <span style="font-size: 14px; border-bottom: 1px dotted #000;">18 มีนาคม พ.ศ. 2567)</span>
                         <br>
@@ -324,22 +325,22 @@
                         </div>
                         <div class="row" style="display: block; width: 100%;">
                             <div style="width: 30%; height: 30px; float: left; border: 1px solid #000; text-align: center;">
-                                test
+                                0
                             </div>
                             <div style="width: 33%; height: 30px; float: left; border: 1px solid #000; text-align: center;">
-                                test
+                                0
                             </div>
                             <div style="width: 33%; height: 30px; float: left; border: 1px solid #000; text-align: center;">
-                                test
+                                0
                             </div>
                             <div style="width: 30%; height: 30px; float: left; border: 1px solid #000; text-align: center;">
-                                test
+                                0
                             </div>
                             <div style="width: 33%; height: 30px; float: left; border: 1px solid #000; text-align: center;">
-                                test
+                                0
                             </div>
                             <div style="width: 33%; height: 30px; float: left; border: 1px solid #000; text-align: center;">
-                                test
+                                0
                             </div>
                         </div>
                     </div> --}}
@@ -350,7 +351,7 @@
                 <div style="display: block; width: 100%;">
                     <div style="width: 80%; float: left; text-align: center; padding-left: 80px;">
                         <span style="font-size: 12px;">ลงชื่อ   </span>
-                        <span style="border-bottom: 1px dotted #000;">         ช่องใส่ result         </span>
+                        <span style="border-bottom: 1px dotted #000;">                                    </span>
                         <span style="font-size: 12px;">   ผู้จ่ายเงิน</span>
                         <br>
                         <div style="margin-bottom: 8px;"></div>
@@ -358,7 +359,7 @@
                             (...........................................................................)
                         </div>
                         <span style="font-size: 12px;">ตำแหน่ง   </span>
-                        <span style="border-bottom: 1px dotted #000;">         ช่องใส่ result         </span>
+                        <span style="border-bottom: 1px dotted #000;">                                    </span>
                         <br>
                         <span style="font-size: 12px;">ยื่นแบบวันที่   </span>
                         <span style="border-bottom: 1px dotted #000;">24<span>   เดือน   </span>กุมภาพันธ์<span>   พ.ศ.   </span>2567</span>
@@ -377,30 +378,7 @@
         </div>
     </div>
 
+</body>
 
-    @php
+</html>
 
-        $html = ob_get_contents();
-        $stylesheet = file_get_contents('css/report/report-4.css');
-        $mpdf->WriteHTML($stylesheet, 1);
-        $mpdf->WriteHTML($html,2);
-        $pdfFilePath = "rd2-". $id .".pdf";
-        $mpdf->Output($pdfFilePath, 'F');
-        ob_end_clean();
-
-    @endphp
-
-    <div class="container" style="display: block; width: 100%;">
-        <a href="../../../{{ $pdfFilePath }}" target="_blank">
-            <button id="viewPdfButton ">View PDF ภงด 1 แนวนอน</button>
-        </a>
-    </div>
-    <script>
-       document.getElementById("viewPdfButton").addEventListener("click", function() {
-        var pdfFilePath = "<?= $pdfFilePath ?>";
-        window.open(pdfFilePath, "_blank");
-        document.getElementById("pdfContent").style.display = "block";
-    });
-    </script>
-
-@endsection
