@@ -15,9 +15,39 @@
                     </ol>
                 </div>
             </div>
+
+            <div class="card card-info card-outline">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>ปี</label>
+                                <select name="year" id="year"
+                                    class="form-control select2 @error('year') is-invalid @enderror"
+                                    style="width: 100%;">
+                                    @if (count($years) >= 1)
+                                        @foreach ($years as $year)
+                                        <option value="{{$year}}" {{ $year==date('Y') ? 'selected' : '' }}>{{$year}}
+                                        </option>
+                                        @endforeach
+                                    @else
+                                        <option value="" disabled selected>ยังไม่มีข้อมูล</option>
+                                    @endif
+                                </select>
+                            </div>
+                        </div>
+
+                    </div>
+                        <div class="mt-2 d-flex justify-content-end">
+                            <button class="btn btn-primary d-flex gap-2 align-items-center" id="search_work_schedule">
+                                <i class="fas fa-search"></i>ค้นหา</button>
+                        </div>
+
+                </div>
+            </div>
         </div>
     </div>
-    <div class="content">
+    <div class="content mt-3">
         <div class="container-fluid">
             @if ($permission->show)
             <div class="row">

@@ -6,7 +6,7 @@
             <div class="container-fluid">
                 <div class="title-header">
                     <div>
-                        <h3 class="m-0">{{ $typeData }}</h3>
+                        <h3 class="m-0">ข้อมูลพนักงาน รายชื่อพนักงานผู้เสียเงินได้ ภ.ง.ด. 1 (ประจำเดือน)</h3>
                     </div>
                     <div aria-label="breadcrumb">
                         <ol class="breadcrumb m-0">

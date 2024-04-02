@@ -6,7 +6,7 @@
             <div class="container-fluid">
                 <div class="title-header">
                     <div>
-                        <h3 class="m-0">{{ $typeData }}</h3>
+                        <h3 class="m-0">ประกันสังคม - แบบรายการแสดงการส่งเงินสมทบ (สปส 1-10) {{ $typeData }}</h3>
                     </div>
                     <div aria-label="breadcrumb">
                         <ol class="breadcrumb m-0">

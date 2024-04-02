@@ -49,7 +49,7 @@
                     </a>
                 </div>
                 <div class="col-md-3 col-sm-6 col-12 px-2 mb-3">
-                    <a href="{{ route('rd1', 1) }}">
+                    <a href="{{ route('rd1.list') }}">
                         <div class="d-flex gap-4 p-4 bg-white rounded-4">
                             <span class="material-symbols-outlined text-white rounded-circle d-flex justify-content-center align-items-center" style="background: #35cdaa; width: 4rem; height: 4rem; font-size: 36px;">
                                 calendar_month
@@ -62,7 +62,7 @@
                     </a>
                 </div>
                 <div class="col-md-3 col-sm-6 col-12 px-2 mb-3">
-                    <a href="{{ route('rd2', 1) }}">
+                    <a href="{{ route('rd1.list.year') }}">
                         <div class="d-flex gap-4 p-4 bg-white rounded-4">
                             <span class="material-symbols-outlined text-white rounded-circle d-flex justify-content-center align-items-center" style="background: #35cdaa; width: 4rem; height: 4rem; font-size: 36px;">
                                 calendar_today
@@ -75,7 +75,7 @@
                     </a>
                 </div>
                 <div class="col-md-3 col-sm-6 col-12 px-2 mb-3">
-                    <a href="{{ route('bis50', 1) }}">
+                    <a href="{{ route('rd2.list') }}">
                         <div class="d-flex gap-4 p-4 bg-white rounded-4">
                             <span class="material-symbols-outlined text-white rounded-circle d-flex justify-content-center align-items-center" style="background: #35cdaa; width: 4rem; height: 4rem; font-size: 36px;">
                                 calendar_month
@@ -88,7 +88,7 @@
                     </a>
                 </div>
                 <div class="col-md-3 col-sm-6 col-12 px-2 mb-3">
-                    <a href="{{ route('bis50', 1) }}">
+                    <a href="{{ route('rd2.list.year') }}">
                         <div class="d-flex gap-4 p-4 bg-white rounded-4">
                             <span class="material-symbols-outlined text-white rounded-circle d-flex justify-content-center align-items-center" style="background: #35cdaa; width: 4rem; height: 4rem; font-size: 36px;">
                                 calendar_today
@@ -101,7 +101,7 @@
                     </a>
                 </div>
                 <div class="col-md-3 col-sm-6 col-12 px-2 mb-3">
-                    <a href="{{ route('pnd', 1) }}">
+                    <a href="{{ route('pnd.list') }}">
                         <div class="d-flex gap-4 p-4 bg-white rounded-4">
                             <span class="material-symbols-outlined text-white rounded-circle d-flex justify-content-center align-items-center" style="background: #35cdaa; width: 4rem; height: 4rem; font-size: 36px;">
                                 description
@@ -114,7 +114,7 @@
                     </a>
                 </div>
                 <div class="col-md-3 col-sm-6 col-12 px-2 mb-3">
-                    <a href="{{ route('pnd', 1) }}">
+                    <a href="{{ route('pnd.list.year') }}">
                         <div class="d-flex gap-4 p-4 bg-white rounded-4">
                             <span class="material-symbols-outlined text-white rounded-circle d-flex justify-content-center align-items-center" style="background: #35cdaa; width: 4rem; height: 4rem; font-size: 36px;">
                                 description
@@ -140,7 +140,7 @@
             </div>
             <div class="row">
                 <div class="col-md-3 col-sm-6 col-12 px-2 mb-3">
-                    <a href="{{ route('ssoPayment', 1) }}">
+                    <a href="{{ route('ssoPayment.index', ['list' => 'index','type' => 'day']) }}">
                     <div class="d-flex gap-4 p-4 bg-white rounded-4">
                         <span class="material-symbols-outlined text-white rounded-circle d-flex justify-content-center align-items-center" style="background: #1a1c7f; width: 4rem; height: 4rem; font-size: 36px;">
                             admin_panel_settings
@@ -153,7 +153,7 @@
                     </a>
                 </div>
                 <div class="col-md-3 col-sm-6 col-12 px-2 mb-3">
-                    <a href="{{ route('ssoPaymonth', 1) }}">
+                    <a href="{{ route('ssoPayment.index', ['list' => 'index','type' => 'month']) }}">
                     <div class="d-flex gap-4 p-4 bg-white rounded-4">
                         <span class="material-symbols-outlined text-white rounded-circle d-flex justify-content-center align-items-center" style="background: #1a1c7f; width: 4rem; height: 4rem; font-size: 36px;">
                             shield_person
@@ -166,7 +166,7 @@
                     </a>
                 </div>
                 <div class="col-md-3 col-sm-6 col-12 px-2 mb-3">
-                    <a href="{{ route('ssoPayment', 1) }}">
+                    <a href="{{ route('ssoPayment.index', ['list' => 'index','type' => 'all']) }}">
                     <div class="d-flex gap-4 p-4 bg-white rounded-4">
                         <span class="material-symbols-outlined text-white rounded-circle d-flex justify-content-center align-items-center" style="background: #1a1c7f; width: 4rem; height: 4rem; font-size: 36px;">
                             supervised_user_circle
@@ -179,7 +179,7 @@
                     </a>
                 </div>
                 <div class="col-md-3 col-sm-6 col-12 px-2 mb-3">
-                    <a href="{{ route('ssoPaymonth', 1) }}">
+                    <a href="{{ route('ssoPayment.index', ['list' => 'list','type' => 'day']) }}">
                     <div class="d-flex gap-4 p-4 bg-white rounded-4">
                         <span class="material-symbols-outlined text-white rounded-circle d-flex justify-content-center align-items-center" style="background: #1a1c7f; width: 4rem; height: 4rem; font-size: 36px;">
                             admin_panel_settings
@@ -192,7 +192,7 @@
                     </a>
                 </div>
                 <div class="col-md-3 col-sm-6 col-12 px-2 mb-3">
-                    <a href="{{ route('ssoPayment', 1) }}">
+                    <a href="{{ route('ssoPayment.index', ['list' => 'list','type' => 'month']) }}">
                     <div class="d-flex gap-4 p-4 bg-white rounded-4">
                         <span class="material-symbols-outlined text-white rounded-circle d-flex justify-content-center align-items-center" style="background: #1a1c7f; width: 4rem; height: 4rem; font-size: 36px;">
                             shield_person
@@ -205,7 +205,7 @@
                     </a>
                 </div>
                 <div class="col-md-3 col-sm-6 col-12 px-2 mb-3">
-                    <a href="{{ route('ssoPaymonth', 1) }}">
+                    <a href="{{ route('ssoPayment.index', ['list' => 'list','type' => 'all']) }}">
                     <div class="d-flex gap-4 p-4 bg-white rounded-4">
                         <span class="material-symbols-outlined text-white rounded-circle d-flex justify-content-center align-items-center" style="background: #1a1c7f; width: 4rem; height: 4rem; font-size: 36px;">
                             supervised_user_circle
@@ -218,7 +218,7 @@
                     </a>
                 </div>
                 <div class="col-md-3 col-sm-6 col-12 px-2 mb-3">
-                    <a href="{{ route('ssofile', 1) }}">
+                    <a href="{{ route('ssoPayment.index', ['list' => 'file', 'type' => 'month']) }}">
                     <div class="d-flex gap-4 p-4 bg-white rounded-4">
                         <span class="material-symbols-outlined text-white rounded-circle d-flex justify-content-center align-items-center" style="background: #1a1c7f; width: 4rem; height: 4rem; font-size: 36px;">
                             bar_chart
@@ -234,7 +234,7 @@
             <hr>
             <div class="row">
                 <div class="col-md-3 col-sm-6 col-12 px-2 mb-3">
-                    <a href="{{ route('ipay', 1) }}">
+                    <a href="{{ route('getReport.index', ['list' => 'ipay', 'type' => 'ipay']) }}">
                         <div class="d-flex gap-4 p-4 bg-white rounded-4">
 
                             <img src="https://play-lh.googleusercontent.com/gnZXRi9diY-yjEo424IBqPsPYtne9pF6ho6cniBKNWAYCQDVU4LkFjbbKxXvn69PzF4" style=" width: 4rem; height: 4rem; font-size: 36px;">
@@ -249,7 +249,7 @@
                     </a>
                 </div>
                 <div class="col-md-3 col-sm-6 col-12 px-2 mb-3">
-                    <a href="{{ route('cashBank', 1) }}">
+                    <a href="{{ route('getReport.index', ['list' => 'cashBank', 'type' => 'cashBank']) }}">
                         <div class="d-flex gap-4 p-4 bg-white rounded-4">
                             <span class="material-symbols-outlined text-white rounded-circle d-flex justify-content-center align-items-center" style="background: #56d5ff; width: 4rem; height: 4rem; font-size: 36px;">
                                 account_balance
