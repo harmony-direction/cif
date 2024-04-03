@@ -40,7 +40,7 @@
                     ตามมาตรา 50 ทวิแห่งประมวลผลรัษฎากร
                 </div>
                 <div style="display: block; width: 10%; float: right; font-size: 12px;">
-                    เลขที่   0
+                    เลขที่   {nb}
                 </div>
             </div>
             <div class="wrap-body" style="width: 100%; padding: 0px 10px;">

@@ -14,12 +14,12 @@
             <div class="wrap-number" style="width: 10%; float: right; text-align-last: right;">สปส.1-10 (ส่วนที่2)</div>
         </div>
         <div style="width: 65%; float: left;">
-            <span style="font-size: 16px;">สำหรับค่าจ้างเงินเดือน    </span><span style="font-size: 16px;">ธันวาคม พ.ศ. 2023</span>
+            <span style="font-size: 16px;">สำหรับค่าจ้างเงินเดือน    </span><span style="font-size: 16px;">{{ $month }} พ.ศ. {{ $year }}</span>
             <br>
             <span style="font-size: 16px;">ชื่อสถานประกอบการ     </span><span style="font-size: 16px; font-style: italic;">บริษัท ฉวีวรรณ อินเตอร์เนชั่นแนลฟู๊ดส์ จำกัด</span>
         </div>
         <div style="width: 23%; float: right;">
-            <span>แผ่นที่     </span><span>1</span><span>     ในจำนวน     </span><span>100</span><span>     แผ่น</span>
+            <span>แผ่นที่     </span><span>{PAGENO}</span><span>     ในจำนวน     </span><span>{nb}</span>{{-- <span>     แผ่น</span> --}}
             <br>
             <span>เลขที่บัญชี</span><span>      </span><span>2000012019</span>
             <br>
@@ -47,15 +47,21 @@
                     <th style="border: 1px solid #000; text-align: center; vertical-align: middle; padding: 2px;">เงินสมทบ<br>ผู้ประกันตน</th>
                 </tr>
                 {{-- foreach ตรงนี้ --}}
-                @for ($i=1; $i<=20; $i++)
-                    <tr>
-                        <td class="text-center" style="border-left: 1px solid #000;">{{$i}}</td>
-                        <td style="border-left: 1px solid #000;">0-0190-11207-95-5</td>
-                        <td style="border-left: 1px solid #000;">น.ส.THIRIAUNG -</td>
-                        <td class="text-center" style="border-left: 1px solid #000;">7,520.00</td>
-                        <td class="text-center" style="border-left: 1px solid #000;">376.00</td>
-                    </tr>
-                @endfor
+                @if(isset($data) && count($data)>=1)
+                    @foreach($data as $key => $item)
+                        <tr>
+                            <td class="text-center" style="border-left: 1px solid #000;">{{$key+1}}</td>
+                            <td style="border-left: 1px solid #000; padding-left:10px;">{{ $item->hid }}</td>
+                            <td style="border-left: 1px solid #000; padding-left:10px;">{{ $item->prefix->name.' '.$item->name.' '.$item->lastname }}</td>
+                            <td class="text-center" style="border-left: 1px solid #000;">{{ $item->salarySummary($item->id)['salary'] }}</td>
+                            <td class="text-center" style="border-left: 1px solid #000;">{{ $item->salarySummary($item->id)['socialSecurityFivePercent'] }}</td>
+                        </tr>
+                    @endforeach
+                @else
+                        <tr>
+                            <td class="text-center" style="border-left: 1px solid #000;" rowspan="5">ไม่มีข้อมูล</td>
+                        </tr>
+                @endif
                 {{-- End foreach ตรงนี้ --}}
             </tbody>
         </table>

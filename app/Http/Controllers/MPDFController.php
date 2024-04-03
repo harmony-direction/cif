@@ -34,6 +34,44 @@ use App\Services\UpdatedRoleGroupCollectionService;
 
 class MPDFController extends Controller
 {
+    public function monthThai($month, $type)
+    {
+        if ($type == 'FULL') {
+            $thai_months = [
+                1 => 'มกราคม',
+                2 => 'กุมภาพันธ์',
+                3 => 'มีนาคม',
+                4 => 'เมษยน.',
+                5 => 'พฤษภาคม',
+                6 => 'มิถุนายน',
+                7 => 'กรกฏาคม',
+                8 => 'สิงหาคม',
+                9 => 'กันยายน',
+                10 => 'ตุลาคม',
+                11 => 'พฤศจิกายน',
+                12 => 'ธันวาคม',
+            ];
+        } else {
+            $thai_months = [
+                1 => 'ม.ค.',
+                2 => 'ก.พ.',
+                3 => 'มี.ค.',
+                4 => 'เม.ย.',
+                5 => 'พ.ค.',
+                6 => 'มิ.ย.',
+                7 => 'ก.ค.',
+                8 => 'ส.ค.',
+                9 => 'ก.ย.',
+                10 => 'ต.ค.',
+                11 => 'พ.ย.',
+                12 => 'ธ.ค.',
+            ];
+        }
+
+
+        return $thai_months[$month];
+    }
+
     public function index()
     {
         // กำหนดค่าตัวแปร $action ให้เป็น 'show'
@@ -170,7 +208,7 @@ class MPDFController extends Controller
             'delete' => true,
         ];
         $viewName = 'report.bis50index';
-        if($year!=null){
+        if ($year != null) {
             $users = User::paginate(50);
             $years = WorkSchedule::distinct()->pluck('year');
             return view($viewName, [
@@ -408,7 +446,7 @@ class MPDFController extends Controller
         })->get();
 
         $currentYear = Carbon::now()->year;
-        $payDays = Payday::where('year',$currentYear)->get();
+        $payDays = Payday::where('year', $currentYear)->get();
         $distinctYears = Payday::distinct('year')->pluck('year');
 
         return view($viewName, [
@@ -514,7 +552,7 @@ class MPDFController extends Controller
         $startDate = $paydayDetail->start_date;
         $endDate = $paydayDetail->end_date;
         $ids = $this->getUsersByWorkScheduleAssignment($startDate, $endDate)->pluck('id')->toArray();
-        $userPaydayIds = UserPayday::where('payday_id',$paydayDetail->payday_id)->pluck('user_id')->toArray();
+        $userPaydayIds = UserPayday::where('payday_id', $paydayDetail->payday_id)->pluck('user_id')->toArray();
         $userIddiffs = array_intersect($ids, $userPaydayIds);
 
         // $userIds = array_merge($userIds, $ids);
@@ -522,7 +560,7 @@ class MPDFController extends Controller
         // $userIds = array_unique($userIds);
         $users = User::whereIn('id', $userIds)->get();
         $companyDepartmentIds = array_unique($users->pluck('company_department_id')->toArray());
-        $companyDepartments = CompanyDepartment::whereIn('id',$companyDepartmentIds)->get();
+        $companyDepartments = CompanyDepartment::whereIn('id', $companyDepartmentIds)->get();
 
         if (isset($users) && isset($companyDepartments) && isset($paydayDetail)) {
             $html = view('report.rd1', compact('users', 'companyDepartments', 'paydayDetail'))->render();
@@ -581,13 +619,13 @@ class MPDFController extends Controller
         ]);
 
         ob_start();
-        $paydayDetail = PaydayDetail::whereYear('end_date',$year)->first();
+        $paydayDetail = PaydayDetail::whereYear('end_date', $year)->first();
 
         $userIds = [];
         $startDate = $paydayDetail->start_date;
         $endDate = $paydayDetail->end_date;
         $ids = $this->getUsersByWorkScheduleAssignment($startDate, $endDate)->pluck('id')->toArray();
-        $userPaydayIds = UserPayday::where('payday_id',$paydayDetail->payday_id)->pluck('user_id')->toArray();
+        $userPaydayIds = UserPayday::where('payday_id', $paydayDetail->payday_id)->pluck('user_id')->toArray();
         $userIddiffs = array_intersect($ids, $userPaydayIds);
 
         // $userIds = array_merge($userIds, $ids);
@@ -595,7 +633,7 @@ class MPDFController extends Controller
         // $userIds = array_unique($userIds);
         $users = User::whereIn('id', $userIds)->get();
         $companyDepartmentIds = array_unique($users->pluck('company_department_id')->toArray());
-        $companyDepartments = CompanyDepartment::whereIn('id',$companyDepartmentIds)->get();
+        $companyDepartments = CompanyDepartment::whereIn('id', $companyDepartmentIds)->get();
 
         if (isset($users) && isset($companyDepartments) && isset($paydayDetail)) {
             $html = view('report.rd1', compact('users', 'companyDepartments', 'paydayDetail'))->render();
@@ -752,12 +790,12 @@ class MPDFController extends Controller
         ob_start();
         $paydayIds = PaydayDetail::whereYear('end_date', $year)->where('month_id', $month)->pluck('id')->toArray();
         $data = SalarySummary::whereIn('payday_detail_id', $paydayIds)->get();
-            $data = [
-                'employee' => $data->sum('employee'),
-                'sum_salary' => $data->sum('sum_salary'),
-                'sum_social_security' => $data->sum('sum_social_security'),
-                'sum_leave' => $data->sum('sum_leave'),
-            ];
+        $data = [
+            'employee' => $data->sum('employee'),
+            'sum_salary' => $data->sum('sum_salary'),
+            'sum_social_security' => $data->sum('sum_social_security'),
+            'sum_leave' => $data->sum('sum_leave'),
+        ];
 
         if (isset($data) && $data) {
             $html = view('report.rd2', compact('data', 'id'))->render();
@@ -819,12 +857,12 @@ class MPDFController extends Controller
         ob_start();
         $paydayIds = PaydayDetail::whereYear('end_date', $year)->pluck('id')->toArray();
         $data = SalarySummary::whereIn('payday_detail_id', $paydayIds)->get();
-            $data = [
-                'employee' => $data->sum('employee'),
-                'sum_salary' => $data->sum('sum_salary'),
-                'sum_social_security' => $data->sum('sum_social_security'),
-                'sum_leave' => $data->sum('sum_leave'),
-            ];
+        $data = [
+            'employee' => $data->sum('employee'),
+            'sum_salary' => $data->sum('sum_salary'),
+            'sum_social_security' => $data->sum('sum_social_security'),
+            'sum_leave' => $data->sum('sum_leave'),
+        ];
 
         if (isset($data) && $data) {
             $html = view('report.rd2', compact('data', 'id'))->render();
@@ -866,7 +904,7 @@ class MPDFController extends Controller
             'update' => true,
             'delete' => true,
         ];
-        $viewName = 'report.sso_'.$list;
+        $viewName = 'report.sso_' . $list;
         $users = User::paginate(50);
 
         // ค้นหาปีที่มีการกำหนดงานเรียกงานอย่างน้อยหนึ่งรอบ
@@ -888,11 +926,11 @@ class MPDFController extends Controller
                 ->whereNotNull('shift_id');
         })->get();
 
-        if($type=='day'){
+        if ($type == 'day') {
             $typeData = 'รายวัน';
-        }elseif($type=='month'){
+        } elseif ($type == 'month') {
             $typeData = 'รายเดือน';
-        }elseif($type=='all'){
+        } elseif ($type == 'all') {
             $typeData = 'รวม';
         }
 
@@ -922,7 +960,7 @@ class MPDFController extends Controller
             'update' => true,
             'delete' => true,
         ];
-        $viewName = 'report.sso_'.$list;
+        $viewName = 'report.sso_' . $list;
         $users = User::paginate(50);
 
         // ค้นหาปีที่มีการกำหนดงานเรียกงานอย่างน้อยหนึ่งรอบ
@@ -944,11 +982,11 @@ class MPDFController extends Controller
                 ->whereNotNull('shift_id');
         })->get();
 
-        if($type=='day'){
+        if ($type == 'day') {
             $typeData = 'รายวัน';
-        }elseif($type=='month'){
+        } elseif ($type == 'month') {
             $typeData = 'รายเดือน';
-        }elseif($type=='all'){
+        } elseif ($type == 'all') {
             $typeData = 'รวม';
         }
 
@@ -969,48 +1007,7 @@ class MPDFController extends Controller
 
     public function ssoPayment_list($year, $month, $type)
     {
-        /* $paydayDetail = PaydayDetail::whereYear('end_date', $year)->pluck('payday_id')->toArray();
 
-        $userIds = [];
-        $startDate = $year.'-01-01';
-        $endDate = $year.'-12-31';
-        $ids = $this->getUsersByWorkScheduleAssignment($startDate, $endDate)->pluck('id')->toArray();
-        $userPaydayIds = UserPayday::whereIn('payday_id',$paydayDetail)->pluck('user_id')->toArray();
-        $userIddiffs = array_intersect($ids, $userPaydayIds);
-
-        //$userIds = array_merge($userIds, $ids);
-        $data = User::whereIn('id', $userIddiffs)->where('employee_type_id', 1)->get();
-        $summany = [
-            'workHour' => 0,
-            'absentCountSum' => 0,
-            'leaveCountSum' => 0,
-            'earlyHour' => 0,
-            'lateHour' => 0,
-            'overTime' => 0,
-            'deligenceAllowance' => 0,
-            'salary' => 0,
-            'overTimeCost' => 0,
-            'socialSecurityFivePercent' => 0,
-            'exceedOvertime' => 0,
-            'exceedOverTimeCost' => 0,
-        ];
-
-        foreach($data as $employee){
-            $dataSummary = $employee->salarySummary($employee->id);
-            $summany['workHour'] += isset($dataSummary['workHour']) ? $dataSummary['workHour']:0;
-            $summany['absentCountSum'] += isset($dataSummary['absentCountSum']) ? $dataSummary['absentCountSum']:0;
-            $summany['leaveCountSum'] += isset($dataSummary['leaveCountSum']) ? $dataSummary['leaveCountSum']:0;
-            $summany['earlyHour'] += isset($dataSummary['earlyHour']) ? $dataSummary['earlyHour']:0;
-            $summany['lateHour'] += isset($dataSummary['lateHour']) ? $dataSummary['lateHour']:0;
-            $summany['overTime'] += isset($dataSummary['overTime']) ? $dataSummary['overTime']:0;
-            $summany['deligenceAllowance'] += isset($dataSummary['deligenceAllowance']) ? $dataSummary['deligenceAllowance']:0;
-            $summany['salary'] += isset($dataSummary['salary']) ? $dataSummary['salary']:0;
-            $summany['overTimeCost'] += isset($dataSummary['overTimeCost']) ? $dataSummary['overTimeCost']:0;
-            $summany['socialSecurityFivePercent'] += isset($dataSummary['socialSecurityFivePercent']) ? $dataSummary['socialSecurityFivePercent']:0;
-            $summany['exceedOvertime'] += isset($dataSummary['exceedOvertime']) ? $dataSummary['exceedOvertime']:0;
-            $summany['exceedOverTimeCost'] += isset($dataSummary['exceedOverTimeCost']) ? $dataSummary['exceedOverTimeCost']:0;
-
-        } */
         $id = $year;
         include '../vendor/autoload.php';
         $defaultConfig = (new \Mpdf\Config\ConfigVariables())->getDefaults();
@@ -1041,17 +1038,38 @@ class MPDFController extends Controller
         ]);
 
         ob_start();
-        $paydayIds = PaydayDetail::whereYear('end_date', $year)->pluck('id')->toArray();
-        $data = SalarySummary::whereIn('payday_detail_id', $paydayIds)->get();
-            $data = [
-                'employee' => $data->sum('employee'),
-                'sum_salary' => $data->sum('sum_salary'),
-                'sum_social_security' => $data->sum('sum_social_security'),
-                'sum_leave' => $data->sum('sum_leave'),
-            ];
+        $paydayIds = PaydayDetail::whereYear('end_date', $year)->where('month_id', $month)->pluck('id')->toArray();
+        $userPayDay = UserPayday::whereIn('payday_id', $paydayIds)->pluck('user_id')->toArray();
+        if($type=='day'){
+            $userData = User::whereIn('id', $userPayDay)->where('employee_type_id', 2)->get();
+        }elseif($type=='month'){
+            $userData = User::whereIn('id', $userPayDay)->where('employee_type_id', 1)->get();
+        }else{
+            $userData = User::whereIn('id', $userPayDay)->get();
+        }
+
+        /* $data = SalarySummary::whereIn('payday_detail_id', $paydayIds)->get(); */
+        $sum_salary_total = 0;
+        $sum_social_security_total = 0;
+        $sum_leave_total = 0;
+
+        foreach ($userData as $item) {
+            $sum_salary_total += $item->salarySummary($item->id)['salary'];
+            $sum_social_security_total += $item->salarySummary($item->id)['socialSecurityFivePercent'];
+            $sum_leave_total += $item->salarySummary($item->id)['leaveCountSum'];
+        }
+
+        $data = [
+            'employee' => count($userData),
+            'sum_salary' => $sum_salary_total,
+            'sum_social_security' => $sum_social_security_total,
+            'sum_leave' => $sum_leave_total,
+        ];
+
 
         if (isset($data) && $data) {
-            $html = view('report.sso1', compact('data', 'id'))->render();
+            $month = $this->monthThai($month, 'FULL');
+            $html = view('report.sso1', compact('data', 'id', 'year', 'month'))->render();
 
             $stylesheet = file_get_contents(public_path('/css/report/sso1.css'));
             $mpdf->WriteHTML($stylesheet, 1);
@@ -1073,22 +1091,30 @@ class MPDFController extends Controller
         } else {
             echo 'not found data';
         }
-       /*  return view('report.sso1', compact('id')); */
+        /*  return view('report.sso1', compact('id')); */
     }
 
     public function ssoPayment($year, $month, $type)
     {
-        /* $paydayDetail = PaydayDetail::whereYear('end_date', $year)->pluck('payday_id')->toArray();
+        $paydayDetail = PaydayDetail::whereYear('end_date', $year)->pluck('payday_id')->toArray();
 
         $userIds = [];
-        $startDate = $year.'-01-01';
-        $endDate = $year.'-12-31';
+        $startDate = $year . '-' . $month . '-01';
+        $endDate = $year . '-' . $month . '-31';
         $ids = $this->getUsersByWorkScheduleAssignment($startDate, $endDate)->pluck('id')->toArray();
-        $userPaydayIds = UserPayday::whereIn('payday_id',$paydayDetail)->pluck('user_id')->toArray();
+        $userPaydayIds = UserPayday::whereIn('payday_id', $paydayDetail)->pluck('user_id')->toArray();
         $userIddiffs = array_intersect($ids, $userPaydayIds);
 
         //$userIds = array_merge($userIds, $ids);
-        $data = User::whereIn('id', $userIddiffs)->where('employee_type_id', 1)->get();
+        if($type=='day'){
+            $data = User::whereIn('id', $userIddiffs)->where('employee_type_id', 2)->get();
+        }elseif($type=='month'){
+            $data = User::whereIn('id', $userIddiffs)->where('employee_type_id', 1)->get();
+        }else{
+            $data = User::whereIn('id', $userIddiffs)->get();
+        }
+
+
         $summany = [
             'workHour' => 0,
             'absentCountSum' => 0,
@@ -1104,22 +1130,21 @@ class MPDFController extends Controller
             'exceedOverTimeCost' => 0,
         ];
 
-        foreach($data as $employee){
+        foreach ($data as $employee) {
             $dataSummary = $employee->salarySummary($employee->id);
-            $summany['workHour'] += isset($dataSummary['workHour']) ? $dataSummary['workHour']:0;
-            $summany['absentCountSum'] += isset($dataSummary['absentCountSum']) ? $dataSummary['absentCountSum']:0;
-            $summany['leaveCountSum'] += isset($dataSummary['leaveCountSum']) ? $dataSummary['leaveCountSum']:0;
-            $summany['earlyHour'] += isset($dataSummary['earlyHour']) ? $dataSummary['earlyHour']:0;
-            $summany['lateHour'] += isset($dataSummary['lateHour']) ? $dataSummary['lateHour']:0;
-            $summany['overTime'] += isset($dataSummary['overTime']) ? $dataSummary['overTime']:0;
-            $summany['deligenceAllowance'] += isset($dataSummary['deligenceAllowance']) ? $dataSummary['deligenceAllowance']:0;
-            $summany['salary'] += isset($dataSummary['salary']) ? $dataSummary['salary']:0;
-            $summany['overTimeCost'] += isset($dataSummary['overTimeCost']) ? $dataSummary['overTimeCost']:0;
-            $summany['socialSecurityFivePercent'] += isset($dataSummary['socialSecurityFivePercent']) ? $dataSummary['socialSecurityFivePercent']:0;
-            $summany['exceedOvertime'] += isset($dataSummary['exceedOvertime']) ? $dataSummary['exceedOvertime']:0;
-            $summany['exceedOverTimeCost'] += isset($dataSummary['exceedOverTimeCost']) ? $dataSummary['exceedOverTimeCost']:0;
-
-        } */
+            $summany['workHour'] += isset($dataSummary['workHour']) ? $dataSummary['workHour'] : 0;
+            $summany['absentCountSum'] += isset($dataSummary['absentCountSum']) ? $dataSummary['absentCountSum'] : 0;
+            $summany['leaveCountSum'] += isset($dataSummary['leaveCountSum']) ? $dataSummary['leaveCountSum'] : 0;
+            $summany['earlyHour'] += isset($dataSummary['earlyHour']) ? $dataSummary['earlyHour'] : 0;
+            $summany['lateHour'] += isset($dataSummary['lateHour']) ? $dataSummary['lateHour'] : 0;
+            $summany['overTime'] += isset($dataSummary['overTime']) ? $dataSummary['overTime'] : 0;
+            $summany['deligenceAllowance'] += isset($dataSummary['deligenceAllowance']) ? $dataSummary['deligenceAllowance'] : 0;
+            $summany['salary'] += isset($dataSummary['salary']) ? $dataSummary['salary'] : 0;
+            $summany['overTimeCost'] += isset($dataSummary['overTimeCost']) ? $dataSummary['overTimeCost'] : 0;
+            $summany['socialSecurityFivePercent'] += isset($dataSummary['socialSecurityFivePercent']) ? $dataSummary['socialSecurityFivePercent'] : 0;
+            $summany['exceedOvertime'] += isset($dataSummary['exceedOvertime']) ? $dataSummary['exceedOvertime'] : 0;
+            $summany['exceedOverTimeCost'] += isset($dataSummary['exceedOverTimeCost']) ? $dataSummary['exceedOverTimeCost'] : 0;
+        }
         $id = $year;
         include '../vendor/autoload.php';
         $defaultConfig = (new \Mpdf\Config\ConfigVariables())->getDefaults();
@@ -1150,17 +1175,9 @@ class MPDFController extends Controller
         ]);
 
         ob_start();
-        $paydayIds = PaydayDetail::whereYear('end_date', $year)->pluck('id')->toArray();
-        $data = SalarySummary::whereIn('payday_detail_id', $paydayIds)->get();
-            $data = [
-                'employee' => $data->sum('employee'),
-                'sum_salary' => $data->sum('sum_salary'),
-                'sum_social_security' => $data->sum('sum_social_security'),
-                'sum_leave' => $data->sum('sum_leave'),
-            ];
-
         if (isset($data) && $data) {
-            $html = view('report.sso2', compact('data', 'id'))->render();
+            $month = $this->monthThai($month, 'FULL');
+            $html = view('report.sso2', compact('data', 'id', 'month', 'year'))->render();
 
             $stylesheet = file_get_contents(public_path('/css/report/sso2.css'));
             $mpdf->WriteHTML($stylesheet, 1);
@@ -1192,7 +1209,7 @@ class MPDFController extends Controller
 
     public function ssofile($year, $month)
     {
-        return Excel::download(new EmployeeSsoExport, 'sso.xlsx');
+        return Excel::download(new EmployeeSsoExport($year, $month), 'sso.xlsx');
     }
 
     #######################################################################################################endregion
@@ -1208,7 +1225,7 @@ class MPDFController extends Controller
             'update' => true,
             'delete' => true,
         ];
-        $viewName = 'report.'.$list;
+        $viewName = 'report.' . $list;
         $users = User::paginate(50);
 
         // ค้นหาปีที่มีการกำหนดงานเรียกงานอย่าง+น้อยหนึ่งรอบ
@@ -1230,9 +1247,9 @@ class MPDFController extends Controller
                 ->whereNotNull('shift_id');
         })->get();
 
-        if($list=='ipay'){
+        if ($list == 'ipay') {
             $listData = 'IPAY';
-        }elseif($list=='cashBank'){
+        } elseif ($list == 'cashBank') {
             $listData = 'รายงานโอนเงินเข้าธนาคาร';
         }
 
@@ -1309,7 +1326,7 @@ class MPDFController extends Controller
         return Excel::download(new BankDataExport($year, $month, $payDetailIds), 'bank_data.xlsx');
     }
 
-    public function getUsersByWorkScheduleAssignment($startDate,$endDate)
+    public function getUsersByWorkScheduleAssignment($startDate, $endDate)
     {
         // Convert the start and end date to the correct format
         $startDate = date('Y-m-d', strtotime($startDate));
@@ -1322,6 +1339,5 @@ class MPDFController extends Controller
         })->get();
 
         return $users;
-
     }
 }

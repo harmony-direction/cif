@@ -18,7 +18,7 @@
                     แบบรายการแสดงการส่งเงินสมทบ
                 </div>
                 <div class="wrap-number" style="width: 14%; float: right; font-size: 16px; font-weight: 500;">
-                    สปส. 1-10 (ส่วนที่ 999)
+                    สปส. 1-10 (ส่วนที่ {PAGENO})
                 </div>
             </div>
             <div style="width: 100%; display: block;">
@@ -53,7 +53,7 @@
                 <table style="width: 90%; border: 1px solid #000">
                     <tbody>
                         <tr style="border: 1px solid #000;">
-                            <td colspan="2" style="font-size: 16px;">การนำส่งเงินสมทบสำหรับค่าจ้างเดือน    ธันวาคม พ.ศ. 2023</td>
+                            <td colspan="2" style="font-size: 16px;">การนำส่งเงินสมทบสำหรับค่าจ้างเดือน    {{ $month }} พ.ศ. {{ $year }}</td>
                         </tr>
                         <tr style="border: 1px solid #000;">
                             <td style="text-align: center; border: 1px solid #000;">รายการ</td>
@@ -61,35 +61,35 @@
                         </tr>
                         <tr>
                             <td style="border-left: 1px solid #000; padding: 5px;">1. เงินค่าจ้างทั้งสิ้น</td>
-                            <td style="border-left: 1px solid #000; padding: 5px;">2,169,460.00</td>
+                            <td style="border-left: 1px solid #000; padding: 5px;">{{ number_format($data['sum_salary'],2) }}</td>
                         </tr>
                         <tr>
                             <td style="border-left: 1px solid #000; padding: 5px;">2. เงินสมทบผู้ประกันตน</td>
-                            <td style="border-left: 1px solid #000; padding: 5px;">108,743.00</td>
+                            <td style="border-left: 1px solid #000; padding: 5px;">{{ number_format($data['sum_social_security'],2) }}</td>
                         </tr>
                         <tr>
                             <td style="border-left: 1px solid #000; padding: 5px;">3. เงินสมทบนายจ้าง</td>
-                            <td style="border-left: 1px solid #000; padding: 5px;">108,743.00</td>
+                            <td style="border-left: 1px solid #000; padding: 5px;">{{ number_format($data['sum_social_security'],2) }}</td>
                         </tr>
                         <tr>
                             <td style="border-left: 1px solid #000; padding: 5px;">4. รวมเงินสมทบนำส่งทั้งสิ้น</td>
-                            <td style="border-left: 1px solid #000; padding: 5px;">216,946.00</td>
+                            <td style="border-left: 1px solid #000; padding: 5px;">{{ number_format($data['sum_social_security']*2,2) }}</td>
                         </tr>
                         <tr>
                             <td colspan="2" style="padding: 5px;">  (สองแสนหนึ่งหมื่นหกพันเก้าร้อยสี่สิบหกบาทถ้วน)</td>
                         </tr>
                         <tr>
                             <td style="border-left: 1px solid #000; padding: 5px;">5. จำนวนผู้ประกันตนที่ส่งเงินสมทบ</td>
-                            <td style="border-left: 1px solid #000; padding: 5px;">148</td>
+                            <td style="border-left: 1px solid #000; padding: 5px;">{{ number_format($data['employee']) }}</td>
                         </tr>
                     </tbody>
                 </table>
                 <br>
                 <p style="font-size: 16px; font-weight: 500;">ข้าพเจ้าขอรับรองว่ารายการที่แจ้งไว้เป็นรายการที่ถูกต้องครบถ้วนและเป็นจริงทุกประการ</p>
                 <p style="font-size: 16px; font-weight: 500;">พร้อมได้แนบ</p>
-                <input type="checkbox">    <span>รายละเอียดการนำส่งเงินสมทบ</span>    <span>จำนวน</span>    <span style="border-bottom: 1px dotted #000;">999</span>    <span>แผ่น หรือ</span>
+                <input type="checkbox">    <span>รายละเอียดการนำส่งเงินสมทบ</span>    <span>จำนวน</span>    <span style="border-bottom: 1px dotted #000;">{nb}</span>    <span>แผ่น หรือ</span>
                 <br>
-                <input type="checkbox">    <span>แผ่นจากแม่เหล็ก</span>                     <span>จำนวน</span>    <span style="border-bottom: 1px dotted #000;">999</span>    <span>แผ่น</span>
+                <input type="checkbox">    <span>แผ่นจากแม่เหล็ก</span>                     <span>จำนวน</span>    <span style="border-bottom: 1px dotted #000;">{nb}</span>    <span>แผ่น</span>
                 <div style="padding: 30px;">
                     <div style="width: 20%; float: left; text-align: center;">
                         <span style="font-size: 12px; color: #cccccc;">
@@ -102,17 +102,17 @@
                     </div>
                     <div style="width: 80%; float: right;">
                         <span style="font-size: 12px;">ลงชื่อ   </span>
-                        <span style="border-bottom: 1px dotted #000;">         ช่องใส่ result         </span>
+                        <span style="border-bottom: 1px dotted #000;">                                    </span>
                         <span style="font-size: 12px;">   นายจ้าง/ผู้มอบอำนาจ</span>
                         <br><br>
                         <div>
                             (...........................................................................)
                         </div>
                         <span style="font-size: 12px;">ตำแหน่ง   </span>
-                        <span style="border-bottom: 1px dotted #000;">         ช่องใส่ result         </span>
+                        <span style="border-bottom: 1px dotted #000;">                                    </span>
                         <br>
                         <span style="font-size: 12px;">ยื่นแบบวันที่   </span>
-                        <span style="border-bottom: 1px dotted #000;">24<span>   เดือน   </span>กุมภาพันธ์<span>   พ.ศ.   </span>2567</span>
+                        <span style="border-bottom: 1px dotted #000;">{{ \Carbon\Carbon::now()->format('d') }}<span>   เดือน   </span>{{ \Carbon\Carbon::now()->format('m') }}<span>   พ.ศ.   </span>{{ \Carbon\Carbon::now()->format('Y') }}</span>
                     </div>
                 </div>
             </div>
@@ -125,14 +125,14 @@
                         <tr>
                             <td style="padding: 5px;">
                                 <span>ชำระเงินวันที่    </span>
-                                <span style="border-bottom: 1px dotted #000;">ช่องใส่ result</span>
+                                <span style="border-bottom: 1px dotted #000;">                           </span>
                             </td>
                         </tr>
                         <tr>
                             <td style="padding: 5px;">
                                 <span>เงินเพิ่ม (ถ้ามี)   </span>
                                 <span style="border-bottom: 1px dotted #000;">
-                                    999<span>  บาท  </span>99<span>  สตาง</span>
+                                    {{-- 999 --}}                             <span>  บาท  </span>{{-- 99 --}}                     <span>  สตาง</span>
                                 </span>
                             </td>
                         </tr>
@@ -140,7 +140,7 @@
                             <td style="padding: 5px;">
                                 <span>ใบเสร็จรับเงินเล่มที่   </span>
                                 <span style="border-bottom: 1px dotted #000;">
-                                    2<span>  เลขที่  </span>1
+                                    {PAGENO}<span>  เลขที่  </span>{nb}
                                 </span>
                             </td>
                         </tr>
@@ -148,7 +148,7 @@
                             <td style="padding: 5px;">
                                 <span>ลงชื่อ   </span>
                                 <span style="border-bottom: 1px dotted #000;">
-                                    result
+                                                                                                                                       
                                 </span>
                             </td>
                         </tr>
@@ -166,7 +166,7 @@
                             <td style="padding: 5px;">
                                 <span>ชำระเงินวันที่   </span>
                                 <span style="border-bottom: 1px dotted #000;">
-                                    29/02/2024
+                                                                                                
                                 </span>
                             </td>
                         </tr>
@@ -174,7 +174,7 @@
                             <td style="padding: 5px;">
                                 <span>ใบนำฝากและใบเสร็จรับเงินเล่มที่   </span>
                                 <span style="border-bottom: 1px dotted #000;">
-                                    999<span>  เลขที่  </span>99
+                                    {PAGENO}<span>  เลขที่  </span>{nb}
                                 </span>
                             </td>
                         </tr>
@@ -187,7 +187,7 @@
                             <td style="padding: 5px;">
                                 <span>ลงชื่อ   </span>
                                 <span style="border-bottom: 1px dotted #000;">
-                                    result
+                                                                                                                                           
                                 </span>
                             </td>
                         </tr>
