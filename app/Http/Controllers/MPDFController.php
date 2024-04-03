@@ -1321,9 +1321,9 @@ class MPDFController extends Controller
         ]);
     }
 
-    public function ipay($year, $month, $payDetailIds)
+    public function ipay($year, $month, $type)
     {
-        return Excel::download(new BankDataExport($year, $month, $payDetailIds), 'bank_data.xlsx');
+        return Excel::download(new BankDataExport($year, $month, $type), 'bank_data.xlsx');
     }
 
     public function getUsersByWorkScheduleAssignment($startDate, $endDate)

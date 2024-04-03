@@ -2,11 +2,12 @@
 
 namespace App\Exports;
 
-use App\Models\BankData;
 use App\Models\User;
+use App\Models\BankData;
+use App\Models\PaydayDetail;
 use Maatwebsite\Excel\Concerns\Exportable;
-use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
+use Maatwebsite\Excel\Concerns\FromCollection;
 
 class BankDataExport implements FromCollection, WithHeadings
 {
@@ -22,18 +23,32 @@ class BankDataExport implements FromCollection, WithHeadings
     protected $year;
     protected $month;
 
-    public function __construct($year, $month, $payDetailIds)
+    public function __construct($year, $month, $type)
     {
         $this->year = $year;
         $this->month = $month;
+        $this->type = $type;
     }
 
     public function collection()
     {
-         // Fetch data from your model and format it
-         $data = User::/* whereYear('date_column', $this->year)
-         ->whereMonth('date_column', $this->month)
-         ->get */all();
+        $paydayDetail = PaydayDetail::whereYear('end_date', $this->year)->pluck('payday_id')->toArray();
+
+        $userIds = [];
+        $startDate = $this->year . '-' . $this->month . '-01';
+        $endDate = $this->year . '-' . $this->month . '-31';
+        $ids = $this->getUsersByWorkScheduleAssignment($startDate, $endDate)->pluck('id')->toArray();
+        $userPaydayIds = UserPayday::whereIn('payday_id', $paydayDetail)->pluck('user_id')->toArray();
+        $userIddiffs = array_intersect($ids, $userPaydayIds);
+
+        //$userIds = array_merge($userIds, $ids);
+        if($this->type=='day'){
+            $data = User::whereIn('id', $userIddiffs)->where('employee_type_id', 2)->get();
+        }elseif($this->type=='month'){
+            $data = User::whereIn('id', $userIddiffs)->where('employee_type_id', 1)->get();
+        }else{
+            $data = User::whereIn('id', $userIddiffs)->get();
+        }
 
         // Format the data to match the structure of the provided array
         $formattedData = $data->map(function ($item) {
