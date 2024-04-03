@@ -1,35 +1,13 @@
-@extends('layouts.app')
+<!DOCTYPE html>
+<html lang="th">
 
-@section('content')
+<head>
+    <meta charset="UTF-8">
     {{-- Css --}}
-    <link href="{{ asset('/css/report-3.css?v=2') }}" rel="stylesheet">
+    <link href="{{ asset('/css/report/sso2.css?v=2') }}" rel="stylesheet">
+</head>
 
-    @php
-        include '../vendor/autoload.php';
-        $defaultConfig = (new \Mpdf\Config\ConfigVariables())->getDefaults();
-        $fontDirs = $defaultConfig['fontDir'];
-        $defaultFontConfig = (new \Mpdf\Config\FontVariables())->getDefaults();
-        $fontData = $defaultFontConfig['fontdata'];
-
-        $mpdf = new \Mpdf\Mpdf([
-            'fontDir' => array_merge($fontDirs, [
-                // __DIR__ . '/tmp',
-                storage_path('fonts/'),
-            ]),
-            'fontdata' => $fontData + [
-                'sarabun' => [
-                    'R' => 'THSarabunNew.ttf',
-                    'I' => 'THSarabunNew Italic.ttf',
-                    'B' => 'THSarabunNew Bold.ttf',
-                ]
-            ],
-            'default_font' => 'sarabun',
-            'mode' => 'utf-8','format' => 'A4','margin_left' => 0,'margin_right' => 0,'margin_top' => 0,'margin_bottom' => 0,'margin_header' => 0,'margin_footer' => 0
-        ]);
-
-        ob_start();
-    @endphp
-
+<body>
     <div id="pdfContent" class="container" style="padding: 10px;">
         <div class="wrap-header">
             <div class="wrap-title" style="width: 50%; float: left; font-size: 20px;">แบบรายการแสดงการส่งเงินสมทบ (สปส.1-10)(ตามแนวตั้ง)</div>
@@ -82,28 +60,6 @@
             </tbody>
         </table>
     </div>
+</body>
 
-    @php
-        $html=ob_get_contents();
-        $stylesheet = file_get_contents('css/report/sso2.css');
-        $mpdf->WriteHTML($stylesheet, 1);
-        $mpdf->WriteHTML($html,2);
-        $pdfFilePath = "sso2-".$id.".pdf";
-        $mpdf->Output($pdfFilePath, 'F');
-        ob_end_clean();
-    @endphp
-
-    <div class="container" style="margin-top: 5rem;">
-        <a href="../../../{{ $pdfFilePath }}" target="_blank">
-            <button id="viewPdfButton ">View PDF แบบแสดงรายการแสดงการส่งเงินสมทบ</button>
-        </a>
-    </div>
-    <script>
-        document.getElementById("viewPdfButton").addEventListener("click", function() {
-         var pdfFilePath = "<?= $pdfFilePath ?>";
-         window.open(pdfFilePath, "_blank");
-         document.getElementById("pdfContent").style.display = "block";
-     });
-     </script>
-
-@endsection
+</html>

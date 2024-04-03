@@ -967,7 +967,7 @@ class MPDFController extends Controller
         /* return view('report.rd1', compact('id')); */
     }
 
-    public function ssoPayment($id)
+    public function ssoPayment_list($year, $month, $type)
     {
         /* $paydayDetail = PaydayDetail::whereYear('end_date', $year)->pluck('payday_id')->toArray();
 
@@ -1011,7 +1011,178 @@ class MPDFController extends Controller
             $summany['exceedOverTimeCost'] += isset($dataSummary['exceedOverTimeCost']) ? $dataSummary['exceedOverTimeCost']:0;
 
         } */
-        return view('report.sso1', compact('id'));
+        $id = $year;
+        include '../vendor/autoload.php';
+        $defaultConfig = (new \Mpdf\Config\ConfigVariables())->getDefaults();
+        $fontDirs = $defaultConfig['fontDir'];
+        $defaultFontConfig = (new \Mpdf\Config\FontVariables())->getDefaults();
+        $fontData = $defaultFontConfig['fontdata'];
+
+        $mpdf = new \Mpdf\Mpdf([
+            'fontDir' => array_merge($fontDirs, [
+                storage_path('fonts/'),
+            ]),
+            'fontdata' => $fontData + [
+                'sarabun' => [
+                    'R' => 'THSarabunNew.ttf',
+                    'I' => 'THSarabunNew Italic.ttf',
+                    'B' => 'THSarabunNew Bold.ttf',
+                ]
+            ],
+            'default_font' => 'sarabun',
+            'mode' => 'utf-8',
+            'format' => 'A4',
+            'margin_left' => 0,
+            'margin_right' => 0,
+            'margin_top' => 0,
+            'margin_bottom' => 0,
+            'margin_header' => 0,
+            'margin_footer' => 0
+        ]);
+
+        ob_start();
+        $paydayIds = PaydayDetail::whereYear('end_date', $year)->pluck('id')->toArray();
+        $data = SalarySummary::whereIn('payday_detail_id', $paydayIds)->get();
+            $data = [
+                'employee' => $data->sum('employee'),
+                'sum_salary' => $data->sum('sum_salary'),
+                'sum_social_security' => $data->sum('sum_social_security'),
+                'sum_leave' => $data->sum('sum_leave'),
+            ];
+
+        if (isset($data) && $data) {
+            $html = view('report.sso1', compact('data', 'id'))->render();
+
+            $stylesheet = file_get_contents(public_path('/css/report/sso1.css'));
+            $mpdf->WriteHTML($stylesheet, 1);
+            $mpdf->WriteHTML($html, 2);
+
+            /* $pdfFilePath = "report_1.pdf";
+            $pdfFile = file_get_contents($pdfFilePath); */
+            $mpdf->Output("rd2.pdf", 'F');
+            ob_end_clean();
+
+
+            $pdfFilePath = "rd2.pdf";
+            $pdfFile = file_get_contents($pdfFilePath);
+
+            return Response::make($pdfFile, 200, [
+                'Content-Type' => 'application/pdf',
+                'Content-Disposition' => 'inline; filename="rd1.pdf"'
+            ]);
+        } else {
+            echo 'not found data';
+        }
+       /*  return view('report.sso1', compact('id')); */
+    }
+
+    public function ssoPayment($year, $month, $type)
+    {
+        /* $paydayDetail = PaydayDetail::whereYear('end_date', $year)->pluck('payday_id')->toArray();
+
+        $userIds = [];
+        $startDate = $year.'-01-01';
+        $endDate = $year.'-12-31';
+        $ids = $this->getUsersByWorkScheduleAssignment($startDate, $endDate)->pluck('id')->toArray();
+        $userPaydayIds = UserPayday::whereIn('payday_id',$paydayDetail)->pluck('user_id')->toArray();
+        $userIddiffs = array_intersect($ids, $userPaydayIds);
+
+        //$userIds = array_merge($userIds, $ids);
+        $data = User::whereIn('id', $userIddiffs)->where('employee_type_id', 1)->get();
+        $summany = [
+            'workHour' => 0,
+            'absentCountSum' => 0,
+            'leaveCountSum' => 0,
+            'earlyHour' => 0,
+            'lateHour' => 0,
+            'overTime' => 0,
+            'deligenceAllowance' => 0,
+            'salary' => 0,
+            'overTimeCost' => 0,
+            'socialSecurityFivePercent' => 0,
+            'exceedOvertime' => 0,
+            'exceedOverTimeCost' => 0,
+        ];
+
+        foreach($data as $employee){
+            $dataSummary = $employee->salarySummary($employee->id);
+            $summany['workHour'] += isset($dataSummary['workHour']) ? $dataSummary['workHour']:0;
+            $summany['absentCountSum'] += isset($dataSummary['absentCountSum']) ? $dataSummary['absentCountSum']:0;
+            $summany['leaveCountSum'] += isset($dataSummary['leaveCountSum']) ? $dataSummary['leaveCountSum']:0;
+            $summany['earlyHour'] += isset($dataSummary['earlyHour']) ? $dataSummary['earlyHour']:0;
+            $summany['lateHour'] += isset($dataSummary['lateHour']) ? $dataSummary['lateHour']:0;
+            $summany['overTime'] += isset($dataSummary['overTime']) ? $dataSummary['overTime']:0;
+            $summany['deligenceAllowance'] += isset($dataSummary['deligenceAllowance']) ? $dataSummary['deligenceAllowance']:0;
+            $summany['salary'] += isset($dataSummary['salary']) ? $dataSummary['salary']:0;
+            $summany['overTimeCost'] += isset($dataSummary['overTimeCost']) ? $dataSummary['overTimeCost']:0;
+            $summany['socialSecurityFivePercent'] += isset($dataSummary['socialSecurityFivePercent']) ? $dataSummary['socialSecurityFivePercent']:0;
+            $summany['exceedOvertime'] += isset($dataSummary['exceedOvertime']) ? $dataSummary['exceedOvertime']:0;
+            $summany['exceedOverTimeCost'] += isset($dataSummary['exceedOverTimeCost']) ? $dataSummary['exceedOverTimeCost']:0;
+
+        } */
+        $id = $year;
+        include '../vendor/autoload.php';
+        $defaultConfig = (new \Mpdf\Config\ConfigVariables())->getDefaults();
+        $fontDirs = $defaultConfig['fontDir'];
+        $defaultFontConfig = (new \Mpdf\Config\FontVariables())->getDefaults();
+        $fontData = $defaultFontConfig['fontdata'];
+
+        $mpdf = new \Mpdf\Mpdf([
+            'fontDir' => array_merge($fontDirs, [
+                storage_path('fonts/'),
+            ]),
+            'fontdata' => $fontData + [
+                'sarabun' => [
+                    'R' => 'THSarabunNew.ttf',
+                    'I' => 'THSarabunNew Italic.ttf',
+                    'B' => 'THSarabunNew Bold.ttf',
+                ]
+            ],
+            'default_font' => 'sarabun',
+            'mode' => 'utf-8',
+            'format' => 'A4',
+            'margin_left' => 0,
+            'margin_right' => 0,
+            'margin_top' => 0,
+            'margin_bottom' => 0,
+            'margin_header' => 0,
+            'margin_footer' => 0
+        ]);
+
+        ob_start();
+        $paydayIds = PaydayDetail::whereYear('end_date', $year)->pluck('id')->toArray();
+        $data = SalarySummary::whereIn('payday_detail_id', $paydayIds)->get();
+            $data = [
+                'employee' => $data->sum('employee'),
+                'sum_salary' => $data->sum('sum_salary'),
+                'sum_social_security' => $data->sum('sum_social_security'),
+                'sum_leave' => $data->sum('sum_leave'),
+            ];
+
+        if (isset($data) && $data) {
+            $html = view('report.sso2', compact('data', 'id'))->render();
+
+            $stylesheet = file_get_contents(public_path('/css/report/sso2.css'));
+            $mpdf->WriteHTML($stylesheet, 1);
+            $mpdf->WriteHTML($html, 2);
+
+            /* $pdfFilePath = "report_1.pdf";
+            $pdfFile = file_get_contents($pdfFilePath); */
+            $mpdf->Output("sso2.pdf", 'F');
+            ob_end_clean();
+
+
+            $pdfFilePath = "sso2.pdf";
+            $pdfFile = file_get_contents($pdfFilePath);
+
+            return Response::make($pdfFile, 200, [
+                'Content-Type' => 'application/pdf',
+                'Content-Disposition' => 'inline; filename="rd1.pdf"'
+            ]);
+        } else {
+            echo 'not found data';
+        }
+        return view('report.sso2', compact('id'));
     }
 
     public function ssoPaymentMonth($id)
@@ -1019,7 +1190,7 @@ class MPDFController extends Controller
         return view('report.sso2', compact('id'));
     }
 
-    public function ssofile($id)
+    public function ssofile($year, $month)
     {
         return Excel::download(new EmployeeSsoExport, 'sso.xlsx');
     }
@@ -1109,7 +1280,7 @@ class MPDFController extends Controller
             'margin_footer' => 3
         ]);
         $data = User::all();
-        $html = View::make('report.cashbank', compact('data'))->render();
+        $html = View::make('report.cashbank_file', compact('data'))->render();
 
         // Create an instance of mPDF
 
@@ -1133,9 +1304,9 @@ class MPDFController extends Controller
         ]);
     }
 
-    public function ipay($id)
+    public function ipay($year, $month, $payDetailIds)
     {
-        return Excel::download(new BankDataExport, 'bank_data.xlsx');
+        return Excel::download(new BankDataExport($year, $month, $payDetailIds), 'bank_data.xlsx');
     }
 
     public function getUsersByWorkScheduleAssignment($startDate,$endDate)

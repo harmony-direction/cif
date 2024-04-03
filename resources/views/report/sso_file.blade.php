@@ -75,7 +75,7 @@
                     $('#search_work_schedule').click(function(){
                         var year = $('#year').val();
                         var month = $('#month').val();
-                        var url = "{{ route('getPage', ['year' => ':year', 'month' => ':month']) }}".replace(':year', year).replace(':month', month);
+                        var url = "{{ route('ssofile', ['year' => ':year', 'month' => ':month']) }}".replace(':year', year).replace(':month', month);
 
                         window.location.href = url;
                     });
