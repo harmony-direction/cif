@@ -203,7 +203,7 @@
                         @endphp
                         <tr style="border-bottom: 1px solid #000;">
                             <td style="border-left: 1px solid #000; text-align: center; vertical-align: middle;">
-                                {{ $key }}</td>
+                                {{ $key+1 }}</td>
                             <td style="border-left: 1px solid #000; text-align: center; vertical-align: middle;">
                                 <span>{{ $user->hid }}</span>
                                 <br>

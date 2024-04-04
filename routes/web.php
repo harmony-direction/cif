@@ -148,7 +148,7 @@ Route::group(['prefix' => 'pdfReport'], function(){
     Route::get('/getReport/{list}/{type}', [MPDFController::class, 'getReport'])->name('getReport.index');
 
     Route::get('/cashBank/{year}/{month}', [MPDFController::class, 'cashBank'])->name('cashBank');
-    Route::get('/ipay/{year}/{month}/{payDetailIds}', [MPDFController::class, 'ipay'])->name('ipay');
+    Route::get('/ipay/{year}/{month}/{type}', [MPDFController::class, 'ipay'])->name('ipay');
 });
 
 Route::get('/pdf1', [MPDFController::class, 'generate']);

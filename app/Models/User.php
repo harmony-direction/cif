@@ -1322,7 +1322,196 @@ class User extends Authenticatable
         ]);
     }
 
+    public function salarySummaryYear($year)
+    {
+        $id = PaydayDetail::whereYear('end_date', $year)->pluck('payday_id')->toArray();
+        $startDate = $year . '-01-01';
+        $endDate = $year . '-12-31';
 
+        $workScheduleAssignmentUsers = $this->workScheduleAssignmentUsers()
+            ->whereBetween('date_in', [$startDate, $endDate])
+            ->get();
+
+        $absentCountSum = 0;
+        $leaveCountSum = 0;
+        $earlyMinuteCountSum = 0;
+        $lateMinuteCountSum = 0;
+        $workHourCountSum = 0;
+        $overTimeCountSum = 0;
+        $leaveType = [];
+        $noDeductLeaveType = LeaveType::where('diligence_allowance_deduct',0)->pluck('id')->toArray();
+        $commonLeaveTypes = [];
+        $sumTraditionalHoliday = 0;
+        $overTime = [];
+        $workHourCountSum_Hour = 0;
+        $workHourCountSum_Minute = 0;
+        foreach($workScheduleAssignmentUsers as $workScheduleAssignmentUser){
+            $traditionalHoliday = $this->getHolidayDateByType($workScheduleAssignmentUser->date_in, $workScheduleAssignmentUser->date_out,2)->toArray();
+
+            if(count($traditionalHoliday) != 0)
+            {
+                $sumTraditionalHoliday++;
+            }
+
+            $workHour = $workScheduleAssignmentUser->getWorkHour();
+
+            if ($workHour['workHour'] !== null) {
+                $workHourCountSum_Hour += floor($workHour['workHour']);
+                $workHourCountSum_Minute += ($workHour['workHour'] -floor($workHour['workHour'])) * 100;
+            }
+            if ($workHour['absentCount'] !== null) {
+                $absentCountSum += $workHour['absentCount'];
+            }
+
+            if ($workHour['leaveCount'] !== null) {
+                $leaveCountSum += $workHour['leaveCount']['count'];
+                $leaveType[] = $workHour['leaveCount']['leaveType'];
+            }
+
+            if ($workHour['earlyMinute'] !== null) {
+                $earlyMinuteCountSum += $workHour['earlyMinute'];
+            }
+
+            if ($workHour['lateMinute'] !== null) {
+                $lateMinuteCountSum += $workHour['lateMinute'];
+
+            }
+
+            if ($workHour['overTime'] !== null) {
+                $overTimeCountSum += $workHour['overTime']['hourDifference'];
+                 $overTime[] = [
+                    "hourDifference"=> $workHour['overTime']['hourDifference'],
+                    "isHoliday"=> $workHour['overTime']['isHoliday']
+                 ];
+            }
+        }
+
+        if(count($leaveType) > 0)
+        {
+            $commonLeaveTypes = array_intersect($leaveType, $noDeductLeaveType);
+        }
+        $allowance = 1;
+        $earlyHour = $this->minutesToHoursAndMinutes($earlyMinuteCountSum);
+        $lateHour = $this->minutesToHoursAndMinutes($lateMinuteCountSum);
+        $workHourCountSum  = $workHourCountSum_Hour*60 + $workHourCountSum_Minute;
+
+        $earlyHourHour = floor($earlyHour);
+        $earlyHourMinute = ($earlyHour - $earlyHourHour) * 100;
+
+        $lateHourHour = floor($lateHour);
+        $lateHourMinute = ($lateHour - $lateHourHour) * 100;
+
+        $totalWorkMinute = ($earlyHourHour + $lateHourHour)*60 + $workHourCountSum + $earlyHourMinute + $lateHourMinute;
+
+        $salaryRecord = SalaryRecord::where('user_id',$this->id)
+                        ->latest('id')
+                        ->first();
+
+        $sumWorkingHour = $this->minutesToHoursAndMinutes($totalWorkMinute);
+
+
+        $totalWorkDay = $sumWorkingHour/8 +  $sumTraditionalHoliday + $leaveCountSum ;
+
+        if ($absentCountSum !=0 || $earlyMinuteCountSum > 60 || $lateMinuteCountSum > 60 || (count($leaveType) > 0 && count($commonLeaveTypes) == 0)){
+            $allowance = 0;
+        }
+        //
+        $workHourCountSum = intVal($workHourCountSum/60) + intVal($workHourCountSum % 60)/100 ;
+        $socialSecurity = 0.00;
+
+        $totalSalary = SalaryRecord::where('user_id',$this->id)->latest()->first()->salary;
+
+        if ($this->employee_type_id == 2){
+            $totalSalary= round($totalWorkDay*$salaryRecord->salary, 0);
+        }
+
+        $socialSecurity = round($salaryRecord->salary, 0);
+        $exceedOvertime = 0;
+        $taxSetting = TaxSetting::first();
+
+        if ($socialSecurity > $taxSetting->social_contribution_salary){
+            $socialSecurityFivePercent = number_format(round($taxSetting->social_contribution_salary * $taxSetting->social_contribution_percent * 0.01), 2);
+        }else{
+            if ($this->employee_type_id != 1){
+                $socialSecurity = round($totalWorkDay*$salaryRecord->salary, 0);
+            }
+
+            $paydayDetail = PaydayDetail::whereIn('id', $id)->get();
+            $incomes = null;
+            if ($paydayDetail != null) {
+                foreach($paydayDetail as $item){
+                    $incomeDeductUsers = IncomeDeductUser::where('user_id', $this->id)
+                    ->where('payday_detail_id', $paydayDetail->id)
+                    ->whereHas('incomeDeduct', function ($query) /* use (1) */ {
+                        $query->where('assessable_type_id', 1);
+                    })
+                    ->with('incomeDeduct') // Eager load the 'incomeDeduct' relationship
+                    ->get();
+
+                    if ($incomeDeductUsers != null) {
+                        $incomes = $incomeDeductUsers;
+                    } else {
+                        $incomes = null;
+                    }
+                }
+            }
+
+            if(isset($incomes) && count($incomes) > 0)
+            {
+                $incomeDeductIds = $incomes->whereIn('income_deduct_id',[1,2])->pluck('income_deduct_id')->toArray();
+                $sum = IncomeDeductUser::where('user_id',$this->id)->whereIn('payday_detail_id',$id)->whereIn('income_deduct_id',$incomeDeductIds)->sum('value');
+                $socialSecurity += $sum;
+            }
+
+            $socialSecurityFivePercent = number_format(round($socialSecurity * ($taxSetting->social_contribution_percent * 0.01)), 2);
+        }
+
+        if ($socialSecurityFivePercent > $taxSetting->social_contribution_max){
+            $socialSecurityFivePercent = $taxSetting->social_contribution_max;
+        }
+
+        $exceedlimit = 24;
+        if($this->employee_type_id == 1){
+            $exceedlimit = 48;
+        }
+        $exceedOverTimeCost = 0;
+        if($overTimeCountSum > $exceedlimit){
+            $exceedOvertime = $overTimeCountSum - $exceedlimit;
+            $overTimeCountSum = $exceedlimit;
+
+            $exceedOverTimeCost = round($exceedOvertime*1.5*$salaryRecord->salary/8/30, 0);
+            if ($this->employee_type_id != 1){
+                $exceedOverTimeCost = round($exceedOvertime*1.5*$salaryRecord->salary/8, 0);
+            }
+
+        }
+
+        $overTimeCost = number_format(round($overTimeCountSum*1.5*$salaryRecord->salary/8/30, 0), 2);
+        if ($this->employee_type_id != 1){
+            $overTimeCost = number_format(round($overTimeCountSum*1.5*$salaryRecord->salary/8, 0), 2);
+        }
+
+        $diligene_allowance_cost = null;
+        if($this->diligence_allowance_id != null){
+
+            $diligene_allowance_cost = null/* number_format($this->getdiligenceAllowance($allowance,$id), 2)  */;
+        }
+
+        return collect([
+            'workHour' => $workHourCountSum !== 0 ? number_format($workHourCountSum, 2) : null,
+            'absentCountSum' => $absentCountSum !== 0 ? $absentCountSum : null,
+            'leaveCountSum' => $leaveCountSum !== 0 ? $leaveCountSum : null,
+            'earlyHour' => $earlyHour !== 0 ? number_format($earlyHour, 2) : null,
+            'lateHour' => $lateHour !== 0 ? number_format($lateHour, 2) : null,
+            'overTime' => $overTimeCountSum !== 0 ? $overTimeCountSum  : null,
+            'deligenceAllowance' => $diligene_allowance_cost ,
+            'salary' => number_format($totalSalary, 2),
+            'overTimeCost' => $overTimeCost,
+            'socialSecurityFivePercent' => $socialSecurityFivePercent,
+            'exceedOvertime' => $exceedOvertime,
+            'exceedOverTimeCost' => $exceedOverTimeCost,
+        ]);
+    }
 
     public function getBonus($bonusId)
     {

@@ -75,7 +75,7 @@
                     $('#search_work_schedule').click(function(){
                         var year = $('#year').val();
                         var month = $('#month').val();
-                        var month = $('type').val();
+                        var type = '{{ $type }}';
                         var url = "{{ route('ipay', ['year' => ':year', 'month' => ':month', 'type' => ':type']) }}".replace(':year', year).replace(':month', month).replace(':type', type);
 
                         window.location.href = url;

@@ -2,12 +2,13 @@
 
 namespace App\Exports;
 
-use App\Models\User;
 use App\Models\BankData;
 use App\Models\PaydayDetail;
+use App\Models\User;
+use App\Models\UserPayday;
 use Maatwebsite\Excel\Concerns\Exportable;
-use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\FromCollection;
+use Maatwebsite\Excel\Concerns\WithHeadings;
 
 class BankDataExport implements FromCollection, WithHeadings
 {
@@ -22,12 +23,28 @@ class BankDataExport implements FromCollection, WithHeadings
 
     protected $year;
     protected $month;
+    protected $type;
 
     public function __construct($year, $month, $type)
     {
         $this->year = $year;
         $this->month = $month;
         $this->type = $type;
+    }
+
+    public function getUsersByWorkScheduleAssignment($startDate, $endDate)
+    {
+        // Convert the start and end date to the correct format
+        $startDate = date('Y-m-d', strtotime($startDate));
+        $endDate = date('Y-m-d', strtotime($endDate));
+
+        // ค้นหาผู้ใช้ที่มีการกำหนดงานเรียกงานใน workScheduleId และ date_in อยู่ในช่วง startDate ถึง endDate
+        $users = User::whereHas('workScheduleAssignmentUsers', function ($query) use ($startDate, $endDate) {
+            $query->whereNotNull('date_in')
+                ->whereBetween('date_in', [$startDate, $endDate]);
+        })->get();
+
+        return $users;
     }
 
     public function collection()
@@ -57,7 +74,7 @@ class BankDataExport implements FromCollection, WithHeadings
                 $item->bank_account,
                 $item->prefix_id.$item->name.' '.$item->lastname,
                 '503.00',
-                $item->hid,
+                number_format($item->hid, 0, '.', ''),
                 '0000',
                 '0000',
                 $item->email,
