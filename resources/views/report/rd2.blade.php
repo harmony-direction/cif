@@ -58,7 +58,7 @@
                 <div style="border-bottom: 1px solid #000; padding-bottom: 15px;">
                     <span style="font-size: 16px; font-weight: bold;">เลขประจำตัวผู้เสียภาษีอากร(13หลัก)*</span>
                                 
-                    <span style="font-size: 15px; border-bottom: 1px dotted #000;">>1-2345-67890-12-3</span>
+                    <span style="font-size: 15px; border-bottom: 1px dotted #000;">     0205538000999     </span>
                     <br>
                                     <span style="font-size: 12px; color: #474747;">(ของผู้มีหน้าที่หักภาษี ณ ที่จ่าย)</span>
                     <br>
@@ -87,7 +87,7 @@
                     </div>
                     <div style="display: block; width: 50%; float: left; text-align: center;">
                         <input type="checkbox">    <label>(2) ยื่น<span style="font-weight: bold;">ปกติ</span>เพิ่มเติม</label>
-                        <span style="font-size: 15px; border: 1px solid #000;"> 99 </span>
+                        <span style="font-size: 15px; border: 1px solid #000;">     </span>
                     </div>
                 </div>
             </div>
@@ -95,9 +95,9 @@
                 <div style="border-bottom: 1px solid #000; padding: 0px 0px 17px 10px;">
                     <span style="font-size: 16px;"><span style="font-weight: bold;">เดือน</span>ที่จ่ายเงินได้พึงประเมิน</span>
                     <br>
-                    <span style="font-size: 15px;">(ให้ทำเครื่องหมาย "/" ลงใน <input type="checkbox">  <label>หน้าชื่อเดือน) พ.ศ.</label></span>
+                    <span style="font-size: 15px;">(ให้ทำเครื่องหมาย "/" ลงใน <input type="checkbox">  <label>หน้าชื่อเดือน) {{ isset($month) ? $month:'' }} พ.ศ.</label></span>
                       
-                    <span style="font-size: 15px; border-bottom: 1px dotted #000;">2023</span>
+                    <span style="font-size: 15px; border-bottom: 1px dotted #000;">{{ isset($year) ? $year:'' }}</span>
                     <br>
                     <div style="display: block; width: 100%;">
                         <div style="display: block; width: 25%; float: left;">
@@ -151,21 +151,21 @@
                         <span style="font-size: 16px">ที่แนบมาพร้อมนี้ :</span>
                                                         
                         <span style="font-size: 16px">จำนวน  </span>
-                        <span style="font-size: 15px; border-bottom: 1px dotted #000;">999</span>
+                        <span style="font-size: 15px; border-bottom: 1px dotted #000;">    </span>
                         <span style="font-size: 16px">  แผ่น</span>
                         <br>
                         <input type="checkbox">    <span style="font-size: 16px; font-weight: bold;">สื่อบันทึกในระบบคอมพิวเตอร</span>
                         <span style="font-size: 16px">ที่แนบมาพร้อมนี้ :</span>
                                   
                         <span style="font-size: 16px">จำนวน  </span>
-                        <span style="font-size: 15px; border-bottom: 1px dotted #000;">999</span>
+                        <span style="font-size: 15px; border-bottom: 1px dotted #000;">    </span>
                         <span style="font-size: 16px">  แผ่น</span>
                         <br>
                                 <span style="font-size: 16px">(ตามหนังสือแสดงความประสงค์ฯ ทะเบียนรับเลขที่</span>
-                        <span style="font-size: 15px; border-bottom: 1px dotted #000;">999</span>
+                        <span style="font-size: 15px; border-bottom: 1px dotted #000;">    </span>
                         <br>
                                 <span style="font-size: 16px">หรือตามหนังสือข้อตกลงการใช้งานฯ เลขอ้างอิงการลงทะเบียน</span>
-                        <span style="font-size: 15px; border-bottom: 1px dotted #000;">999 )</span>
+                        <span style="font-size: 15px; border-bottom: 1px dotted #000;">     )</span>
                     </div>
                 </div>
                 <div style="display: block; width: 100%;">
@@ -210,9 +210,9 @@
                             <tr>
                                 <td style="padding: 2px 0px;">
                                         <span style="font-size: 18px; font-style: italic;">(ตามหนังสือที่  </span>
-                                    <span style="font-size: 18px; border-bottom: 1px dotted #000;">999</span>
+                                    <span style="font-size: 18px; border-bottom: 1px dotted #000;">    </span>
                                     <span style="font-size: 18px; font-style: italic;">  ลงวันที่  </span>
-                                    <span style="font-size: 18px; border-bottom: 1px dotted #000;">18 มีนาคม พ.ศ. 2567)</span>
+                                    <span style="font-size: 18px; border-bottom: 1px dotted #000;">                    )</span>
                                 </td>
                                 <td style="padding: 2px 0px; text-align: center; font-size: 18px;">
                                     0
@@ -362,7 +362,7 @@
                         <span style="border-bottom: 1px dotted #000;">                                    </span>
                         <br>
                         <span style="font-size: 12px;">ยื่นแบบวันที่   </span>
-                        <span style="border-bottom: 1px dotted #000;">24<span>   เดือน   </span>กุมภาพันธ์<span>   พ.ศ.   </span>2567</span>
+                        <span style="border-bottom: 1px dotted #000;">    <span>   เดือน   </span>                    <span>   พ.ศ.   </span>        </span>
                     </div>
                     <div style="width: 20%; float: right; text-align: center;">
                         <span style="font-size: 12px; color: #cccccc;">

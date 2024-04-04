@@ -857,7 +857,8 @@ class MPDFController extends Controller
         ];
 
         if (isset($data) && $data) {
-            $html = view('report.rd2', compact('data', 'id'))->render();
+            $month = $this->monthThai($month, 'FULL');
+            $html = view('report.rd2', compact('data', 'id', 'year', 'month'))->render();
 
             $stylesheet = file_get_contents(public_path('css/report/report-4.css'));
             $mpdf->WriteHTML($stylesheet, 1);
