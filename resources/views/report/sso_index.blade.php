@@ -6,7 +6,7 @@
             <div class="container-fluid">
                 <div class="title-header">
                     <div>
-                        <h3 class="m-0">{{ $typeData }}</h3>
+                        <h3 class="m-0">ประกันสังคม - แบบรายการแสดงการส่งเงินสมทบ (สปส 1-10) {{ $typeData }}</h3>
                     </div>
                     <div aria-label="breadcrumb">
                         <ol class="breadcrumb m-0">
@@ -75,7 +75,8 @@
                     $('#search_work_schedule').click(function(){
                         var year = $('#year').val();
                         var month = $('#month').val();
-                        var url = "{{ route('cashBank', ['year' => ':year', 'month' => ':month']) }}".replace(':year', year).replace(':month', month);
+                        var type = '{{ $type }}';
+                        var url = "{{ route('ssoPayment.list', ['year' => ':year', 'month' => ':month', 'type' => ':type']) }}".replace(':year', year).replace(':month', month).replace(':type', type);
 
                         window.location.href = url;
                     });

@@ -4,6 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <link href="{{ asset('/css/report/report-5.css?v=2') }}" rel="stylesheet">
+
+    <!-- Bootstrap CSS -->
+    {{-- <link href="{{ asset('/bootstrap-5.3.2-dist/css/bootstrap.min.css?v=2') }}" rel="stylesheet"> --}}
 </head>
 
 <body>
@@ -200,7 +203,7 @@
                         @endphp
                         <tr style="border-bottom: 1px solid #000;">
                             <td style="border-left: 1px solid #000; text-align: center; vertical-align: middle;">
-                                {{ $key+1 }}</td>
+                                {{ $key }}</td>
                             <td style="border-left: 1px solid #000; text-align: center; vertical-align: middle;">
                                 <span>{{ $user->hid }}</span>
                                 <br>

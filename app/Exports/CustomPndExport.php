@@ -23,18 +23,7 @@ class CustomPndExport implements FromCollection/* , WithMapping, ShouldAutoSize,
 
     public function collection()
     {
-       /*  return $this->data->map(function ($row) {
-            return $row->toArray();
-        }); */
-        /* return $this->data->map(function ($row) {
-            $rowArray = $row->toArray();
-            return preg_replace('/["\,]+/', '|', $rowArray);
 
-            str_replace(['","', '"', ',', '\"', '/["]+/'], '|', trim( $value)) ?: '|';
-            return array_map(function ($value) {
-                return preg_replace('/["\',\r\n]+/', '|', $value);
-            }, $rowArray);
-        }); */
         return $this->data->map(function ($row) {
             $rowArray = $row->toArray();
             return array_map(function ($value) {
@@ -46,7 +35,6 @@ class CustomPndExport implements FromCollection/* , WithMapping, ShouldAutoSize,
     {
         $mappedRow = [];
 
-        // Add each value to the mapped row array
         foreach ($row as $value) {
             $mappedRow[] = str_replace(['","', '"', ',', '\"', '/["]+/'], '|', trim($value)) ?: '|';
         }
@@ -55,15 +43,6 @@ class CustomPndExport implements FromCollection/* , WithMapping, ShouldAutoSize,
     }
     public function mapCollection($collection): array
     {
-        //return $collection->map([$this, 'map'])->all();
-        $mappedRow = [];
-        foreach ($row as $value) {
-            $mappedRow[] = str_replace(['","', '"', ',', '\"', '/["]+/'], '|', trim($value)) ?: '|';
-        }
-        return $mappedRow;
-    }
-    /* public function map($row): array
-    {
         $mappedRow = [];
         foreach ($row as $value) {
             $mappedRow[] = str_replace(['","', '"', ',', '\"', '/["]+/'], '|', trim($value)) ?: '|';
@@ -71,13 +50,4 @@ class CustomPndExport implements FromCollection/* , WithMapping, ShouldAutoSize,
         return $mappedRow;
     }
 
-
-
-    public function getCsvSettings(): array
-    {
-        return [
-            'delimiter' => '|',
-            'line_ending' => "\r\n",
-        ];
-    } */
 }

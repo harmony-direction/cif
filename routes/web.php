@@ -110,20 +110,45 @@ Auth::routes();
 Route::group(['prefix' => 'pdfReport'], function(){
     Route::get('/', [MPDFController::class, 'index'])->name('report.index');
     Route::group(['prefix' => 'revenue'], function(){
+        Route::get('/getpage/{year}/{month}', [MPDFController::class, 'getPage'])->name('getPage');
+
         Route::get('/bis50list', [MPDFController::class, 'bis50list'])->name('bis50.list');
-        Route::get('/bis50/{id}', [MPDFController::class, 'bis50'])->name('bis50');
-        Route::get('/pnd/{id}', [MPDFController::class, 'pnd'])->name('pnd');
-        Route::get('/rd1/{id}', [MPDFController::class, 'rd1'])->name('rd1');
-        Route::get('/rd2/{id}', [MPDFController::class, 'rd2'])->name('rd2');
+        Route::get('/bis50list/{year}', [MPDFController::class, 'bis50list'])->name('bis50.list.search');
+        Route::get('/bis50/{id}/{year}', [MPDFController::class, 'bis50'])->name('bis50');
+
+        Route::get('/pndindex', [MPDFController::class, 'pndindex'])->name('pnd.list.year');
+        Route::get('/pndindexyear', [MPDFController::class, 'pndindexyear'])->name('pnd.list');
+        Route::get('/pnd/{year}/{month}', [MPDFController::class, 'pnd'])->name('pnd');
+        Route::get('/pnd/{year}', [MPDFController::class, 'pndyear'])->name('pnd.year');
+
+        Route::get('/rd1index', [MPDFController::class, 'rd1index'])->name('rd1.list');
+        Route::get('/rd1indexyear', [MPDFController::class, 'rd1indexyear'])->name('rd1.list.year');
+        Route::get('/rd1/{year}/{month}/{id}', [MPDFController::class, 'rd1'])->name('rd1');
+        Route::get('/rd1year/{year}', [MPDFController::class, 'rd1year'])->name('rd1year');
+        Route::get('/rd2index', [MPDFController::class, 'rd2index'])->name('rd2.list');
+        Route::get('/rd2indexyear', [MPDFController::class, 'rd2indexyear'])->name('rd2.list.year');
+        Route::get('/rd2/{year}/{month}', [MPDFController::class, 'rd2'])->name('rd2');
+        Route::get('/rd2/{year}', [MPDFController::class, 'rd2year'])->name('rd2.year');
     });
     Route::group(['prefix' => 'sso'], function(){
-        Route::get('/ssoPayment/{id}', [MPDFController::class, 'ssoPayment'])->name('ssoPayment');
+        Route::get('/ssoPayment/{list}/{type}', [MPDFController::class, 'ssoPaymentIndex'])->name('ssoPayment.index');
+
+        Route::get('/ssoPaymentlist/{year}/{month}/{type}', [MPDFController::class, 'ssoPayment_list'])->name('ssoPayment.list');
+        Route::get('/ssoPaymentMonthlist', [MPDFController::class, 'ssoPayment_list_month'])->name('ssoPayment.list.month');
+        Route::get('/ssoPaymentAlllist', [MPDFController::class, 'ssoPayment_list_all'])->name('ssoPayment.list.all');
+
+        Route::get('/ssoPayment/{year}/{month}/{type}', [MPDFController::class, 'ssoPayment'])->name('ssoPayment');
         Route::get('/ssoPaymentMonth/{id}', [MPDFController::class, 'ssoPaymentMonth'])->name('ssoPaymonth');
-        Route::get('/ssofile/{id}', [MPDFController::class, 'ssofile'])->name('ssofile');
+        Route::get('/ssoPaymentAll/{id}', [MPDFController::class, 'ssoPaymentAll'])->name('ssoPayAll');
+
+        Route::get('/ssofile/{year}/{month}', [MPDFController::class, 'ssofile'])->name('ssofile');
+
     });
 
-    Route::get('/cashBank/{id}', [MPDFController::class, 'cashBank'])->name('cashBank');
-    Route::get('/ipay/{id}', [MPDFController::class, 'ipay'])->name('ipay');
+    Route::get('/getReport/{list}/{type}', [MPDFController::class, 'getReport'])->name('getReport.index');
+
+    Route::get('/cashBank/{year}/{month}', [MPDFController::class, 'cashBank'])->name('cashBank');
+    Route::get('/ipay/{year}/{month}/{type}', [MPDFController::class, 'ipay'])->name('ipay');
 });
 
 Route::get('/pdf1', [MPDFController::class, 'generate']);

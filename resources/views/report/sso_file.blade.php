@@ -6,7 +6,7 @@
             <div class="container-fluid">
                 <div class="title-header">
                     <div>
-                        <h3 class="m-0">{{ $typeData }}</h3>
+                        <h3 class="m-0">ประกันสังคม - ไฟล์ส่งเงินสมทบ {{ $typeData }}</h3>
                     </div>
                     <div aria-label="breadcrumb">
                         <ol class="breadcrumb m-0">
@@ -75,7 +75,7 @@
                     $('#search_work_schedule').click(function(){
                         var year = $('#year').val();
                         var month = $('#month').val();
-                        var url = "{{ route('cashBank', ['year' => ':year', 'month' => ':month']) }}".replace(':year', year).replace(':month', month);
+                        var url = "{{ route('ssofile', ['year' => ':year', 'month' => ':month']) }}".replace(':year', year).replace(':month', month);
 
                         window.location.href = url;
                     });

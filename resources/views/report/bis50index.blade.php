@@ -6,7 +6,7 @@
         <div class="container-fluid">
             <div class="title-header">
                 <div>
-                    <h3 class="m-0">ข้อมูลพนักงาน</h3>
+                    <h3 class="m-0">ข้อมูลพนักงาน {{ isset($year) ? 'ประจำปี '.$year:'' }}</h3>
                 </div>
                 <div aria-label="breadcrumb">
                     <ol class="breadcrumb m-0">
@@ -15,9 +15,39 @@
                     </ol>
                 </div>
             </div>
+
+            <div class="card card-info card-outline">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>ปี</label>
+                                <select name="year" id="year"
+                                    class="form-control select2 @error('year') is-invalid @enderror"
+                                    style="width: 100%;">
+                                    @if (count($years) >= 1)
+                                        @foreach ($years as $year)
+                                        <option value="{{$year}}" {{ $year==date('Y') ? 'selected' : '' }}>{{$year}}
+                                        </option>
+                                        @endforeach
+                                    @else
+                                        <option value="" disabled selected>ยังไม่มีข้อมูล</option>
+                                    @endif
+                                </select>
+                            </div>
+                        </div>
+
+                    </div>
+                        <div class="mt-2 d-flex justify-content-end">
+                            <button class="btn btn-primary d-flex gap-2 align-items-center" id="search_work_schedule">
+                                <i class="fas fa-search"></i>ค้นหา</button>
+                        </div>
+
+                </div>
+            </div>
         </div>
     </div>
-    <div class="content">
+    <div class="content mt-3">
         <div class="container-fluid">
             @if ($permission->show)
             <div class="row">
@@ -65,7 +95,7 @@
                                                         <td>{{$user->user_position->name}}</td>
                                                         <td class="text-end">
                                                             <a class="btn btn-action btn-edit btn-sm"
-                                                                href="{{route('bis50',['id' => $user->id])}}">
+                                                                href="{{route('bis50',['id' => $user->id, 'year' => $year])}}">
                                                                 <i class="fas fa-eye"></i>
                                                             </a>
                                                             {{-- <a class="btn btn-danger btn-sm"
@@ -100,11 +130,14 @@
 <script src="{{asset('assets/js/helpers/helper.js?v=1')}}"></script>
 
 <script>
-    window.params = {
-        searchRoute: '{{ route('groups.user-management-system.setting.userinfo.search') }}',
-        url: '{{ url('/') }}',
-        token: $('meta[name="csrf-token"]').attr('content')
-    };
+    $(document).ready(function(){
+            $('#search_work_schedule').click(function(){
+                var year = $('#year').val();
+                var url = "{{ route('bis50.list.search', ['year' => ':year']) }}".replace(':year', year);
+
+                window.location.href = url;
+            });
+        });
 </script>
 
 @endpush
