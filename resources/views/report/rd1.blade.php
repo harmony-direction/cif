@@ -4,9 +4,6 @@
 <head>
     <meta charset="UTF-8">
     <link href="{{ asset('/css/report/report-5.css?v=2') }}" rel="stylesheet">
-
-    <!-- Bootstrap CSS -->
-    {{-- <link href="{{ asset('/bootstrap-5.3.2-dist/css/bootstrap.min.css?v=2') }}" rel="stylesheet"> --}}
 </head>
 
 <body>

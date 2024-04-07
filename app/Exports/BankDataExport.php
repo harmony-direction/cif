@@ -83,30 +83,7 @@ class BankDataExport implements FromCollection, WithHeadings
         });
 
         return $formattedData;
-        /* return collect([
-            [
-                '006',
-                '2080189468',
-                'น.ส.มลฤดี  บุญลอย',
-                '503.00',
-                '0000000000000',
-                'xxxx',
-                '0000',
-                'xxxx',
-                '0000000000',
-            ],
-            [
-                '006',
-                '2080189069',
-                'น.ส.เล็ก  วงษ์ลา',
-                '1584.00',
-                '0000000000000',
-                'xxxx',
-                '0000',
-                'xxxx',
-                '0000000000',
-            ]
-        ]); */
+
     }
 
     public function headings(): array

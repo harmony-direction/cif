@@ -259,14 +259,6 @@ class MPDFController extends Controller
         ]);
 
         ob_start();
-        /* $data = User::whereId($id)->first();
-        $paydayDetail = PaydayDetail::whereYear('end_date', $year)->pluck('payday_id')->toArray();
-
-        $userIds = [];
-        $startDate = $year . '-01-01';
-        $endDate = $year . '-12-31';
-        $ids = $this->getUsersByWorkScheduleAssignment($startDate, $endDate)->pluck('id')->toArray(); */
-        //$userPaydayIds = UserPayday::whereIn('payday_id', $paydayDetail)->pluck('user_id')->toArray();
         $data = User::where('id', $id)->first();
         $paydayDetail = PaydayDetail::whereYear('end_date', $year)->pluck('payday_id')->toArray();
         $salarySummary = array(
@@ -305,20 +297,6 @@ class MPDFController extends Controller
         }
 
         $data = ['data'=>$data,'paydayDetail' => $paydayDetail, 'salarySummary' => $salarySummary, 'incomes' => $incomes, 'deducts'=> $deducts];
-        /* $returndata = [];
-
-        foreach ($data as $item) {
-            $rowData = [
-                'passport' => $item->nationality_id,
-                'prefix' => $item->prefix->name,
-                'name' => $item->name,
-                'lastname' => $item->name, // This might be incorrect, should it be $item->lastname?
-                'bank_account' => isset($item->salarySummary($this->month)['salary']) ? $item->salarySummary($this->month)['salary']:0,
-                'bank' => isset($item->salarySummary($this->month)['socialSecurityFivePercent']) ? $item->salarySummary($this->month)['socialSecurityFivePercent']:0,
-            ];
-
-            $returndata[] = $rowData;
-        } */
         if (isset($data) && $data) {
             $html = view('report.bis50-2', compact('data', 'year'))->render();
 
@@ -864,8 +842,6 @@ class MPDFController extends Controller
             $mpdf->WriteHTML($stylesheet, 1);
             $mpdf->WriteHTML($html, 2);
 
-            /* $pdfFilePath = "report_1.pdf";
-            $pdfFile = file_get_contents($pdfFilePath); */
             $mpdf->Output("rd2.pdf", 'F');
             ob_end_clean();
 
@@ -947,7 +923,6 @@ class MPDFController extends Controller
         } else {
             echo 'not found data';
         }
-        /* return view('report.rd2', compact('id')); */
     }
 
 
@@ -1062,7 +1037,6 @@ class MPDFController extends Controller
             'currentYear' => $currentYear,
             'currentMonth' => $currentMonth
         ]);
-        /* return view('report.rd1', compact('id')); */
     }
 
     public function ssoPayment_list($year, $month, $type)
@@ -1098,8 +1072,6 @@ class MPDFController extends Controller
         ]);
 
         ob_start();
-        /* $paydayIds = PaydayDetail::whereYear('end_date', $year)->where('month_id', $month)->pluck('id')->toArray();
-        $userPayDay = UserPayday::whereIn('payday_id', $paydayIds)->pluck('user_id')->toArray(); */
         $paydayDetail = PaydayDetail::whereYear('end_date', $year)->pluck('payday_id')->toArray();
 
         $userIds = [];
@@ -1117,7 +1089,6 @@ class MPDFController extends Controller
             $userData = User::whereIn('id', $userIddiffs)->get();
         }
 
-        /* $data = SalarySummary::whereIn('payday_detail_id', $paydayIds)->get(); */
         $sum_salary_total = 0;
         $sum_social_security_total = 0;
         $sum_leave_total = 0;
@@ -1144,8 +1115,6 @@ class MPDFController extends Controller
             $mpdf->WriteHTML($stylesheet, 1);
             $mpdf->WriteHTML($html, 2);
 
-            /* $pdfFilePath = "report_1.pdf";
-            $pdfFile = file_get_contents($pdfFilePath); */
             $mpdf->Output("rd2.pdf", 'F');
             ob_end_clean();
 
@@ -1160,7 +1129,6 @@ class MPDFController extends Controller
         } else {
             echo 'not found data';
         }
-        /*  return view('report.sso1', compact('id')); */
     }
 
     public function ssoPayment($year, $month, $type)
@@ -1252,8 +1220,6 @@ class MPDFController extends Controller
             $mpdf->WriteHTML($stylesheet, 1);
             $mpdf->WriteHTML($html, 2);
 
-            /* $pdfFilePath = "report_1.pdf";
-            $pdfFile = file_get_contents($pdfFilePath); */
             $mpdf->Output("sso2.pdf", 'F');
             ob_end_clean();
 
@@ -1371,7 +1337,6 @@ class MPDFController extends Controller
         // Create an instance of mPDF
 
         // Set headers and footers
-        /* $mpdf->SetHeader('บริษัท ฉวีวรรณ อินเตอร์เนชั่นแนลฟู๊ดส์ จำกัด'); */
         $mpdf->SetHTMLFooter('<div style="margin:20px 30px 20px 20px; font-size: 14px; text-align: left; border: 0;"><b>พิมพ์วันที่</b> &nbsp;&nbsp;&nbsp;&nbsp;  {DATE j/m/Y H:i} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b>รายงานโดย</b> &nbsp;&nbsp; business &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b>แฟ้มรายงาน</b> file path</div>');
 
 
