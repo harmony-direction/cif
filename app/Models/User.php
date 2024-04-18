@@ -1031,6 +1031,8 @@ class User extends Authenticatable
         $overTimeCountSum = 0;
         $leaveType = [];
         $noDeductLeaveType = LeaveType::where('diligence_allowance_deduct',0)->pluck('id')->toArray();
+        $deductLeaveType = LeaveType::where('diligence_allowance_deduct',1)->pluck('id')->toArray();
+     
         $commonLeaveTypes = [];
         $sumTraditionalHoliday = 0;
         $overTime = [];
@@ -1081,6 +1083,7 @@ class User extends Authenticatable
         if(count($leaveType) > 0)
         {
             $commonLeaveTypes = array_intersect($leaveType, $noDeductLeaveType);
+            $commonDeductLeaveTypes = array_intersect($leaveType, $deductLeaveType);
         }
         $allowance = 1;
         $earlyHour = $this->minutesToHoursAndMinutes($earlyMinuteCountSum);
@@ -1119,7 +1122,7 @@ class User extends Authenticatable
             }
         }
 
-        if ($absentCountSum !=0 || $earlyMinuteCountSum > 60 || $lateMinuteCountSum > 60 || (count($leaveType) > 0 && count($commonLeaveTypes) == 0)){
+        if ($absentCountSum !=0 || $earlyMinuteCountSum > 60 || $lateMinuteCountSum > 60 || (count($leaveType) > 0 && count($commonDeductLeaveTypes) != 0)){
             $allowance = 0;
         }
 
@@ -1156,6 +1159,8 @@ class User extends Authenticatable
         $overTimeCountSum = 0;
         $leaveType = [];
         $noDeductLeaveType = LeaveType::where('diligence_allowance_deduct',0)->pluck('id')->toArray();
+        $deductLeaveType = LeaveType::where('diligence_allowance_deduct',1)->pluck('id')->toArray();
+        
         $commonLeaveTypes = [];
         $sumTraditionalHoliday = 0;
         $overTime = [];
@@ -1205,6 +1210,7 @@ class User extends Authenticatable
         if(count($leaveType) > 0)
         {
             $commonLeaveTypes = array_intersect($leaveType, $noDeductLeaveType);
+            $commonDeductLeaveTypes = array_intersect($leaveType, $deductLeaveType);
         }
         $allowance = 1;
         $earlyHour = $this->minutesToHoursAndMinutes($earlyMinuteCountSum);
@@ -1225,13 +1231,12 @@ class User extends Authenticatable
        
         $sumWorkingHour = $this->minutesToHoursAndMinutes($totalWorkMinute);
 
-
-        $totalWorkDay = $sumWorkingHour/8 +  $sumTraditionalHoliday + $leaveCountSum ;                
-
-        if ($absentCountSum !=0 || $earlyMinuteCountSum > 60 || $lateMinuteCountSum > 60 || (count($leaveType) > 0 && count($commonLeaveTypes) == 0)){
+        $totalWorkDay = $sumWorkingHour/8 +  $sumTraditionalHoliday + $leaveCountSum ; 
+   
+        if ($absentCountSum !=0 || $earlyMinuteCountSum > 60 || $lateMinuteCountSum > 60 || (count($leaveType) > 0 && count($commonDeductLeaveTypes) != 0)){
             $allowance = 0;
         }
-        // 
+        
         $workHourCountSum = intVal($workHourCountSum/60) + intVal($workHourCountSum % 60)/100 ;
         $socialSecurity = 0.00;
 
