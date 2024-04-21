@@ -1094,9 +1094,9 @@ class MPDFController extends Controller
         $sum_leave_total = 0;
 
         foreach ($userData as $item) {
-            $sum_salary_total += $item->salarySummary($item->id)['salary'];
-            $sum_social_security_total += $item->salarySummary($item->id)['socialSecurityFivePercent'];
-            $sum_leave_total += $item->salarySummary($item->id)['leaveCountSum'];
+            $sum_salary_total += isset($item->salarySummary($item->id)['salary']) ? $item->salarySummary($item->id)['salary']:'-';
+            $sum_social_security_total += isset($item->salarySummary($item->id)['socialSecurityFivePercent']) ? $item->salarySummary($item->id)['socialSecurityFivePercent']:'-';
+            $sum_leave_total += isset($item->salarySummary($item->id)['leaveCountSum']) ? $item->salarySummary($item->id)['leaveCountSum']:'-';
         }
 
         $data = [
