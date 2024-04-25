@@ -236,7 +236,9 @@
                             </td>
                         </tr>
                         @php
-                            $allSum += $userSummary['salary'];
+                            //$allSum += $userSummary['salary'];
+                            $salary = floatval(str_replace(',', '', $userSummary['salary']));
+                            $allSum += $salary;
                         @endphp
                     @endforeach
                     <tr style="border: 1px solid #000;">

@@ -1094,9 +1094,12 @@ class MPDFController extends Controller
         $sum_leave_total = 0;
 
         foreach ($userData as $item) {
-            $sum_salary_total += isset($item->salarySummary($item->id)['salary']) ? $item->salarySummary($item->id)['salary']:'-';
-            $sum_social_security_total += isset($item->salarySummary($item->id)['socialSecurityFivePercent']) ? $item->salarySummary($item->id)['socialSecurityFivePercent']:'-';
-            $sum_leave_total += isset($item->salarySummary($item->id)['leaveCountSum']) ? $item->salarySummary($item->id)['leaveCountSum']:'-';
+            $salary = floatval(str_replace(',', '', $item->salarySummary($item->id)['salary']));
+            $socialSecurityFivePercent = floatval(str_replace(',', '', $item->salarySummary($item->id)['socialSecurityFivePercent']));
+            $leaveCountSum = isset($item->salarySummary($item->id)['leaveCountSum']) ? $item->salarySummary($item->id)['leaveCountSum'] : '-';
+            $sum_salary_total += isset($salary) ? $salary:0;
+            $sum_social_security_total += isset($socialSecurityFivePercent) ? $socialSecurityFivePercent:0;
+            $sum_leave_total += is_numeric($leaveCountSum) ? $leaveCountSum : 0;
         }
 
         $data = [
@@ -1176,10 +1179,12 @@ class MPDFController extends Controller
             $summany['lateHour'] += isset($dataSummary['lateHour']) ? $dataSummary['lateHour'] : 0;
             $summany['overTime'] += isset($dataSummary['overTime']) ? $dataSummary['overTime'] : 0;
             $summany['deligenceAllowance'] += isset($dataSummary['deligenceAllowance']) ? $dataSummary['deligenceAllowance'] : 0;
-            $summany['salary'] += isset($dataSummary['salary']) ? $dataSummary['salary'] : 0;
-            $summany['overTimeCost'] += isset($dataSummary['overTimeCost']) ? $dataSummary['overTimeCost'] : 0;
+            $salary = floatval(str_replace(',', '', $dataSummary['salary']));
+            $summany['salary'] = isset($salary) ? $salary : 0;
+            $overTimeCost = floatval(str_replace(',', '', $dataSummary['overTimeCost']));
+            $summany['overTimeCost'] = isset($overTimeCost) ? $overTimeCost : 0;
             $summany['socialSecurityFivePercent'] += isset($dataSummary['socialSecurityFivePercent']) ? $dataSummary['socialSecurityFivePercent'] : 0;
-            $summany['exceedOvertime'] += isset($dataSummary['exceedOvertime']) ? $dataSummary['exceedOvertime'] : 0;
+            $summany['exceedOvertime'] = isset($dataSummary['exceedOvertime']) ? $dataSummary['exceedOvertime'] : 0;
             $summany['exceedOverTimeCost'] += isset($dataSummary['exceedOverTimeCost']) ? $dataSummary['exceedOverTimeCost'] : 0;
         }
         $id = $year;
