@@ -1291,8 +1291,8 @@ class MPDFController extends Controller
             $listData = 'IPAY';
         } elseif ($list == 'cashBank') {
             $listData = 'รายงานโอนเงินเข้าธนาคาร';
-            $viewName = 'cashbank';
-        }elseif ($list == 'report.cashbank') {
+            $viewName = 'report.cashbank';
+        }elseif ($list == 'cashbank') {
             $listData = 'รายงานโอนเงินเข้าธนาคาร';
             $viewName = 'report.cashbank';
         }
