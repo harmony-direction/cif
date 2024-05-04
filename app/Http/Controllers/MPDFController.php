@@ -1292,9 +1292,9 @@ class MPDFController extends Controller
         } elseif ($list == 'cashBank') {
             $listData = 'รายงานโอนเงินเข้าธนาคาร';
             $viewName = 'cashbank';
-        }elseif ($list == 'cashbank') {
+        }elseif ($list == 'report.cashbank') {
             $listData = 'รายงานโอนเงินเข้าธนาคาร';
-            $viewName = 'cashbank';
+            $viewName = 'report.cashbank';
         }
 
         return view($viewName, [
