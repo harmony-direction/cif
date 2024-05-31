@@ -188,6 +188,7 @@
 
         <script>
             $(document).ready(function() {
+                $('.select2').select2()
                 $('.nav-item.dropdown').on('show.bs.dropdown', function() {
                     $(this).find('.dropdown-menu').first().stop(true, true).slideDown();
                 });
@@ -196,7 +197,7 @@
                     $(this).find('.dropdown-menu').first().stop(true, true).slideUp();
                 });
             });
-            $('.select2').select2()
+
             window.params = {
                 searchRoute: '{{ route('groups.document-system.overtime.document.search') }}',
                 bulkDeleteRoute: '{{ route('groups.document-system.overtime.document.bulk-delete') }}',
