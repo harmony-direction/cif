@@ -92,17 +92,16 @@
                             </ul> --}}
                                 <ul class="nav nav-pills">
                                     <li class="nav-item dropdown">
-                                        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#"
-                                            aria-expanded="false">
+                                        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">
                                             รายการที่เลือก <span class="caret"></span>
                                         </a>
                                         <div class="dropdown-menu">
                                             <a class="dropdown-item" tabindex="-1" href="#" id="bulk-delete">ลบ</a>
-                                            <a class="dropdown-item" tabindex="-1" href="#"
-                                                id="bulk-download">ดาวน์โหลด</a>
+                                            <a class="dropdown-item" tabindex="-1" href="#" id="bulk-download">ดาวน์โหลด</a>
                                         </div>
                                     </li>
                                 </ul>
+
                             </div>
 
                             <div>
@@ -182,6 +181,11 @@
     @push('scripts')
         <script type="module" src="{{ asset('assets/js/helpers/document-system/overtime/document/index.js?v=1') }}"></script>
         <script src="{{ asset('assets/js/helpers/helper.js?v=1') }}"></script>
+                <!-- jQuery and Bootstrap JS -->
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
         <script>
             $(document).ready(function() {
                 $('.nav-item.dropdown').on('show.bs.dropdown', function() {
