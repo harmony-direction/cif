@@ -31,7 +31,7 @@ class UserManagementSystemSettingUserInfoController extends Controller
     private $addDefaultWorkScheduleAssignment;
     private $activityLogger;
     private $relationships;
-    public function __construct(UpdatedRoleGroupCollectionService $updatedRoleGroupCollectionService, AddDefaultWorkScheduleAssignment $addDefaultWorkScheduleAssignment,ActivityLogger $activityLogger) 
+    public function __construct(UpdatedRoleGroupCollectionService $updatedRoleGroupCollectionService, AddDefaultWorkScheduleAssignment $addDefaultWorkScheduleAssignment,ActivityLogger $activityLogger)
     {
         $this->updatedRoleGroupCollectionService = $updatedRoleGroupCollectionService;
         $this->addDefaultWorkScheduleAssignment = $addDefaultWorkScheduleAssignment;
@@ -68,8 +68,8 @@ class UserManagementSystemSettingUserInfoController extends Controller
         $permission = $roleGroupCollection['permission'];
         $viewName = $roleGroupCollection['viewName'];
         $users = User::paginate(50);
-      
-        
+
+
 
         return view($viewName, [
             'groupUrl' => $groupUrl,
@@ -80,7 +80,7 @@ class UserManagementSystemSettingUserInfoController extends Controller
     }
     public function view($id)
     {
-        
+
         // กำหนดค่าตัวแปร $action ให้เป็น 'create'
         $action = 'create';
         // ดึงค่า 'groupUrl' จาก session และแปลงเป็นข้อความ
@@ -96,7 +96,7 @@ class UserManagementSystemSettingUserInfoController extends Controller
         $ethnicities = Ethnicity::all();  // เรียกข้อมูลเชื้อชาติทั้งหมดจากตาราง ethnicities
         $employeeTypes = EmployeeType::all();  // เรียกข้อมูลประเภทพนักงานทั้งหมดจากตาราง employee_types
         $userPositions = UserPosition::all();  // เรียกข้อมูลตำแหน่งงานทั้งหมดจากตาราง user_positions
-        $companyDepartments = CompanyDepartment::all(); 
+        $companyDepartments = CompanyDepartment::all();
         $paydays = Payday::all();
         $currentYear = Carbon::now()->year;
         $workSchedules = WorkSchedule::where('year', $currentYear)->get();
@@ -105,6 +105,7 @@ class UserManagementSystemSettingUserInfoController extends Controller
         $approvers = Approver::all();
         $months = Month::all();
         $userDiligenceAllowances = UserDiligenceAllowance::where('user_id', $id)->orderBy('id', 'desc')->get();
+        dd($userDiligenceAllowance);
         $leaves = Leave::where('user_id',$id)->whereYear('from_date',$currentYear)->get();
         $userLeaves = UserLeave::where('user_id',$id)->get();
         $leaveTypes = LeaveType::all();
@@ -116,12 +117,12 @@ class UserManagementSystemSettingUserInfoController extends Controller
             'modules' => $updatedRoleGroupCollection,
             'permission' => $permission,
             'user' => $user,
-            'prefixes' => $prefixes,  
-            'nationalities' => $nationalities,  
-            'ethnicities' => $ethnicities, 
-            'employeeTypes' => $employeeTypes, 
-            'userPositions' => $userPositions, 
-            'companyDepartments' => $companyDepartments,  
+            'prefixes' => $prefixes,
+            'nationalities' => $nationalities,
+            'ethnicities' => $ethnicities,
+            'employeeTypes' => $employeeTypes,
+            'userPositions' => $userPositions,
+            'companyDepartments' => $companyDepartments,
             'paydays' => $paydays,
             'workSchedules' => $workSchedules,
             'users' => $users,
