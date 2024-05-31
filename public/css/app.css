@@ -4,7 +4,7 @@
  * Copyright 2011-2023 The Bootstrap Authors
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
  */
- 
+
 :root,
 [data-bs-theme=light] {
   --bs-blue: #0d6efd;
@@ -82,7 +82,7 @@
   --bs-body-line-height: 1.6;
   --bs-body-color: #101828;
   --bs-body-color-rgb: 33, 37, 41;
-  --bs-body-bg: #F9FAFB;
+  --bs-body-bg: #ffffff;
   --bs-body-bg-rgb: 248, 250, 252;
   --bs-emphasis-color: #000;
   --bs-emphasis-color-rgb: 0, 0, 0;
@@ -3038,7 +3038,7 @@ textarea.form-control-lg {
   --bs-btn-color-hover: #B42318;
 }
 .btn-calculator {
-  --bs-btn-color: #F79009; 
+  --bs-btn-color: #F79009;
   --bs-btn-color-hover: #DC6803;
 }
 .btn-header {
