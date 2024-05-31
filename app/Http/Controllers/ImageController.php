@@ -17,7 +17,7 @@ class ImageController extends Controller
         return $response;
     }
     public function announce_attachment_view($file) {
-        $path = storage_path('app/announcement/attachments/' . $file);
+        $path = storage_path('app/uploads/attachments/' . $file);
         $file = \File::get($path);
         $type = \File::mimeType($path);
         $response = \Response::make($file, 200);
