@@ -17,9 +17,14 @@ class ImageController extends Controller
         return $response;
     }
     public function announce_attachment_view($file) {
-        $path = storage_path('uploads/attachments/' . $file);
-        $file = \File::get($path);
-        $type = \File::mimeType($path);
+        $path = $file;
+
+        if (!Storage::disk('attachments')->exists($path)) {
+            abort(404); // File not found
+        }
+
+        $file = Storage::disk('attachments')->get($path);
+        $type = Storage::disk('attachments')->mimeType($path);
         $response = \Response::make($file, 200);
         $response->header('Content-Type', $type);
         return $response;
@@ -28,17 +33,9 @@ class ImageController extends Controller
         return Storage::disk('announcement-attachments')->download($file);
     }
     public function avatar_view($image) {
-        $path = $image;
-
-        if (!Storage::disk('attachments')->exists($path)) {
-            abort(404); // File not found
-        }
-
-        $file = Storage::disk('attachments')->get($path);
-        $type = Storage::disk('attachments')->mimeType($path);
-        /* $path = storage_path('app/avatar/' . $image);
+        $path = storage_path('app/avatar/' . $image);
         $file = \File::get($path);
-        $type = \File::mimeType($path); */
+        $type = \File::mimeType($path);
         $response = \Response::make($file, 200);
         $response->header('Content-Type', $type);
         return $response;
