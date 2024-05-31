@@ -82,6 +82,9 @@ class SettingOrganizationEmployeeController extends Controller
 
     public function store(Request $request)
     {
+        $request->validate([
+            'avatar' => 'required|file|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
         $check = User::where('employee_no',$request->employee_no)->first();
         $validator = $this->validateFormData($request);
 
@@ -361,6 +364,9 @@ class SettingOrganizationEmployeeController extends Controller
         $filename = "";
         $this->activityLogger->log('อัปเดต', $user);
         if ($request->hasFile('avatar')) {
+            $request->validate([
+                'avatars' => 'file|mimes:jpeg,png,jpg,gif|max:2048',
+            ]);
             Storage::disk('avatars')->delete($user->thumbnail);
             $file = $request->file('avatar');
             $filename = 'avatar' . '-' . time() . '.' . $file->getClientOriginalExtension();
