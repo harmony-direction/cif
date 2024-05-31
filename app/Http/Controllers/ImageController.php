@@ -28,7 +28,7 @@ class ImageController extends Controller
         return Storage::disk('announcement-attachments')->download($file);
     }
     public function avatar_view($image) {
-        $path = 'uploads/attachments/' . $image;
+        $path = $image;
 
         if (!Storage::disk('attachments')->exists($path)) {
             abort(404); // File not found
