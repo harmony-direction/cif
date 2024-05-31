@@ -150,7 +150,7 @@
                                                 </div>
                                             </div>
                                         </div>
-    
+
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label>สัญชาติ <span class="fw-bold text-danger">*</span></label>
@@ -165,7 +165,7 @@
                                                 </select>
                                             </div>
                                         </div>
-    
+
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label>เชื้อชาติ <span class="fw-bold text-danger">*</span></label>
@@ -180,7 +180,7 @@
                                                 </select>
                                             </div>
                                         </div>
-    
+
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label>ระดับการศึกษาสูงสุด</label>
@@ -206,7 +206,7 @@
                                                 </select>
                                             </div>
                                         </div>
-    
+
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label>เลขที่บัตรประชาชน</label>
@@ -214,7 +214,7 @@
                                                     class="form-control numericInputHid">
                                             </div>
                                         </div>
-    
+
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label>เลขประจำตัวผู้เสียภาษีอากร</label>
@@ -415,7 +415,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                           
+
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label>วันหมดอายุใบอนุญาตทำงาน</label>
@@ -450,7 +450,7 @@
                                                         class="form-control">
                                                 </div>
                                             </div>
-                                          
+
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label>เลขที่ประกันสังคม</label>
@@ -465,14 +465,14 @@
                                                     <select name="timeRecordRequire"
                                                         class="form-control select2 @error('timeRecordRequire') is-invalid @enderror"
                                                         style="width: 100%;" disabled>
-        
+
                                                         <option value="1" {{ $user->timeRecordRequire == "1" ? 'selected': '' }}>
                                                             ต้องสแกนเวลา
                                                         </option>
                                                         <option value="0" {{ $user->timeRecordRequire == "0" ? 'selected': '' }}>
                                                             ไม่ต้องสแกนเวลา
                                                         </option>
-        
+
                                                     </select>
                                                 </div>
                                             </div>
@@ -1258,7 +1258,7 @@
 
                     </div>
                 </div>
-                
+
                 <div class="cif-modal-footer">
                     <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">ยกเลิก</button>
                     <button type="button" class="btn btn-primary" id="save-update-education">แก้ไข</button>
@@ -1419,7 +1419,7 @@
                         </div>
                         <div class="col-md-12" id="file_wrapper">
                             <div class="form-group">
-                                <button type="button" class="btn btn-header" id="btn-add-attachment"><i class="fas fa-file"></i>เพิ่มไฟล์แนบ 
+                                <button type="button" class="btn btn-header" id="btn-add-attachment"><i class="fas fa-file"></i>เพิ่มไฟล์แนบ
                                     <span id="attachment-file" class="text-dark"></span></button>
                                 <div class="form-group">
                                     <input type="file" accept="" id="file-input" style="display: none;">
@@ -1549,13 +1549,13 @@
                         <button type="button" class="btn btn-primary"
                             id="save-update-leave-increment">บันทึก</button>
                 </div>
-                
+
             </div>
         </div>
     </div>
 </div>
 @push('scripts')
-<script type="module" src="{{asset('assets/js/helpers/user-management-system/setting/userinfo.js?v=1')}}"></script>
+<script type="module" src="{{asset('assets/js/helpers/user-management-system/setting/userinfo.js?v=2')}}"></script>
 <script src="{{asset('assets/js/helpers/helper.js?v=1')}}"></script>
 <script>
     $('.select2').select2()
@@ -1590,9 +1590,9 @@
         updateDiligenceAllowanceClassifyRoute: '{{ route('groups.user-management-system.setting.userinfo.update-diligence-allowance-classify') }}',
         updateUserLeaveRoute: '{{ route('groups.user-management-system.setting.userinfo.update-user-leave') }}',
         updateLeaveIncrementRoute: '{{ route('groups.user-management-system.setting.userinfo.update-leave-increment') }}',
-        
 
-        
+
+
 
         url: '{{ url('/') }}',
         token: $('meta[name="csrf-token"]').attr('content')

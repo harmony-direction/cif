@@ -43,7 +43,7 @@ $(document).on('click', '#save-add-salary', function (e) {
     var storeSalaryUrl = window.params.storeSalaryRoute;
     var salary = parseInt($('#salary').val());
     var salaryAdjustDate = $('#salaray-adjustment-date').val();
-    
+
     // Validate salaryAdjustDate using a regular expression for the format
     var datePattern = /^\d{2}\/\d{2}\/\d{4}$/;
     if (!datePattern.test(salaryAdjustDate)) {
@@ -94,7 +94,7 @@ $(document).on('click', '.btn-update-salary', function (e) {
         $('#update-salary').val(response.salary);
         $('#modal-update-salary').modal('show');
     }).catch(error => { })
-    
+
 });
 
 $(document).on('click', '#save-update-salary', function (e) {
@@ -169,7 +169,7 @@ $(document).on('click', '.btn-delete-salary', function (e) {
 
 $(document).on('click', '.btn-leave-increment-setting', function (e) {
     e.preventDefault();
-    
+
     $('#modal-leave-increment-setting').modal('show');
 });
 
@@ -239,7 +239,7 @@ $(document).on('change', '#overtime-approver', function (e) {
     if (!approverId) {
         return;
     }
-    
+
     RequestApi.postRequest(data, getApproverUrl, token).then(response => {
         var authorizedUsersContainer = $('#overtime_authorized_container');
         authorizedUsersContainer.empty(); // Clear existing content
@@ -322,9 +322,9 @@ $(document).on('click', '#btn-add-position', function (e) {
 
 $(document).on('click', '#save-add-position', function (e) {
     e.preventDefault();
-    
+
     var storePositionUrl = window.params.storePositionRoute;
-    var position = $('#position').val(); 
+    var position = $('#position').val();
     var positionAdjustDate = $('#position-adjustment-date').val();
 
     var datePattern = /^\d{2}\/\d{2}\/\d{4}$/;
@@ -337,7 +337,7 @@ $(document).on('click', '#save-add-position', function (e) {
         });
         return; // Return early if validation fails
     }
-    
+
     var data = {
         'userId': userId,
         'position': position,
@@ -354,7 +354,7 @@ $(document).on('click', '#save-add-position', function (e) {
 
 $(document).on('click', '.btn-update-position-history', function (e) {
     e.preventDefault();
-    
+
     var positionHistoryId = $(this).data('id');
     var getPositionUrl = window.params.getPositionRoute;
     var data = {
@@ -367,7 +367,7 @@ $(document).on('click', '.btn-update-position-history', function (e) {
     }).catch(error => {
         console.error(error);
     });
-    
+
 });
 
 $(document).on('click', '#save-update-position', function (e) {
@@ -683,7 +683,7 @@ $(document).on('click', '#save-add-punishment', function (e) {
 
         return false; // Prevent form submission
     }
-    
+
     var datePattern = /^\d{2}\/\d{2}\/\d{4}$/;
     if (!datePattern.test(puhishmentRecordDate)) {
         Swal.fire({
@@ -692,7 +692,7 @@ $(document).on('click', '#save-add-punishment', function (e) {
             icon: 'error',
             heightAuto: false
         });
-        return; 
+        return;
     }
 
     var data = {
@@ -700,7 +700,7 @@ $(document).on('click', '#save-add-punishment', function (e) {
         'puhishment': puhishment,
         'puhishmentRecordDate': puhishmentRecordDate
     }
-    
+
     RequestApi.postRequest(data, storePunishmentUrl, token).then(response => {
         $('#punishment-container').html(response);
         $('#modal-add-punishment').modal('hide');
@@ -744,7 +744,7 @@ $(document).on('click', '#save-update-punishment', function (e) {
 
         return false; // Prevent form submission
     }
-    
+
     var datePattern = /^\d{2}\/\d{2}\/\d{4}$/;
     if (!datePattern.test(puhishmentRecordDate)) {
         Swal.fire({
@@ -762,7 +762,7 @@ $(document).on('click', '#save-update-punishment', function (e) {
         'puhishmentRecordDate': puhishmentRecordDate,
         'punishmentId': punishmentId
     }
-   
+
     RequestApi.postRequest(data, updatePunishmentUrl, token).then(response => {
         $('#punishment-container').html(response);
         $('#modal-update-punishment').modal('hide');
@@ -827,6 +827,7 @@ $(document).on('click', '#save-add-attachment', function (e) {
     var selectedFile = $('#file-input')[0].files[0];
     var link = $('#link').val();
     var selection;
+    var csrfToken = $('meta[name="csrf-token"]').attr('content');
     if ($('#radFile').is(':checked')) {
         selection = 1;
         $('#file_wrapper').show();
@@ -878,6 +879,10 @@ $(document).on('click', '#save-add-attachment', function (e) {
     formData.append('link', link);
     formData.append('type', selection);
 
+    var headers = {
+        'X-CSRF-TOKEN': csrfToken
+    };
+
     RequestApi.postRequestFormData(formData, storeAttachmentUrl, token).then(response => {
         $('#user-attachment-container').html(response);
         $('#modal-add-attachment').modal('hide');
@@ -905,7 +910,7 @@ $(document).on('click', '.btn-delete-user-attachment', function (e) {
                 'userId': userId,
                 'attachmentId': attachmentId
             }
-            
+
             RequestApi.postRequest(data, deleteAttachmentUrl, token).then(response => {
                 $('#user-attachment-container').html(response);
             }).catch(error => { })
@@ -929,8 +934,8 @@ $(document).on('click', '.btn-update-user-diligence-allowance', function (e) {
         $('#update-user-diligence-allowance-modal-container').html(response);
         $('#modal-update-user-diligence-allowance').modal('show');
     }).catch(error => { })
-    
-    
+
+
 });
 
 $(document).on('click', '#save-update-user-diligence-allowance', function (e) {
@@ -946,13 +951,13 @@ $(document).on('click', '#save-update-user-diligence-allowance', function (e) {
     }
 
     RequestApi.postRequest(data, updateDiligenceAllowanceClassifyUrl, token).then(response => {
-        
+
         $('#dilegence-allowance-container').html(response);
         $('#modal-update-user-diligence-allowance').modal('hide');
 
     }).catch(error => { })
 
-    
+
 });
 
 $(document).on('click', '#radFile, #radLink', function () {
@@ -999,18 +1004,18 @@ $(document).on('click', '#save-update-user-leave', function (e) {
         $('#modal-update-user-leave').modal('hide');
 
     }).catch(error => { })
-    
+
 });
 
 
 // ให้เรียกฟังก์ชันนี้เมื่อคลิกปุ่ม "บันทึก"
 // document.getElementById('save-update-leave-increment').addEventListener('click', function () {
-$(document).on('click', '#save-update-leave-increment', function (e) { 
+$(document).on('click', '#save-update-leave-increment', function (e) {
     var updateLeaveIncrementUrl = window.params.updateLeaveIncrementRoute;
     var userId = $('#userId').val();
     var jsonData = [];
     var tableRows = document.querySelectorAll('#module_modal_table tbody tr');
-    
+
     tableRows.forEach(function (row) {
         var leaveType = {
             id: row.querySelector('td:nth-child(1)').getAttribute('data-id'),
@@ -1049,7 +1054,7 @@ $(document).on('click', '#save-update-leave-increment', function (e) {
         ).then(function() {
             window.location.reload();
         });
-    
+
     }).catch(error => { })
 });
 
