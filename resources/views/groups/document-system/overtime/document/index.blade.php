@@ -100,6 +100,16 @@
                                         {{-- <a class="dropdown-item" tabindex="-1" href="#" id="bulk-download">ดาวน์โหลด</a> --}}
                                     </div>
                                 </li>
+                                <div class="dropdown">
+                                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                                      Dropdown button
+                                    </button>
+                                    <div class="dropdown-menu">
+                                      <a class="dropdown-item" href="#">Link 1</a>
+                                      <a class="dropdown-item" href="#">Link 2</a>
+                                      <a class="dropdown-item" href="#">Link 3</a>
+                                    </div>
+                                  </div>
                             </ul>
 
                             </div>
@@ -189,13 +199,6 @@
         <script>
             $(document).ready(function() {
                 $('.select2').select2()
-                $('.nav-item.dropdown').on('show.bs.dropdown', function() {
-                    $(this).find('.dropdown-menu').first().stop(true, true).slideDown();
-                });
-
-                $('.nav-item.dropdown').on('hide.bs.dropdown', function() {
-                    $(this).find('.dropdown-menu').first().stop(true, true).slideUp();
-                });
             });
 
             window.params = {
