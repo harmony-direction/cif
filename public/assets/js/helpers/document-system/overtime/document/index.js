@@ -51,7 +51,7 @@ $(document).on('click', '.pagination a', function (e) {
 document.addEventListener('DOMContentLoaded', function () {
     $(document).on('click', '#bulk-delete', function (e) {
         e.preventDefault();
-        console.log('check')
+        console.log($(this).val())
         // Find all checkboxes with the class "overtime-checkbox"
         // Find all checked checkboxes with the class "overtime-checkbox"
         var companyDepartmentId = $('#companyDepartment').val();
