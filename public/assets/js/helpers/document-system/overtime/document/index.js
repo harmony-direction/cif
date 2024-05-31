@@ -25,6 +25,7 @@ $(document).on('click', '#search_overtime', function (e) {
     })
 });
 
+
 $(document).on('click', '.pagination a', function (e) {
     e.preventDefault();
 
@@ -47,41 +48,42 @@ $(document).on('click', '.pagination a', function (e) {
         $('#table_container').html(response);
     }).catch(error => { })
 });
+document.addEventListener('DOMContentLoaded', function () {
+    $(document).on('click', '#bulk-delete', function (e) {
+        e.preventDefault();
+        console.log('check')
+        // Find all checkboxes with the class "overtime-checkbox"
+        // Find all checked checkboxes with the class "overtime-checkbox"
+        var companyDepartmentId = $('#companyDepartment').val();
+        var startDate = $('#startDate').val();
+        var endDate = $('#endDate').val();
+        var bulkDeleteUrl = window.params.bulkDeleteRoute
+        var selectedCheckboxes = $("input.overtime-checkbox:checked");
 
-$(document).on('click', '#bulk-delete', function (e) {
-    e.preventDefault();
-    console.log('check')
-    // Find all checkboxes with the class "overtime-checkbox"
-    // Find all checked checkboxes with the class "overtime-checkbox"
-    var companyDepartmentId = $('#companyDepartment').val();
-    var startDate = $('#startDate').val();
-    var endDate = $('#endDate').val();
-    var bulkDeleteUrl = window.params.bulkDeleteRoute
-    var selectedCheckboxes = $("input.overtime-checkbox:checked");
+        // Create an array to store the values of selected checkboxes
+        var selectedValues = [];
 
-    // Create an array to store the values of selected checkboxes
-    var selectedValues = [];
+        // Iterate through the selected checkboxes and add their values to the array
+        selectedCheckboxes.each(function () {
+            selectedValues.push($(this).val());
+        });
 
-    // Iterate through the selected checkboxes and add their values to the array
-    selectedCheckboxes.each(function () {
-        selectedValues.push($(this).val());
+        if (selectedValues.length == 0) {
+            return
+        }
+
+        var data = {
+            'selectedOvertime': selectedValues,
+            'companyDepartmentId': companyDepartmentId,
+            'startDate': startDate,
+            'endDate': endDate,
+        }
+
+        RequestApi.postRequest(data, bulkDeleteUrl, token).then(response => {
+            $('#table_container').html(response);
+            // $('#modal-users').modal('show');
+        }).catch(error => {
+        })
+
     });
-
-    if (selectedValues.length == 0) {
-        return
-    }
-
-    var data = {
-        'selectedOvertime': selectedValues,
-        'companyDepartmentId': companyDepartmentId,
-        'startDate': startDate,
-        'endDate': endDate,
-    }
-
-    RequestApi.postRequest(data, bulkDeleteUrl, token).then(response => {
-        $('#table_container').html(response);
-        // $('#modal-users').modal('show');
-    }).catch(error => {
-    })
-
 });
