@@ -24,6 +24,7 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Models\UserDiligenceAllowance;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rules\Exists;
 
 class SettingOrganizationEmployeeController extends Controller
 {
@@ -367,7 +368,10 @@ class SettingOrganizationEmployeeController extends Controller
             $request->validate([
                 'avatars' => 'file|mimes:jpeg,png,jpg,gif|max:2048',
             ]);
-            Storage::disk('avatars')->delete($user->thumbnail);
+            if((Storage::disk('avatars')->exists($user->thumbnail))){
+                Storage::disk('avatars')->delete($user->thumbnail);
+            }
+
             $file = $request->file('avatar');
             $filename = 'avatar' . '-' . time() . '.' . $file->getClientOriginalExtension();
             $file->storeAs('avatar', $filename);
