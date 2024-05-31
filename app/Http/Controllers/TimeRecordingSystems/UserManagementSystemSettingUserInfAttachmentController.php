@@ -10,6 +10,15 @@ use Illuminate\Support\Facades\Storage;
 
 class UserManagementSystemSettingUserInfAttachmentController extends Controller
 {
+    public function view($file) {
+        $path = storage_path('app/uploads/attachments/' . $file);
+        $file = \File::get($path);
+        $type = \File::mimeType($path);
+        $response = \Response::make($file, 200);
+        $response->header('Content-Type', $type);
+        return $response;
+    }
+
     public function store(Request $request)
     {
         $file = $request->file('file');
@@ -20,9 +29,9 @@ class UserManagementSystemSettingUserInfAttachmentController extends Controller
 
         $filePath = $link;
         if ($type == 1){
-            $filePath = $file->store('', 'attachments'); 
+            $filePath = $file->store('', 'attachments');
         }
-        
+
         UserAttachment::create([
             'user_id' => $userId,
             'name' => $name,
@@ -40,7 +49,7 @@ class UserManagementSystemSettingUserInfAttachmentController extends Controller
         $userId = $request->data['userId'];
         $attachmentId = $request->data['attachmentId'];
         $attachment = UserAttachment::find($attachmentId);
-        
+
         $filePath = $attachment->file;
         Storage::disk('attachments')->delete($filePath);
         $attachment->delete();

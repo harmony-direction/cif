@@ -1040,8 +1040,7 @@
                                                                 @php
                                                                 $path = $user_attachment->file;
                                                                 if ($user_attachment->type == 1){
-                                                                $path = url('/storage/uploads/attachment') .'/'.
-                                                                $user_attachment->file;
+                                                                    $path = {{ route('viewAttachmentRoute', $user_attachment->file) }}
                                                                 }
                                                                 @endphp
                                                                 <a class="btn btn-edit btn-action btn-sm" href="{{$path}}">
@@ -1584,6 +1583,7 @@
         getPunishmentRoute: '{{ route('groups.user-management-system.setting.userinfo.punishment.get-punishment') }}',
         updatePunishmentRoute: '{{ route('groups.user-management-system.setting.userinfo.punishment.update-punishment') }}',
         deletePunishmentRoute: '{{ route('groups.user-management-system.setting.userinfo.punishment.delete') }}',
+        viewAttachmentRoute: '{{ route('groups.user-management-system.setting.userinfo.attachment.view') }}',
         storeAttachmentRoute: '{{ route('groups.user-management-system.setting.userinfo.attachment.store') }}',
         deleteAttachmentRoute: '{{ route('groups.user-management-system.setting.userinfo.attachment.delete') }}',
         getDiligenceAllowanceClassifyRoute: '{{ route('groups.user-management-system.setting.userinfo.get-diligence-allowance-classify') }}',

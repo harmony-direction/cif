@@ -638,6 +638,7 @@ Route::middleware('auth')->group(function () {
                         Route::post('delete', [UserManagementSystemSettingUserInfoPunishmentController::class, 'delete'])->name('groups.user-management-system.setting.userinfo.punishment.delete');
                     });
                     Route::group(['prefix' => 'attachment'], function () {
+                        Route::post('view', [UserManagementSystemSettingUserInfAttachmentController::class, 'view'])->name('groups.user-management-system.setting.userinfo.attachment.view');
                         Route::post('store', [UserManagementSystemSettingUserInfAttachmentController::class, 'store'])->name('groups.user-management-system.setting.userinfo.attachment.store');
                         Route::post('delete', [UserManagementSystemSettingUserInfAttachmentController::class, 'delete'])->name('groups.user-management-system.setting.userinfo.attachment.delete');
                     });

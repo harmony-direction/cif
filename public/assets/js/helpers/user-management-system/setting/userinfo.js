@@ -879,9 +879,6 @@ $(document).on('click', '#save-add-attachment', function (e) {
     formData.append('link', link);
     formData.append('type', selection);
 
-    var headers = {
-        'X-CSRF-TOKEN': csrfToken
-    };
 
     RequestApi.postRequestFormData(formData, storeAttachmentUrl, token).then(response => {
         $('#user-attachment-container').html(response);

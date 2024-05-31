@@ -127,6 +127,12 @@ body {
     padding: 1.5rem;
 }
 /* card */
+.table-responsive, thead.border-bottom, thead, tbody, tfoot, tr, td, th {
+    background-color: white;
+}
+.card{
+    background-color: white;
+}
 .card-header.card-sm {
     flex-direction: row;
 }
