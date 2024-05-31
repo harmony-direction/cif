@@ -368,7 +368,7 @@ class SettingOrganizationEmployeeController extends Controller
             $request->validate([
                 'avatars' => 'file|mimes:jpeg,png,jpg,gif|max:2048',
             ]);
-            if((Storage::disk('avatars')->exists($user->thumbnail))){
+            if ($user->thumbnail && Storage::disk('avatars')->exists($user->thumbnail)) {
                 Storage::disk('avatars')->delete($user->thumbnail);
             }
 
