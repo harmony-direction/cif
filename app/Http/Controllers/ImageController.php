@@ -17,20 +17,13 @@ class ImageController extends Controller
         return $response;
     }
     public function announce_attachment_view($file) {
-        $path = $file;
-        dd(Storage::disk('attachments')->get($path));
-
-        if (!Storage::disk('attachments')->exists($path)) {
-            abort(404); // File not found
-        }
-
-        $file = Storage::disk('attachments')->get($path);
-        $type = Storage::disk('attachments')->mimeType($path);
+        $path = storage_path('app/announcement/uploads/attachments/' . $file);
+        $file = \File::get($path);
+        $type = \File::mimeType($path);
         $response = \Response::make($file, 200);
         $response->header('Content-Type', $type);
         return $response;
     }
-
     public function announce_attachment_download($file) {
         return Storage::disk('announcement-attachments')->download($file);
     }
