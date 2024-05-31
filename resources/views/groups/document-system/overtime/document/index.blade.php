@@ -184,7 +184,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
-        <script type="module" src="{{ asset('assets/js/helpers/document-system/overtime/document/index.js?v=1') }}"></script>
+        <script type="module" src="{{ asset('assets/js/helpers/document-system/overtime/document/index.js?v=2') }}"></script>
         <script src="{{ asset('assets/js/helpers/helper.js?v=1') }}"></script>
                 <!-- jQuery and Bootstrap JS -->
         {{-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
@@ -201,45 +201,7 @@
                 url: '{{ url('/') }}',
                 token: $('meta[name="csrf-token"]').attr('content')
             };
-            $(document).ready(function() {
-                $(document).on('click', '#bulk-delete', function (e) {
-                    e.preventDefault();
-                    console.log('check');
-                    // Find all checkboxes with the class "overtime-checkbox"
-                    // Find all checked checkboxes with the class "overtime-checkbox"
-                    var companyDepartmentId = $('#companyDepartment').val();
-                    var startDate = $('#startDate').val();
-                    var endDate = $('#endDate').val();
-                    var bulkDeleteUrl = window.params.bulkDeleteRoute;
-                    var selectedCheckboxes = $("input.overtime-checkbox:checked");
 
-                    // Create an array to store the values of selected checkboxes
-                    var selectedValues = [];
-
-                    // Iterate through the selected checkboxes and add their values to the array
-                    selectedCheckboxes.each(function () {
-                        selectedValues.push($(this).val());
-                    });
-
-                    if (selectedValues.length == 0) {
-                        return;
-                    }
-
-                    var data = {
-                        'selectedOvertime': selectedValues,
-                        'companyDepartmentId': companyDepartmentId,
-                        'startDate': startDate,
-                        'endDate': endDate,
-                    };
-
-                    RequestApi.postRequest(data, bulkDeleteUrl, token).then(response => {
-                        $('#table_container').html(response);
-                        // $('#modal-users').modal('show');
-                    }).catch(error => {
-                        console.error(error);
-                    });
-                });
-            });
             </script>
 
     @endpush
