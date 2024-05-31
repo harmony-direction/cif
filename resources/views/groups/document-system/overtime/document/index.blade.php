@@ -90,17 +90,17 @@
                                                                             </div>
                                 </li>
                             </ul> --}}
-                                <ul class="nav nav-pills">
-                                    <li class="nav-item dropdown">
-                                        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">
-                                            รายการที่เลือก <span class="caret"></span>
-                                        </a>
-                                        <div class="dropdown-menu">
-                                            <a class="dropdown-item" tabindex="-1" href="#" id="bulk-delete">ลบ</a>
-                                            <a class="dropdown-item" tabindex="-1" href="#" id="bulk-download">ดาวน์โหลด</a>
-                                        </div>
-                                    </li>
-                                </ul>
+                            <ul class="nav nav-pills">
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">
+                                        รายการที่เลือก <span class="caret"></span>
+                                    </a>
+                                    <div class="dropdown-menu">
+                                        <a class="dropdown-item" tabindex="-1" href="#" id="bulk-delete">ลบ</a>
+                                        <a class="dropdown-item" tabindex="-1" href="#" id="bulk-download">ดาวน์โหลด</a>
+                                    </div>
+                                </li>
+                            </ul>
 
                             </div>
 
