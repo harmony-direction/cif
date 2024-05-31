@@ -1040,7 +1040,7 @@
                                                                 @php
                                                                 $path = $user_attachment->file;
                                                                 if ($user_attachment->type == 1){
-                                                                    $path = route('viewAttachmentRoute', $user_attachment->file);
+                                                                    $path = route('groups.user-management-system.setting.userinfo.attachment.view', $user_attachment->file);
                                                                 }
                                                                 @endphp
                                                                 <a class="btn btn-edit btn-action btn-sm" href="{{$path}}">
