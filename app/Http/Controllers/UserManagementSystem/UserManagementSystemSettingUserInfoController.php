@@ -105,7 +105,7 @@ class UserManagementSystemSettingUserInfoController extends Controller
         $approvers = Approver::all();
         $months = Month::all();
         $userDiligenceAllowances = UserDiligenceAllowance::where('user_id', $id)->orderBy('id', 'desc')->get();
-        dd($userDiligenceAllowances);
+
         $leaves = Leave::where('user_id',$id)->whereYear('from_date',$currentYear)->get();
         $userLeaves = UserLeave::where('user_id',$id)->get();
         $leaveTypes = LeaveType::all();
