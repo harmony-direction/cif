@@ -17,7 +17,7 @@ $(document).on('click', '#search_overtime', function (e) {
         'startDate': startDate,
         'endDate': endDate,
     }
-    
+
     RequestApi.postRequest(data, searchUrl, token).then(response => {
         $('#table_container').html(response);
         // $('#modal-users').modal('show');
@@ -50,6 +50,7 @@ $(document).on('click', '.pagination a', function (e) {
 
 $(document).on('click', '#bulk-delete', function (e) {
     e.preventDefault();
+    console.log('check')
     // Find all checkboxes with the class "overtime-checkbox"
     // Find all checked checkboxes with the class "overtime-checkbox"
     var companyDepartmentId = $('#companyDepartment').val();
