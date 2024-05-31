@@ -16,6 +16,14 @@ class ImageController extends Controller
         $response->header('Content-Type', $type);
         return $response;
     }
+    public function uploads_view($file) {
+        $path = storage_path('app/uploads/attachments/' . $file);
+        $file = \File::get($path);
+        $type = \File::mimeType($path);
+        $response = \Response::make($file, 200);
+        $response->header('Content-Type', $type);
+        return $response;
+    }
     public function announce_attachment_view($file) {
         $path = storage_path('app/announcement/uploads/attachments/' . $file);
         $file = \File::get($path);
