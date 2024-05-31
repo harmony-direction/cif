@@ -183,6 +183,7 @@ Route::group(['prefix' => 'work_schedule'], function () {
 });
 
 Route::middleware('auth')->group(function () {
+    Route::get('/storage/uploads/attachment/{file}', [ImageController::class,'topic_attachment_view'])->name('storage.topic.attachment');
     Route::get('/storage/topic-attachment/{file}', [ImageController::class,'topic_attachment_view'])->name('storage.topic.attachment');
     Route::get('/storage/topic-attachment/{file}/download', [ImageController::class,'topic_attachment_download'])->name('storage.topic.attachment.download');
 
