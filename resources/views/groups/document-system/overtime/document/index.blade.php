@@ -100,17 +100,7 @@
                                         {{-- <a class="dropdown-item" tabindex="-1" href="#" id="bulk-download">ดาวน์โหลด</a> --}}
                                     </div>
                                 </li>
-                                <div class="dropdown">
-                                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-                                      Dropdown button
-                                    </button>
-                                    <div class="dropdown-menu">
-                                      <a class="dropdown-item" href="#">Link 1</a>
-                                      <a class="dropdown-item" href="#">Link 2</a>
-                                      <a class="dropdown-item" href="#">Link 3</a>
-                                    </div>
-                                  </div>
-                                  <div class="dropdown mt-3">
+                                <div class="dropdown mt-3">
                                     <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
                                       Dropdown button
                                     </button>
@@ -199,6 +189,10 @@
         </div>
     </div>
     @push('scripts')
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
         <script type="module" src="{{ asset('assets/js/helpers/document-system/overtime/document/index.js?v=1') }}"></script>
         <script src="{{ asset('assets/js/helpers/helper.js?v=1') }}"></script>
                 <!-- jQuery and Bootstrap JS -->
