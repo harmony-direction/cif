@@ -83,6 +83,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         RequestApi.postRequest(data, bulkDeleteUrl, token).then(response => {
             $('#table_container').html(response);
+            console.log(response)
             // $('#modal-users').modal('show');
         }).catch(error => {
         })
