@@ -74,7 +74,7 @@
                                 </i>
                                 เพิ่มรายการล่วงเวลา
                             </a>
-                            {{-- <ul class="nav nav-pills">
+                            <ul class="nav nav-pills">
                                 <li class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#"
                                         aria-expanded="false">
@@ -82,11 +82,11 @@
                                     </a>
                                     <div class="dropdown-menu" style="">
                                         <a class="dropdown-item" tabindex="-1" href="#" id="bulk-delete">ลบ</a>
-                                        {{-- <a class="dropdown-item" tabindex="-1" href="#"
+                                        <a class="dropdown-item" tabindex="-1" href="#"
                                             id="bulk-download">ดาวน์โหลด</a>
                                                                             </div>
                                 </li>
-                            </ul> --}}
+                            </ul>
                         </div>
 
                         <div>
