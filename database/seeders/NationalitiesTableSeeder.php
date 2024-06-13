@@ -29,7 +29,7 @@ class NationalitiesTableSeeder extends Seeder
             'name' =>'ลาว'
             ],
             [
-            'name' =>'ฟิลลิปปินส์'
+            'name' =>'ฟิลิปปินส์'
             ]
         ]);
     }

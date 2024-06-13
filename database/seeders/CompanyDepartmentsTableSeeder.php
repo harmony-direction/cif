@@ -93,7 +93,7 @@ class CompanyDepartmentsTableSeeder extends Seeder
                 'code' => 'HS'
             ],
             [
-                'name' => 'โรงงานแปรรูป(ผลิตดิบ)',
+                'name' => 'โรงแปรรูป',
                 'eng_name' => 'Production Raw  Plant',
                 'color' => '#175CD3',
                 'code' => 'PDR'
