@@ -32,7 +32,7 @@
                 <div class="col-md-12">
                     <div class="card border-0 rounded-4">
                         <div class="py-3 px-4">
-                            <h4 class="m-0">ข้อมูลส่วนบุคคล</h4>
+                            <h4 class="m-0">ข้อมูลส่วนบุคคล test</h4>
                         </div>
                         <form action="{{route('setting.organization.employee.store')}}" method="POST" enctype="multipart/form-data">
                             @csrf
