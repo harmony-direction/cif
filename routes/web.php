@@ -1,22 +1,24 @@
 <?php
 
-use App\Http\Controllers\ImageController;
-use App\Http\Controllers\MPDFController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ApiController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\MPDFController;
 use App\Http\Controllers\TestController;
 use App\Http\Controllers\GroupController;
+use App\Http\Controllers\ImageController;
 use App\Http\Controllers\LandingController;
 use App\Http\Controllers\settings\SettingController;
 use App\Http\Controllers\settings\SettingReportLogController;
+
 use App\Http\Controllers\settings\SettingAccessRoleController;
 use App\Http\Controllers\settings\SettingGeneralTaxController;
 use App\Http\Controllers\settings\SettingReportUserController;
 use App\Http\Controllers\TimeRecordingSystems\ShiftController;
 use App\Http\Controllers\settings\SettingReportExpirationController;
 use App\Http\Controllers\settings\SettingGeneralSearchFieldController;
+use App\Http\Controllers\settings\SettingGeneralUserPositionController;
 use App\Http\Controllers\settings\SettingOrganizationCompanyController;
 use App\Http\Controllers\settings\SettingAccessAssignmentRoleController;
 use App\Http\Controllers\settings\SettingOrganizationApproverController;
@@ -46,9 +48,9 @@ use App\Http\Controllers\SalarySystem\SalarySystemSalaryCalculationListControlle
 use App\Http\Controllers\SalarySystem\SalarySystemSettingSkillBasedCostController;
 use App\Http\Controllers\settings\SettingOrganizationApproverAssignmentController;
 use App\Http\Controllers\TimeRecordingSystems\TimeRecordingSystemReportController;
+
 use App\Http\Controllers\AssessmentSystem\AssessmentSystemSettingCriteriaController;
 use App\Http\Controllers\AssessmentSystemSettingAssessmentGroupAssignmentController;
-
 use App\Http\Controllers\LearningSystem\LearningSystemSettingLearningListController;
 use App\Http\Controllers\SalarySystem\SalarySystemSettingPaydayAssignmentController;
 use App\Http\Controllers\AnnouncementSystem\AnnounceSystemAnnouncementListController;
@@ -775,6 +777,14 @@ Route::middleware('auth')->group(function () {
                     Route::get('', [SettingGeneralTaxController::class, 'index'])->name('setting.general.tax');
                     Route::post('store', [SettingGeneralTaxController::class, 'store'])->name('setting.general.tax.store');
                 });
+            Route::group(['prefix' => 'user-position'], function () {
+                    Route::get('', [SettingGeneralUserPositionController::class, 'index'])->name('setting.general.user-position.index');
+                    Route::get('create', [SettingGeneralUserPositionController::class, 'create'])->name('setting.general.user-position.create');
+                    Route::post('store', [SettingGeneralUserPositionController::class, 'store'])->name('setting.general.user-position.store');
+                    Route::get('{id}', [SettingGeneralUserPositionController::class, 'view'])->name('setting.general.user-position.view');
+                    Route::put('{id}', [SettingGeneralUserPositionController::class, 'update'])->name('setting.general.user-position.update');
+                    Route::delete('{id}', [SettingGeneralUserPositionController::class, 'delete'])->name('setting.general.user-position.delete');
+                });    
         });
         Route::group(['prefix' => 'access'], function () {
             Route::group(['prefix' => 'role'], function () {

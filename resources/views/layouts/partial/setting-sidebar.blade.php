@@ -91,6 +91,15 @@
                         </a>
                     </li>
                     <li class="nav-item">
+                        <a href="{{route('setting.general.user-position.index')}}"
+                            class="nav-link {{ request()->is('setting/general/user-position*') ? 'active' : '' }}">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <circle cx="12" cy="12" r="4" fill="#D0D5DD"/>
+                            </svg>
+                            <p>ตำแหน่ง</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
                         <a href="{{route('setting.general.tax')}}"
                             class="nav-link {{ request()->is('setting.general.tax*') ? 'active' : '' }}">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
