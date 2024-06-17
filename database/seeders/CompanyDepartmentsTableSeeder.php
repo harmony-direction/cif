@@ -57,7 +57,7 @@ class CompanyDepartmentsTableSeeder extends Seeder
                 'code' => 'QC'
             ],
             [
-                'name' => 'โรงงานอาหารสุก',
+                'name' => 'ผลิตสุก',
                 'eng_name' => 'Production cooked Plant',
                 'color' => '#9B8AFB',
                 'code' => 'PDC'
@@ -81,20 +81,20 @@ class CompanyDepartmentsTableSeeder extends Seeder
                 'code' => 'WH'
             ],
             [
-                'name' => 'ส่งออก',
+                'name' => 'Export',
                 'eng_name' => 'Export',
                 'color' => '#53B1FD',
                 'code' => 'EX'
             ],
             [
-                'name' => 'ความปลอดภัยอาชีวอนามัยและสภาพแวดล้อมในการทำงาน',
+                'name' => 'ความปลอดภัย',
                 'eng_name' => 'Health and Safety',
                 'color' => '#1E616B',
                 'code' => 'HS'
             ],
             [
-                'name' => 'โรงแปรรูป',
-                'eng_name' => 'Production Raw  Plant',
+                'name' => 'โรงงานแปรรูป',
+                'eng_name' => 'Production Raw Plant',
                 'color' => '#175CD3',
                 'code' => 'PDR'
             ],
@@ -122,6 +122,12 @@ class CompanyDepartmentsTableSeeder extends Seeder
                 'color' => '#FE9F55',
                 'code' => 'MG'
             ],
+            [
+                'name' => 'โรงงานอาหารสุก',
+                'eng_name' => 'Production cooked Plant',
+                'color' => '#FE9F55',
+                'code' => 'PCP'
+            ]
         ];
 
         foreach ($departments as $department) {
