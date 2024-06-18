@@ -3,7 +3,7 @@
 @section('content')
 <main class="container-fluid px-3">
     <header class="d-flex justify-content-between align-items-center mt-4 mb-3 ">
-        <h2 class="m-0">สวัสดี, {{Auth::user()->name}}</h2>
+        <h2 class="m-0">สวัสดี {{Auth::user()->name}}</h2>
         <p class="text-muted m-0">{{$formatDated}}</p>
     </header>
     @if(session('error'))
