@@ -161,7 +161,14 @@ class SettingOrganizationEmployeeController extends Controller
         // $user->education_branch = $educationBranch;  // กำหนดค่าสาขาวิชาที่ศึกษาให้กับคอลัมน์ education_branch
         // $user->email = $employeeNo . '@cif.com';  // กำหนดค่าอีเมลให้กับคอลัมน์ email (รหัสพนักงาน@cif.com)
         $user->email = $email;  // กำหนดค่าอีเมลให้กับคอลัมน์ email
-        $user->password = bcrypt('11111111');  // กำหนดค่ารหัสผ่านให้กับคอลัมน์ password (เข้ารหัสแบบ bcrypt)
+        // $user->password = bcrypt('11111111');  // กำหนดค่ารหัสผ่านให้กับคอลัมน์ password (เข้ารหัสแบบ bcrypt)
+
+        if (is_null($request->password) || empty($request->password)) {
+            $user->password = bcrypt('11111111');
+        } else {
+            $user->password = bcrypt($request->password);
+        }
+
         $user->passport = $passport;
         $user->work_permit = $workPermit;
         $user->tax = $tax;

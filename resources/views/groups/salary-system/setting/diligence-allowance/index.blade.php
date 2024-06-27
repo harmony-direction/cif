@@ -45,7 +45,7 @@
                                                 href="{{route('groups.salary-system.setting.diligence-allowance.assignment',['id' => $diligenceAllowance->id])}}">
                                                 <i class="fas fa-link"></i>
                                             </a>
-                                            @if ($permission->update)
+                                            {{-- @if ($permission->update)
                                             <a class="btn btn-action btn-edit btn-sm"
                                                 href="{{route('groups.salary-system.salary.diligence-allowance.view',['id' => $diligenceAllowance->id])}}">
                                                 <i class="fas fa-pencil-alt"></i>
@@ -59,7 +59,7 @@
                                                 data-message="รายการเบี้ยขยัน">
                                                 <i class="fas fa-trash"></i>
                                             </a>
-                                            @endif
+                                            @endif --}}
                                         </td>
                                     </tr>
                                     @endforeach

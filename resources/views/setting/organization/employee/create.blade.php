@@ -296,6 +296,13 @@
                                                 class="form-control" required>
                                         </div>
                                     </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>รหัสผ่าน (เว้นว่างถ้าใช้ default)</label>
+                                            <input type="password" name="password" value="{{old('password')}}"
+                                                class="form-control" required>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             <hr>
