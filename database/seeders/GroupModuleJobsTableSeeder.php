@@ -55,9 +55,9 @@ class GroupModuleJobsTableSeeder extends Seeder
         $yearlyHolidayJob = Job::where('code','YEARLY-HOLIDAY')->first();
         $workScheduleJob = Job::where('code','WORK-SCHEDULE')->first();
         $workScheduleTimeRecording = Job::where('code','TIME-RECORDING')->first();
-        $workScheduleTimeRecordingPayday = Job::where('code','TIME-RECORDING-CURRENT-PAYDAY')->first();
+        // $workScheduleTimeRecordingPayday = Job::where('code','TIME-RECORDING-CURRENT-PAYDAY')->first();
         $workScheduleTimeRecordingCheck = Job::where('code','TIME-RECORDING-CHECK')->first();
-        $workScheduleTimeRecordingCheckCurrentPayday = Job::where('code','TIME-RECORDING-CHECK-CURRENT-PAYDAY')->first();
+        // $workScheduleTimeRecordingCheckCurrentPayday = Job::where('code','TIME-RECORDING-CHECK-CURRENT-PAYDAY')->first();
         $workScheduleEmployeeGroup = Job::where('code','EMPLOYEE-GROUP')->first();
         $workScheduleVisibility = Job::where('code','WORK-SCHEDULR-VISIBILITY')->first();
         // $workScheduleReport = Job::where('code','WORK-SCHEDULR-REPORT')->first();
@@ -112,21 +112,21 @@ class GroupModuleJobsTableSeeder extends Seeder
             'module_id' => $workScheduleModule->id,
             'job_id' => $workScheduleTimeRecording->id,
         ]);
-        GroupModuleJob::create([
-            'group_id' => $timeRecordGroup->id,
-            'module_id' => $workScheduleModule->id,
-            'job_id' => $workScheduleTimeRecordingPayday->id,
-        ]);
+        // GroupModuleJob::create([
+        //     'group_id' => $timeRecordGroup->id,
+        //     'module_id' => $workScheduleModule->id,
+        //     'job_id' => $workScheduleTimeRecordingPayday->id,
+        // ]);
         GroupModuleJob::create([
             'group_id' => $timeRecordGroup->id,
             'module_id' => $workScheduleModule->id,
             'job_id' => $workScheduleTimeRecordingCheck->id,
         ]);
-        GroupModuleJob::create([
-            'group_id' => $timeRecordGroup->id,
-            'module_id' => $workScheduleModule->id,
-            'job_id' => $workScheduleTimeRecordingCheckCurrentPayday->id,
-        ]);
+        // GroupModuleJob::create([
+        //     'group_id' => $timeRecordGroup->id,
+        //     'module_id' => $workScheduleModule->id,
+        //     'job_id' => $workScheduleTimeRecordingCheckCurrentPayday->id,
+        // ]);
         GroupModuleJob::create([
             'group_id' => $timeRecordGroup->id,
             'module_id' => $timeRecordingSettingModule->id,

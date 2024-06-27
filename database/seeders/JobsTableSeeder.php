@@ -45,18 +45,18 @@ class JobsTableSeeder extends Seeder
             'route' => 'groups.time-recording-system.schedulework.time-recording-check',  
             'view' => 'groups.time-recording-system.schedulework.time-recording-check.index',
         ]);
-        Job::create([
-            'code' => 'TIME-RECORDING-CURRENT-PAYDAY',
-            'name' => 'บันทึกเวลารอบปัจจุบัน',
-            'route' => 'groups.time-recording-system.schedulework.time-recording-current-payday',  
-            'view' => 'groups.time-recording-system.schedulework.time-recording-current-payday.index',
-        ]);
-        Job::create([
-            'code' => 'TIME-RECORDING-CHECK-CURRENT-PAYDAY',
-            'name' => 'ตรวจสอบเวลารอบปัจจุบัน',
-            'route' => 'groups.time-recording-system.schedulework.time-recording-check-current-payday',  
-            'view' => 'groups.time-recording-system.schedulework.time-recording-check-current-payday.index',
-        ]);
+        // Job::create([
+        //     'code' => 'TIME-RECORDING-CURRENT-PAYDAY',
+        //     'name' => 'บันทึกเวลารอบปัจจุบัน',
+        //     'route' => 'groups.time-recording-system.schedulework.time-recording-current-payday',  
+        //     'view' => 'groups.time-recording-system.schedulework.time-recording-current-payday.index',
+        // ]);
+        // Job::create([
+        //     'code' => 'TIME-RECORDING-CHECK-CURRENT-PAYDAY',
+        //     'name' => 'ตรวจสอบเวลารอบปัจจุบัน',
+        //     'route' => 'groups.time-recording-system.schedulework.time-recording-check-current-payday',  
+        //     'view' => 'groups.time-recording-system.schedulework.time-recording-check-current-payday.index',
+        // ]);
         Job::create([
             'code' => 'EMPLOYEE-GROUP',
             'name' => 'กลุ่มพนักงาน',
