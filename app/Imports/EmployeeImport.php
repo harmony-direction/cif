@@ -28,6 +28,7 @@ class EmployeeImport implements ToCollection, WithHeadingRow
     private $errorCount = 0;
     private $errorRows = [];
     private $errorMessages = [];
+    private $errorUsers = [];
 
     public function collection(Collection $rows)
     {
@@ -42,6 +43,38 @@ class EmployeeImport implements ToCollection, WithHeadingRow
             return;
         }
 
+        $customMessages = [
+            'code.required' => 'กรุณาระบุรหัสพนักงาน',
+            'department.required' => 'กรุณาระบุแผนก',
+            'department.exists' => 'แผนกที่ระบุไม่มีอยู่ในระบบ',
+            'prefix.required' => 'กรุณาระบุคำนำหน้า',
+            'prefix.exists' => 'คำนำหน้าที่ระบุไม่มีอยู่ในระบบ',
+            'name.required' => 'กรุณาระบุชื่อ',
+            'nationality.required' => 'กรุณาระบุสัญชาติ',
+            'nationality.exists' => 'สัญชาติที่ระบุไม่มีอยู่ในระบบ',
+            'ethnicity.required' => 'กรุณาระบุชาติพันธุ์',
+            'ethnicity.exists' => 'ชาติพันธุ์ที่ระบุไม่มีอยู่ในระบบ',
+            'address.required' => 'กรุณาระบุที่อยู่',
+            'province.required' => 'กรุณาระบุจังหวัด',
+            'amphur.required' => 'กรุณาระบุอำเภอ',
+            'tambol.required' => 'กรุณาระบุตำบล',
+            'position.required' => 'กรุณาระบุตำแหน่ง',
+            'position.exists' => 'ตำแหน่งที่ระบุไม่มีอยู่ในระบบ',
+            'adjust_position_date.required' => 'กรุณาระบุวันที่ปรับตำแหน่ง',
+            'salary.required' => 'กรุณาระบุเงินเดือน',
+            'adjust_salary_date.required' => 'กรุณาระบุวันที่ปรับเงินเดือน',
+            'p_leave.required' => 'กรุณาระบุวันลาพักร้อน',
+            'sp_leave.required' => 'กรุณาระบุวันลาพิเศษ',
+            'sick_leave.required' => 'กรุณาระบุวันลาป่วย',
+            'sick_leave_op.required' => 'กรุณาระบุวันลาป่วยสะสม',
+            'a_leave.required' => 'กรุณาระบุวันลากิจ',
+            'm_leave.required' => 'กรุณาระบุวันลาคลอด',
+            'o_leave.required' => 'กรุณาระบุวันลาลาหยุดอื่นๆ',
+            'employee_type.required' => 'กรุณาระบุประเภทพนักงาน',
+            'employee_type.exists' => 'ประเภทพนักงานที่ระบุไม่มีอยู่ในระบบ',
+            'start_work_date.required' => 'กรุณาระบุวันที่เริ่มงาน',
+        ];
+
         // ดำเนินการตรวจสอบข้อมูล
         foreach ($rows as $index => $row) {
             if ($row->filter(function ($value) {
@@ -53,7 +86,7 @@ class EmployeeImport implements ToCollection, WithHeadingRow
                 'code' => 'required',
                 'department' => [
                     'required',
-                    Rule::exists(CompanyDepartment::class, 'name')
+                    Rule::exists(CompanyDepartment::class, 'code')
                 ],
                 'prefix' => [
                     'required',
@@ -91,14 +124,20 @@ class EmployeeImport implements ToCollection, WithHeadingRow
                     Rule::exists(EmployeeType::class, 'name')
                 ],
                 'start_work_date' => 'required',
-                
-                // ใส่กฎการตรวจสอบเพิ่มเติมสำหรับคอลัมน์อื่น ๆ ตามต้องการ
-            ]);
+            ], $customMessages);
             
             if ($validator->fails()) {
                 $this->errorCount++;
                 $this->errorRows[] = $row;
-                $this->errorMessages[] = $validator->errors()->first();
+                // $this->errorMessages[] = $validator->error();
+                $errors = $validator->errors()->all();
+                // $errorMessages = implode(', ', $errors);
+                $this->errorMessages[] =  implode(', ', $errors);
+                if ($row['lastname'] !== '-') {
+                    $this->errorUsers[] = $row['name'] . ' ' .  $row['lastname'];
+                } else {
+                    $this->errorUsers[] = $row['name'];
+                }
             } else {
                 $this->successCount++;
             }
@@ -120,14 +159,15 @@ class EmployeeImport implements ToCollection, WithHeadingRow
                 });
 
                 $employeeNo = $row['code'];
-                $companyDepartmentName = $row['department'];
+                $companyDepartmentCode = $row['department'];
                 $prefixName = $row['prefix'];
                 $nationalityName = $row['nationality'];
                 $ethnicityName = $row['ethnicity'];
                 $positionName = $row['position'];
                 $employeeTypeName = $row['employee_type'];
 
-                $companyDepartmentId = CompanyDepartment::where('name', $companyDepartmentName)->value('id');
+                $companyDepartmentId = CompanyDepartment::where('code', $companyDepartmentCode)->value('id');
+                // dd($companyDepartmentId);
                 $prefixId = Prefix::where('name', $prefixName)->value('id');
                 $nationalityId = Nationality::where('name', $nationalityName)->value('id');
                 $ethnicityId = Ethnicity::where('name', $ethnicityName)->value('id');
@@ -348,6 +388,11 @@ class EmployeeImport implements ToCollection, WithHeadingRow
     public function getErrorMessages()
     {
         return $this->errorMessages;
+    }
+
+    public function getErrorUsers()
+    {
+        return $this->errorUsers;
     }
 
     // ฟังก์ชันสำหรับตรวจสอบส่วนหัว

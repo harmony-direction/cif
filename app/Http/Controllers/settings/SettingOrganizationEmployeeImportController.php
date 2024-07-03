@@ -38,6 +38,7 @@ class SettingOrganizationEmployeeImportController extends Controller
         $errorCount = $import->getErrorCount();
         $errorRows = $import->getErrorRows();
         $errorMessages = $import->getErrorMessages();
+        $errorUsers = $import->getErrorUsers();
 
         if ($errorCount > 0) {
             return redirect()->back()->withErrors([
@@ -45,6 +46,7 @@ class SettingOrganizationEmployeeImportController extends Controller
                 'error_count' => $errorCount,
                 'error_rows' => $errorRows,
                 'error_messages' => $errorMessages,
+                'error_users' => $errorUsers,
             ]);
         } else {
             return redirect()->route('setting.organization.employee.index', [

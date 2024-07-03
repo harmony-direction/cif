@@ -23,6 +23,15 @@
             <div class="alert alert-danger alert-dismissible">
                 <button type="button" class="btn-close" data-dismiss="alert" aria-label="Close"></button>
                 เกิดข้อผิดพลาดการนำเข้า โปรดตรวจสอบไฟล์นำเข้าให้ถูกต้อง
+                @if ($errors->get('error_users'))
+                <p class="mt-2"><strong>พนักงานที่ผิดพลาด</strong></p>
+                <ul>
+                        @foreach ($errors->get('error_users') as $key => $user)
+                        <li>{{ $user }}</li>
+                    @endforeach
+                </ul>
+
+            @endif
             </div>
             @endif
             <div class="row">

@@ -21,112 +21,106 @@ class CompanyDepartmentsTableSeeder extends Seeder
     {
         $departments = [
             [
-                'name' => 'วิศวกรรม',
-                'eng_name' => 'Engineering',
+                'name' => 'แผนกบริหาร',
+                'eng_name' => 'แผนกบริหาร',
                 'color' => '#FEAF71',
+                'code' => 'MG'
+            ],
+            [
+                'name' => 'แผนกวิศวกรรม',
+                'eng_name' => 'แผนกวิศวกรรม',
+                'color' => '#FD6F8E',
                 'code' => 'ENG'
             ],
             [
-                'name' => 'เทคนิค',
-                'eng_name' => 'Technical',
-                'color' => '#FD6F8E',
+                'name' => 'แผนกเทคนิค',
+                'eng_name' => 'แผนกเทคนิค',
+                'color' => '#F63D68',
                 'code' => 'TD'
             ],
             [
-                'name' => 'ธุรการ',
-                'eng_name' => 'Administrative',
-                'color' => '#F63D68',
+                'name' => 'แผนกธุรการ',
+                'eng_name' => 'แผนกธุรการ',
+                'color' => '#F670C7',
                 'code' => 'AD'
             ],
             [
-                'name' => 'บัญชี',
-                'eng_name' => 'Account',
+                'name' => 'แผนกบัญชี',
+                'eng_name' => 'แผนกบัญชี',
                 'color' => '#F670C7',
                 'code' => 'ACC'
             ],
             [
-                'name' => 'บุคคล',
-                'eng_name' => 'Personal',
-                'color' => '#F670C7',
+                'name' => 'แผนกบุคคล',
+                'eng_name' => 'แผนกบุคคล',
+                'color' => '#C295DE',
                 'code' => 'PS'
             ],
             [
-                'name' => 'ควบคุมคุณภาพ',
-                'eng_name' => 'Quality Control',
-                'color' => '#C295DE',
+                'name' => 'แผนกควบคุมคุณภาพ',
+                'eng_name' => 'แผนกควบคุมคุณภาพ',
+                'color' => '#9B8AFB',
                 'code' => 'QC'
             ],
             [
-                'name' => 'ผลิตสุก',
-                'eng_name' => 'Production cooked Plant',
-                'color' => '#9B8AFB',
+                'name' => 'แผนกผลิตสุก',
+                'eng_name' => 'แผนกผลิตสุก',
+                'color' => '#7C7AD6',
                 'code' => 'PDC'
             ],
             [
-                'name' => 'วิจัยและพัฒนาผลิตภัณฑ์',
-                'eng_name' => 'Research and Development',
-                'color' => '#7C7AD6',
+                'name' => 'แผนกวิจัยและพัฒนาผลิตภัณฑ์',
+                'eng_name' => 'แผนกวิจัยและพัฒนาผลิตภัณฑ์',
+                'color' => '#444376',
                 'code' => 'RD'
             ],
             [
-                'name' => 'จัดซื้อ',
-                'eng_name' => 'Purchase',
-                'color' => '#444376',
-                'code' => 'PC'
-            ],
-            [
-                'name' => 'คลังสินค้า',
-                'eng_name' => 'Warehouse',
+                'name' => 'แผนกคลังสินค้า',
+                'eng_name' => 'แผนกคลังสินค้า',
                 'color' => '#48E6FE',
                 'code' => 'WH'
             ],
             [
-                'name' => 'Export',
-                'eng_name' => 'Export',
+                'name' => 'แผนกจัดซื้อ',
+                'eng_name' => 'แผนกจัดซื้อ',
                 'color' => '#53B1FD',
+                'code' => 'PC'
+            ],
+            [
+                'name' => 'แผนก Export',
+                'eng_name' => 'แผนก Export',
+                'color' => '#1E616B',
                 'code' => 'EX'
             ],
             [
-                'name' => 'ความปลอดภัย',
-                'eng_name' => 'Health and Safety',
-                'color' => '#1E616B',
+                'name' => 'แผนกความปลอดภัย',
+                'eng_name' => 'แผนกความปลอดภัย',
+                'color' => '#175CD3',
                 'code' => 'HS'
             ],
             [
-                'name' => 'โรงงานแปรรูป',
-                'eng_name' => 'Production Raw Plant',
-                'color' => '#175CD3',
+                'name' => 'แผนกโรงงานแปรรูป',
+                'eng_name' => 'แผนกโรงงานแปรรูป',
+                'color' => '#41B87C',
                 'code' => 'PDR'
             ],
             [
-                'name' => 'อนามัย',
-                'eng_name' => 'Sanitation',
-                'color' => '#41B87C',
+                'name' => 'แผนกอนามัย',
+                'eng_name' => 'แผนกอนามัย',
+                'color' => '#F9F58F',
                 'code' => 'CS'
             ],
             [
-                'name' => 'สิ่งแวดล้อม',
-                'eng_name' => 'Environment',
-                'color' => '#F9F58F',
+                'name' => 'แผนกสิ่งแวดล้อม',
+                'eng_name' => 'แผนกสิ่งแวดล้อม',
+                'color' => '#F5D489',
                 'code' => 'ENV'
             ],
             [
-                'name' => 'การตลาด',
-                'eng_name' => 'Marketing',
-                'color' => '#F5D489',
+                'name' => 'แผนกการตลาด',
+                'eng_name' => 'แผนกการตลาด',
+                'color' => '#FE9F55',
                 'code' => 'MK'
-            ],
-            [
-                'name' => 'บริหาร',
-                'eng_name' => 'Management',
-                'color' => '#FE9F55',
-                'code' => 'MG'
-            ],
-            [
-                'name' => 'โรงงานอาหารสุก',
-                'eng_name' => 'Production cooked Plant',
-                'color' => '#FE9F55',
-                'code' => 'PCP'
             ]
         ];
 
