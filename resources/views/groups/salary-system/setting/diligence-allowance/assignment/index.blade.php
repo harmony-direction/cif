@@ -44,15 +44,11 @@
                                         <td>{{$diligenceAllowanceClassify->cost}}</td>
                                         <td class="text-end">
                                             @if ($permission->update)
-                                            <a class="btn btn-action btn-edit btn-sm" href="">
+                                            <a class="btn btn-action btn-edit btn-sm" href="{{route('groups.salary-system.setting.diligence-allowance.assignment.view',['id' => $diligenceAllowance->id,'level_id' => $diligenceAllowanceClassify->id])}}">
                                                 <i class="fas fa-pencil-alt"></i>
                                             </a>
                                             @endif
-                                            @if ($permission->delete)
-                                            <a class="btn btn-action btn-delete btn-sm">
-                                                <i class="fas fa-trash"></i>
-                                            </a>
-                                            @endif
+                                            
                                         </td>
                                     </tr>
                                     @endforeach

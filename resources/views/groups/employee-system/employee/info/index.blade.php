@@ -441,7 +441,7 @@
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <div class="form-group">
-                                                        <label>เลขที่บัญชี</label>
+                                                        <label>ธนาคาร</label>
                                                         <input type="text" name="bank" value="{{old('bank') ?? $user->bank}}" disabled placeholder="เลขที่บัญชี"
                                                             class="form-control numericInputInt">
                                                     </div>
@@ -449,7 +449,7 @@
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="form-group">
-                                                    <label>บัญชีธนาคาร</label>
+                                                    <label>เลขที่บัญชี</label>
                                                     <input type="text" name="bankAccount" value="{{old('bankAccount') ?? $user->bank_account}}" disabled placeholder="บัญชีธนาคาร"
                                                         class="form-control">
                                                 </div>

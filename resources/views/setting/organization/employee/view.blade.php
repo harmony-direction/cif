@@ -406,16 +406,16 @@
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <div class="form-group">
-                                                    <label>เลขที่บัญชี</label>
+                                                    <label>ธนาคาร</label>
                                                     <input type="text" name="bank" value="{{ $user->bank }}"
-                                                        class="form-control numericInputInt">
+                                                        class="form-control">
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label>บัญชีธนาคาร</label>
-                                                <input type="text" name="bankAccount" value="{{ $user->bank_account }}"
+                                                <label>เลขที่บัญชี</label>
+                                                <input type="text" name="bank_account" value="{{ $user->bank_account }}"
                                                     class="form-control">
                                             </div>
                                         </div>
@@ -425,7 +425,7 @@
                                                 <label>เลขที่ประกันสังคม</label>
                                                 <input type="text" name="social_security_number"
                                                     value="{{ $user->social_security_number }}"
-                                                    class="form-control numericInputInt">
+                                                    class="form-control">
                                             </div>
                                         </div>
                                         <div class="col-md-4">

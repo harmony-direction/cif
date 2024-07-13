@@ -10392,10 +10392,6 @@
     ],
     "provinceList": [
       {
-        "provinceId": "21",
-        "provinceName": "ระยอง"
-      },
-      {
         "provinceId": "22",
         "provinceName": "จันทบุรี"
       }
@@ -13558,10 +13554,6 @@
       {
         "provinceId": "19",
         "provinceName": "สระบุรี"
-      },
-      {
-        "provinceId": "30",
-        "provinceName": "นครราชสีมา"
       }
     ]
   },

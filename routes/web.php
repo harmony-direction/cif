@@ -440,6 +440,8 @@ Route::middleware('auth')->group(function () {
                     Route::group(['prefix' => 'assignment'], function () {
                         Route::get('{id}', [SalarySystemSettingDiligenceAllowanceAssignmentController::class, 'index'])->name('groups.salary-system.setting.diligence-allowance.assignment');
                         Route::get('create/{id}', [SalarySystemSettingDiligenceAllowanceAssignmentController::class, 'create'])->name('groups.salary-system.setting.diligence-allowance.assignment.create');
+                        Route::get('view/{level_id}/{id}', [SalarySystemSettingDiligenceAllowanceController::class, 'view'])->name('groups.salary-system.setting.diligence-allowance.assignment.view');
+                        Route::put('{id}', [SalarySystemSettingDiligenceAllowanceController::class, 'update'])->name('groups.salary-system.setting.diligence-allowance.assignment.update');
                         Route::post('store', [SalarySystemSettingDiligenceAllowanceAssignmentController::class, 'store'])->name('groups.salary-system.setting.diligence-allowance.assignment.store');
                     });
                 });
