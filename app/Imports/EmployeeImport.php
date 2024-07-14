@@ -125,7 +125,7 @@ class EmployeeImport implements ToCollection, WithHeadingRow
                 ],
                 'start_work_date' => 'required',
             ], $customMessages);
-            
+
             if ($validator->fails()) {
                 $this->errorCount++;
                 $this->errorRows[] = $row;
@@ -146,7 +146,7 @@ class EmployeeImport implements ToCollection, WithHeadingRow
         if ($this->errorCount === 0) {
             // บันทึกแถวที่ถูกต้องลงในโมเดล
             $users = [];
-         
+
             foreach ($rows as $row) {
                 if ($row->filter(function ($value) {
                     return $value !== null && $value !== '';
@@ -173,7 +173,11 @@ class EmployeeImport implements ToCollection, WithHeadingRow
                 $ethnicityId = Ethnicity::where('name', $ethnicityName)->value('id');
                 $positionId = UserPosition::where('name', $positionName)->value('id');
                 $employeeTypeId = EmployeeType::where('name', $employeeTypeName)->value('id');
-                $address = $row['address'] . ' ตำบล' . $row['tambol'] . ' อำเภอ' . $row['amphur'] . ' จังหวัด' . $row['province'] ;
+                /* . ' ตำบล' . $row['tambol'] . ' อำเภอ' . $row['amphur'] . ' จังหวัด' . $row['province']  */
+                $address = $row['address'];
+                $subdistrict =$row['tambol'];
+                $district = $row['amphur'];
+                $city = $row['province'];
                 $visaExpire = $row['visa_expire'] != '' ? Carbon::createFromTimestamp((($row['visa_expire'] - 25569) * 86400))->format('Y-m-d') : null;
                 $workPermittedExpire = $row['work_permitted_expire'] != '' ? Carbon::createFromTimestamp((($row['work_permitted_expire'] - 25569) * 86400))->format('Y-m-d') : null;
                 $startWorkDate = $row['start_work_date'] != '' ? Carbon::createFromTimestamp((($row['start_work_date'] - 25569) * 86400))->format('Y-m-d') : null;
@@ -204,6 +208,10 @@ class EmployeeImport implements ToCollection, WithHeadingRow
                         'name' => $row['name'],
                         'lastname' => $row['lastname'] ?? null,
                         'address' => $address,
+                        'subdistrict' => $subdistrict,
+                        'district' => $district,
+                        'city' => $city,
+
                         'phone' => $row['phone'] ?? null,
                         'hid' => $row['hid'] ?? null,
                         'passport' => $row['passport'] ?? null,
