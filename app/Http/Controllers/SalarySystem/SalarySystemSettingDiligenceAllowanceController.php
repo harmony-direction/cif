@@ -59,8 +59,13 @@ class SalarySystemSettingDiligenceAllowanceController extends Controller
         $updatedRoleGroupCollection = $roleGroupCollection['updatedRoleGroupCollection'];
         $permission = $roleGroupCollection['permission'];
 
+        // dd($id,$levelId);
+        if($id == 2){
+            $levelId = $levelId-5;
+        }
         $diligenceAllowanceClassify = DiligenceAllowanceClassify::where('diligence_allowance_id',$id)->where('level',$levelId)->first();
 
+     
         return view('groups.salary-system.setting.diligence-allowance.assignment.view', [
             'groupUrl' => $groupUrl,
             'modules' => $updatedRoleGroupCollection,
