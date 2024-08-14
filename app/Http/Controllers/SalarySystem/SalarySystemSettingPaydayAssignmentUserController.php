@@ -40,7 +40,7 @@ class SalarySystemSettingPaydayAssignmentUserController extends Controller
         $permission = $roleGroupCollection['permission'];
         $payday = Payday::find($id);
         $userIds = $payday->users->pluck('id')->toArray();
-        $users = User::whereIn('id',$userIds)->paginate(20);
+        $users = User::whereIn('id',$userIds)->paginate(5000);
         $companyDepartments = CompanyDepartment::get();
 
         return view('groups.salary-system.setting.payday.assignment-user.index', [
@@ -205,7 +205,7 @@ class SalarySystemSettingPaydayAssignmentUserController extends Controller
         $commonUserIds = array_intersect($searchUserIds, $paydayUserIds);
 
         // If you need the details of the common users (e.g., user objects)
-        $commonUsers = User::whereIn('id', $commonUserIds)->paginate(20);
+        $commonUsers = User::whereIn('id', $commonUserIds)->paginate(5000);
 
         return view('groups.salary-system.setting.payday.assignment-user.table-render.user-table', [
             'users' => $commonUsers,

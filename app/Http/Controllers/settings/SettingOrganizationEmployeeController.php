@@ -55,7 +55,7 @@ class SettingOrganizationEmployeeController extends Controller
     }
     public function index()
     {
-        $users = User::paginate(20);
+        $users = User::paginate(5000);
         return view('setting.organization.employee.index',[
             'users' => $users
         ]);
@@ -459,7 +459,7 @@ class SettingOrganizationEmployeeController extends Controller
             }
         }
 
-        $users = $query->paginate(20);
+        $users = $query->paginate(5000);
         return view('setting.organization.employee.table-render.employee-table',['users' => $users])->render();
     }
     // ดึงข้อมูลพื้นที่

@@ -55,7 +55,7 @@ class SalarySystemSalaryIncomeDeductAssignmentController extends Controller
             })
             ->select('user_id')
             ->distinct()
-            ->paginate(20);
+            ->paginate(5000);
 
         $incomeDeducts = IncomeDeduct::all();
 
@@ -108,7 +108,7 @@ class SalarySystemSalaryIncomeDeductAssignmentController extends Controller
             })
             ->select('user_id')
             ->distinct()
-            ->paginate(20);
+            ->paginate(5000);
         return view('groups.salary-system.salary.income-deduct-assignment.table-render.income-deduct-assignment-render', [
             'incomeDeductUsers' => $incomeDeductUsers,
             ])->render();
@@ -136,7 +136,7 @@ class SalarySystemSalaryIncomeDeductAssignmentController extends Controller
             })
             ->select('user_id')
             ->distinct()
-            ->paginate(20);
+            ->paginate(5000);
 
         return view('groups.salary-system.salary.income-deduct-assignment.table-render.income-deduct-assignment-render', [
             'incomeDeductUsers' => $incomeDeductUsers,
@@ -195,7 +195,7 @@ class SalarySystemSalaryIncomeDeductAssignmentController extends Controller
                     ->whereIn('payday_detail_id', $paydayDetailIds)
                     ->groupBy('user_id');
             })
-            ->paginate(20);
+            ->paginate(5000);
 
         return view('groups.salary-system.salary.income-deduct-assignment.table-render.income-deduct-assignment-render', [
             'incomeDeductUsers' => $incomeDeductUsers,

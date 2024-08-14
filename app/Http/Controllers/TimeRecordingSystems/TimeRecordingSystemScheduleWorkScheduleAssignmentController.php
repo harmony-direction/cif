@@ -28,6 +28,7 @@ class TimeRecordingSystemScheduleWorkScheduleAssignmentController extends Contro
     }
     public function view($id)
     {
+        
         // กำหนดตัวแปร $action ให้มีค่าเป็น 'update'
         $action = 'update';
         // ดึงค่า 'groupUrl' จาก session และแปลงเป็นข้อความ

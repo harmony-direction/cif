@@ -66,7 +66,7 @@ class SalarySystemSalaryCalculationExtraListSummaryController extends Controller
         $userPaydayIds = $paydayDetail->payday->users->pluck('id')->toarray();
         $userIds = array_intersect($userIds, $userPaydayIds);
 
-        $users = User::whereIn('id', $userIds)->paginate(20);
+        $users = User::whereIn('id', $userIds)->paginate(5000);
         $incomeDeducts = IncomeDeduct::all();
 
         return view('groups.salary-system.salary.calculation-extra-list.summary.index', [

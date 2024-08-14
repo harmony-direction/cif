@@ -37,7 +37,7 @@ class SettingOrganizationApproverAssignmentController extends Controller
 
         $users = User::whereDoesntHave('approvers', function ($query) use ($id) {
             $query->where('approver_id', $id);
-        })->paginate(50);
+        })->paginate(5000);
 
         return view('setting.organization.approver.assignment.create', [
             'users' => $users,
@@ -112,7 +112,7 @@ class SettingOrganizationApproverAssignmentController extends Controller
 
         $filteredUserIds = $userIds->diff($approversUserIds);
 
-        $users = User::whereIn('id', $filteredUserIds)->paginate(50);
+        $users = User::whereIn('id', $filteredUserIds)->paginate(5000);
 
         return view('setting.organization.approver.assignment.table-render.employee-table', ['users' => $users])->render();
     }

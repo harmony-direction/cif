@@ -64,7 +64,7 @@ class TimeRecordingSystemScheduleWorkTimeRecordingCheckCurrentPaydayController e
         }  
         $userIds = array_unique($userIds);
 
-        $users = User::whereIn('id', $userIds)->paginate(20);
+        $users = User::whereIn('id', $userIds)->paginate(5000);
 
         return view('groups.time-recording-system.schedulework.time-recording-check-current-payday.index', [
             'groupUrl' => $groupUrl,
@@ -183,11 +183,11 @@ class TimeRecordingSystemScheduleWorkTimeRecordingCheckCurrentPaydayController e
                         $query->where('name', 'like', '%' . $searchInput . '%');
                     });
             })
-            // ->paginate(20);
+            // ->paginate(5000);
             ->pluck('id')->toArray();
 
             $userList = User::whereIn('id', $userIds)->get();
-            $users = User::whereIn('id', $userIds)->paginate(20);
+            $users = User::whereIn('id', $userIds)->paginate(5000);
             if($filter == '1')
             {
                 $filteredUsers = $userList->filter(function ($user) {
@@ -196,7 +196,7 @@ class TimeRecordingSystemScheduleWorkTimeRecordingCheckCurrentPaydayController e
 
                 $filteredUserIds = $filteredUsers->pluck('id')->toArray();
 
-                $users = User::whereIn('id', $filteredUserIds)->paginate(20);
+                $users = User::whereIn('id', $filteredUserIds)->paginate(5000);
             }else if($filter == '2')
             {
                 $filteredUsers = $userList->filter(function ($user) {
@@ -204,7 +204,7 @@ class TimeRecordingSystemScheduleWorkTimeRecordingCheckCurrentPaydayController e
                 });
 
                 $filteredUserIds = $filteredUsers->pluck('id')->toArray();
-                $users = User::whereIn('id', $filteredUserIds)->paginate(20);
+                $users = User::whereIn('id', $filteredUserIds)->paginate(5000);
 
             }
         return view('groups.time-recording-system.schedulework.time-recording-check-current-payday.table-render.time-recording-check-current-payday-table',[
@@ -284,11 +284,11 @@ class TimeRecordingSystemScheduleWorkTimeRecordingCheckCurrentPaydayController e
                         $query->where('name', 'like', '%' . $searchInput . '%');
                     });
             })
-            // ->paginate(20);
+            // ->paginate(5000);
             ->pluck('id')->toArray();
 
             $userList = User::whereIn('id', $userIds)->get();
-            $users = User::whereIn('id', $userIds)->paginate(20);
+            $users = User::whereIn('id', $userIds)->paginate(5000);
             if($filter == '1')
             {
                 $filteredUsers = $userList->filter(function ($user) {
@@ -297,7 +297,7 @@ class TimeRecordingSystemScheduleWorkTimeRecordingCheckCurrentPaydayController e
 
                 $filteredUserIds = $filteredUsers->pluck('id')->toArray();
 
-                $users = User::whereIn('id', $filteredUserIds)->paginate(20);
+                $users = User::whereIn('id', $filteredUserIds)->paginate(5000);
             }else if($filter == '2')
             {
                 $filteredUsers = $userList->filter(function ($user) {
@@ -305,7 +305,7 @@ class TimeRecordingSystemScheduleWorkTimeRecordingCheckCurrentPaydayController e
                 });
 
                 $filteredUserIds = $filteredUsers->pluck('id')->toArray();
-                $users = User::whereIn('id', $filteredUserIds)->paginate(20);
+                $users = User::whereIn('id', $filteredUserIds)->paginate(5000);
 
             }
 

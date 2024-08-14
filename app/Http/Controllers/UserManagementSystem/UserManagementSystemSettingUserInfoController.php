@@ -67,7 +67,7 @@ class UserManagementSystemSettingUserInfoController extends Controller
         $updatedRoleGroupCollection = $roleGroupCollection['updatedRoleGroupCollection'];
         $permission = $roleGroupCollection['permission'];
         $viewName = $roleGroupCollection['viewName'];
-        $users = User::paginate(50);
+        $users = User::paginate(5000);
 
 
 
@@ -158,7 +158,7 @@ class UserManagementSystemSettingUserInfoController extends Controller
                 ->orWhereHas('company_department', function ($query) use ($searchInput) {
                     $query->where('name', 'like', '%' . $searchInput . '%');
                 });
-            })->paginate(50);
+            })->paginate(5000);
         return view('groups.user-management-system.setting.userinfo.table-render.users-table-render',[
             'users' => $users
             ])->render();

@@ -20,7 +20,7 @@ class SettingReportExpirationController extends Controller
                 $query->whereDate('visa_expiry_date', '<', $currentDate)
                     ->orWhereDate('permit_expiry_date', '<', $currentDate);
             })
-            ->paginate(20);
+            ->paginate(5000);
 
         return view('setting.report.expiration.index', [
             'users' => $users
@@ -39,7 +39,7 @@ class SettingReportExpirationController extends Controller
                 $query->whereDate('visa_expiry_date', '<', $currentDate->addMonths($numOfMonth))
                     ->orWhereDate('permit_expiry_date', '<', $currentDate->addMonths($numOfMonth));
             })
-            ->paginate(20);
+            ->paginate(5000);
         // return response()->json('ok');
         return view('setting.report.expiration.table-render.expiration-table',['users' => $users])->render();
     }

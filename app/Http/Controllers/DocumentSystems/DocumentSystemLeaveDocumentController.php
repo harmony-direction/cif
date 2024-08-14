@@ -48,7 +48,7 @@ class DocumentSystemLeaveDocumentController extends Controller
 
         // Retrieve Leave records with from_date equal to or greater than today
         // $leaves = Leave::where('from_date', '>=', $currentDate)->get();
-        $leaves = Leave::paginate(50);
+        $leaves = Leave::paginate(5000);
         $months = Month::all();
         $currentYear = Carbon::now()->year;
         $nextYear = $currentYear + 1;
@@ -515,7 +515,7 @@ class DocumentSystemLeaveDocumentController extends Controller
                     ->orWhere('code', 'like', '%' . $searchString . '%');
                 });
         })
-        ->paginate(50);
+        ->paginate(5000);
 
         return view('groups.document-system.leave.document.table-render.leave-table-render',[
             'leaves' => $leaves

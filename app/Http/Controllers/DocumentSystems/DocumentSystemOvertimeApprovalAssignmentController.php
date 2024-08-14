@@ -76,7 +76,7 @@ class DocumentSystemOvertimeApprovalAssignmentController extends Controller
 
         $users = User::whereDoesntHave('overTimeDetails', function ($query) use ($id) {
             $query->where('over_time_id', $id);
-        })->paginate(50);
+        })->paginate(5000);
 
         return view('groups.document-system.overtime.document.assignment.create', [
             'groupUrl' => $groupUrl,
@@ -115,7 +115,7 @@ class DocumentSystemOvertimeApprovalAssignmentController extends Controller
 
         $filteredUserIds = $userIds->diff($overtimeDetailUserIds);
 
-        $users = User::whereIn('id', $filteredUserIds)->paginate(50);
+        $users = User::whereIn('id', $filteredUserIds)->paginate(5000);
 
         return view('groups.document-system.overtime.document.assignment.table-render.employee-table', ['users' => $users])->render();
     }

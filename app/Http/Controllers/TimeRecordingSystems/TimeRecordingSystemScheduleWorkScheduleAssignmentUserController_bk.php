@@ -30,6 +30,7 @@ class TimeRecordingSystemScheduleWorkScheduleAssignmentUserController extends Co
     }
     public function index($scheduleId,$year,$monthId)
     {
+
         // กำหนดค่าตัวแปร $action ให้เป็น 'show'
         $action = 'show';
         // ดึงค่า 'groupUrl' จาก session และแปลงเป็นข้อความ
@@ -44,7 +45,7 @@ class TimeRecordingSystemScheduleWorkScheduleAssignmentUserController extends Co
         $workSchedule = WorkSchedule::find($scheduleId);
 
         // เรียกใช้งานฟังก์ชัน getUsersByWorkScheduleAssignment เพื่อดึงข้อมูลผู้ใช้ที่เกี่ยวข้องกับ WorkScheduleAssignment
-        $users = $this->getUsersByWorkScheduleAssignment($scheduleId, $monthId, $year)->paginate(20);
+        $users = $this->getUsersByWorkScheduleAssignment($scheduleId, $monthId, $year)->paginate(5000);
 
         $userGroups = UserGroup::all();
         
@@ -80,7 +81,7 @@ class TimeRecordingSystemScheduleWorkScheduleAssignmentUserController extends Co
         $workSchedule = WorkSchedule::find($scheduleId);
 
         // ค้นหาข้อมูลผู้ใช้ทั้งหมดและแบ่งหน้าผลลัพธ์ที่แสดงให้แสดงผลเฉพาะ 20 รายการต่อหน้า
-        $users = User::paginate(20);
+        $users = User::paginate(5000);
 
         // ส่งค่าตัวแปรไปยัง view 'groups.time-recording-system.schedulework.schedule.assignment.user.create'
         return view('groups.time-recording-system.schedulework.schedule.assignment.user.create', [
@@ -269,7 +270,7 @@ class TimeRecordingSystemScheduleWorkScheduleAssignmentUserController extends Co
         }
 
         // ค้นหาผู้ใช้และแบ่งหน้าผลลัพธ์เป็นรายการที่แสดงให้แสดงผลเฉพาะ 50 รายการต่อหน้า
-        $users = $query->paginate(50);
+        $users = $query->paginate(5000);
 
         // ส่งผลลัพธ์การค้นหาไปยัง view 'groups.time-recording-system.schedulework.schedule.assignment.user.table-render.user-table' เพื่อทำการ render ตารางผู้ใช้
         return view('groups.time-recording-system.schedulework.schedule.assignment.user.table-render.user-table', ['users' => $users])->render();
@@ -342,7 +343,7 @@ class TimeRecordingSystemScheduleWorkScheduleAssignmentUserController extends Co
     // 
     public function importEmployeeNoFromDept(Request $request)
     {
-        dd('ok');
+        // dd('ok');
         // $employeeNos = $request->data['employeeNos'];
         // $workScheduleId = $request->data['workScheduleId'];
         // $month = $request->data['month'];

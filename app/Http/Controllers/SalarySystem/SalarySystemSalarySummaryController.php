@@ -90,7 +90,7 @@ class SalarySystemSalarySummaryController extends Controller
         }  
         $userIds = array_unique($userIds);
 
-        $users = User::whereIn('id', $userIds)->paginate(20);
+        $users = User::whereIn('id', $userIds)->paginate(5000);
 
         return view($viewName, [
             'groupUrl' => $groupUrl,

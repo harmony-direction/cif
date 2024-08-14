@@ -85,7 +85,7 @@ class SalarySystemSalaryCalculationListSummaryController extends Controller
         } 
         // $userIds = array_merge($userIds, $ids);
         $userIds = array_unique($userIddiffs);
-        $users = User::whereIn('id', $userIds)->paginate(20);
+        $users = User::whereIn('id', $userIds)->paginate(5000);
 
         $incomeDeducts = IncomeDeduct::all();
         $salarySummaries = SalarySummary::where('payday_detail_id',$id)->get();
@@ -195,7 +195,7 @@ class SalarySystemSalaryCalculationListSummaryController extends Controller
         $userIds = array_unique($userIddiffs);
         $commonUserIds = array_intersect($userIds, $searchUserIds);
 
-        $users = User::whereIn('id',$commonUserIds)->paginate(20);
+        $users = User::whereIn('id',$commonUserIds)->paginate(5000);
 
          return view('groups.salary-system.salary.calculation-list.summary.table-render.user-table',[
             'users' => $users,

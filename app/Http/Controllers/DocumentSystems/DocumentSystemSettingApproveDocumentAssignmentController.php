@@ -63,7 +63,7 @@ class DocumentSystemSettingApproveDocumentAssignmentController extends Controlle
 
         $users = User::whereDoesntHave('approvers', function ($query) use ($id) {
             $query->where('approver_id', $id);
-        })->paginate(50);
+        })->paginate(5000);
         
         return view('groups.document-system.setting.approve-document.assignment.create', [
             'groupUrl' => $groupUrl,
@@ -214,7 +214,7 @@ class DocumentSystemSettingApproveDocumentAssignmentController extends Controlle
 
         $filteredUserIds = $userIds->diff($approversUserIds);
 
-        $users = User::whereIn('id', $filteredUserIds)->paginate(50);
+        $users = User::whereIn('id', $filteredUserIds)->paginate(5000);
 
         return view('groups.document-system.setting.approve-document.assignment.table-render.employee-table', ['users' => $users])->render();
     }

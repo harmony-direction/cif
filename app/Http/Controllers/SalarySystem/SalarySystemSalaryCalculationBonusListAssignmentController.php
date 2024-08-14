@@ -37,7 +37,7 @@ class SalarySystemSalaryCalculationBonusListAssignmentController extends Control
         $permission = $roleGroupCollection['permission'];
         $viewName = $roleGroupCollection['viewName'];
         // ตัวอย่างการเข้าถึงข้อมูลของ User ที่เกี่ยวข้องกับ BonusUser
-        $bonusUsers = BonusUser::where('bonus_id',$id)->paginate(20); // ให้นำเลข id ที่ต้องการมาใส่ใน find()
+        $bonusUsers = BonusUser::where('bonus_id',$id)->paginate(5000); // ให้นำเลข id ที่ต้องการมาใส่ใน find()
         $bonus = Bonus::find($id);
  
         return view('groups.salary-system.salary.calculation-bonus-list.assignment.index', [
@@ -77,7 +77,7 @@ class SalarySystemSalaryCalculationBonusListAssignmentController extends Control
             }
         }
 
-        $bonusUsers = BonusUser::where('bonus_id',$bonusId)->paginate(20); // ให้นำเลข id ที่ต้องการมาใส่ใน find()
+        $bonusUsers = BonusUser::where('bonus_id',$bonusId)->paginate(5000); // ให้นำเลข id ที่ต้องการมาใส่ใน find()
      
         return view('groups.salary-system.salary.calculation-bonus-list.assignment.table-render.user-table',[
             'bonusUsers' => $bonusUsers,
@@ -95,7 +95,7 @@ class SalarySystemSalaryCalculationBonusListAssignmentController extends Control
 
         $bonusUser = BonusUser::find($bonusUserId);
 
-        $bonusUsers = BonusUser::where('bonus_id',$bonusUser->bonus_id)->paginate(20); // ให้นำเลข id ที่ต้องการมาใส่ใน find()
+        $bonusUsers = BonusUser::where('bonus_id',$bonusUser->bonus_id)->paginate(5000); // ให้นำเลข id ที่ต้องการมาใส่ใน find()
 
         return view('groups.salary-system.salary.calculation-bonus-list.assignment.table-render.user-table',[
             'bonusUsers' => $bonusUsers,
@@ -113,7 +113,7 @@ class SalarySystemSalaryCalculationBonusListAssignmentController extends Control
                     $subQuery->where('name', 'like', '%' . $searchString . '%');
                 });
         })
-        ->paginate(20);
+        ->paginate(5000);
 
         return view('groups.salary-system.salary.calculation-bonus-list.assignment.table-render.user-table',[
             'bonusUsers' => $bonusUsers,
@@ -127,7 +127,7 @@ class SalarySystemSalaryCalculationBonusListAssignmentController extends Control
         $bonusUser = BonusUser::find($bonusUserId);
 
         $bonusUser->delete();
-        $bonusUsers = BonusUser::where('bonus_id',$bonusUser->bonus_id)->paginate(20);
+        $bonusUsers = BonusUser::where('bonus_id',$bonusUser->bonus_id)->paginate(5000);
         return view('groups.salary-system.salary.calculation-bonus-list.assignment.table-render.user-table',[
             'bonusUsers' => $bonusUsers,
             ])->render();

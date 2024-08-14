@@ -27,7 +27,7 @@ class SettingOrganizationApproverController extends Controller
      */
     public function index()
     {
-        $approvers = Approver::paginate(20);
+        $approvers = Approver::paginate(5000);
 
         return view('setting.organization.approver.index', [
             'approvers' => $approvers

@@ -343,7 +343,7 @@ class TimeRecordingSystemScheduleWorkTimeRecordingImportController extends Contr
                     ->where('month_id', $month)
                     ->where('year', $year);
             });
-        })->paginate(50);
+        })->paginate(5000);
 
         return $users;
     }

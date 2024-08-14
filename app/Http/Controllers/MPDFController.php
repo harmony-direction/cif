@@ -209,7 +209,7 @@ class MPDFController extends Controller
         ];
         $viewName = 'report.bis50index';
         if ($year != null) {
-            $users = User::paginate(50);
+            $users = User::paginate(5000);
             $years = WorkSchedule::distinct()->pluck('year');
             return view($viewName, [
                 'groupUrl' => $groupUrl,
@@ -219,7 +219,7 @@ class MPDFController extends Controller
                 'year' => $year,
             ]);
         }
-        $users = User::paginate(50);
+        $users = User::paginate(5000);
         $years = WorkSchedule::distinct()->pluck('year');
         return view($viewName, [
             'groupUrl' => $groupUrl,
@@ -334,7 +334,7 @@ class MPDFController extends Controller
             'delete' => true,
         ];
         $viewName = 'report.pndindexyear';
-        $users = User::paginate(50);
+        $users = User::paginate(5000);
 
         // ค้นหาปีที่มีการกำหนดงานเรียกงานอย่างน้อยหนึ่งรอบ
         $years = WorkSchedule::distinct()->pluck('year');
@@ -381,7 +381,7 @@ class MPDFController extends Controller
             'delete' => true,
         ];
         $viewName = 'report.pndindex';
-        $users = User::paginate(50);
+        $users = User::paginate(5000);
 
         // ค้นหาปีที่มีการกำหนดงานเรียกงานอย่างน้อยหนึ่งรอบ
         $years = WorkSchedule::distinct()->pluck('year');
@@ -461,7 +461,7 @@ class MPDFController extends Controller
             'delete' => true,
         ];
         $viewName = 'report.rd1index';
-        $users = User::paginate(50);
+        $users = User::paginate(5000);
 
         // ค้นหาปีที่มีการกำหนดงานเรียกงานอย่างน้อยหนึ่งรอบ
         $years = WorkSchedule::distinct()->pluck('year');
@@ -515,7 +515,7 @@ class MPDFController extends Controller
             'delete' => true,
         ];
         $viewName = 'report.rd1indexyear';
-        $users = User::paginate(50);
+        $users = User::paginate(5000);
 
         // ค้นหาปีที่มีการกำหนดงานเรียกงานอย่างน้อยหนึ่งรอบ
         $years = WorkSchedule::distinct()->pluck('year');
@@ -709,7 +709,7 @@ class MPDFController extends Controller
             'delete' => true,
         ];
         $viewName = 'report.rd2index';
-        $users = User::paginate(50);
+        $users = User::paginate(5000);
 
         // ค้นหาปีที่มีการกำหนดงานเรียกงานอย่างน้อยหนึ่งรอบ
         $years = WorkSchedule::distinct()->pluck('year');
@@ -757,7 +757,7 @@ class MPDFController extends Controller
             'delete' => true,
         ];
         $viewName = 'report.rd2indexyear';
-        $users = User::paginate(50);
+        $users = User::paginate(5000);
 
         // ค้นหาปีที่มีการกำหนดงานเรียกงานอย่างน้อยหนึ่งรอบ
         $years = WorkSchedule::distinct()->pluck('year');
@@ -940,7 +940,7 @@ class MPDFController extends Controller
             'delete' => true,
         ];
         $viewName = 'report.sso_' . $list;
-        $users = User::paginate(50);
+        $users = User::paginate(5000);
 
         // ค้นหาปีที่มีการกำหนดงานเรียกงานอย่างน้อยหนึ่งรอบ
         $years = WorkSchedule::distinct()->pluck('year');
@@ -996,7 +996,7 @@ class MPDFController extends Controller
             'delete' => true,
         ];
         $viewName = 'report.sso_' . $list;
-        $users = User::paginate(50);
+        $users = User::paginate(5000);
 
         // ค้นหาปีที่มีการกำหนดงานเรียกงานอย่างน้อยหนึ่งรอบ
         $years = WorkSchedule::distinct()->pluck('year');
@@ -1266,7 +1266,7 @@ class MPDFController extends Controller
             'delete' => true,
         ];
         $viewName = 'report.' . $list;
-        $users = User::paginate(50);
+        $users = User::paginate(5000);
 
         // ค้นหาปีที่มีการกำหนดงานเรียกงานอย่าง+น้อยหนึ่งรอบ
         $years = WorkSchedule::distinct()->pluck('year');

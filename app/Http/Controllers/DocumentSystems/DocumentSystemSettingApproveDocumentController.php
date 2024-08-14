@@ -37,7 +37,7 @@ class DocumentSystemSettingApproveDocumentController extends Controller
         $updatedRoleGroupCollection = $roleGroupCollection['updatedRoleGroupCollection'];
         $permission = $roleGroupCollection['permission'];
         $viewName = $roleGroupCollection['viewName'];
-        $approvers = Approver::paginate(20);
+        $approvers = Approver::paginate(5000);
 
         return view($viewName, [
             'groupUrl' => $groupUrl,

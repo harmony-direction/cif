@@ -16,7 +16,7 @@ class SettingReportLogController extends Controller
      */
     public function index()
     {
-        $logActivities = LogActivity::orderBy('created_at', 'desc')->paginate(20);
+        $logActivities = LogActivity::orderBy('created_at', 'desc')->paginate(5000);
         return view('setting.report.log-activity.index',[
             'logActivities' => $logActivities
         ]);
@@ -36,7 +36,7 @@ class SettingReportLogController extends Controller
                     $query->where('name', 'like', '%' . $queryInput . '%')
                         ->orWhere('lastname', 'like', '%' . $queryInput . '%');
                 });
-        })->paginate(20);
+        })->paginate(5000);
 
         return view('setting.report.log-activity.table-render.log-activity-table',['logActivities' => $logActivities])->render();
     }

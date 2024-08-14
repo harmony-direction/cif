@@ -94,7 +94,7 @@ class SalarySystemSalaryCalculationController extends Controller
         }  
         $userIds = array_unique($userIds);
 
-        $users = User::whereIn('id', $userIds)->paginate(20);
+        $users = User::whereIn('id', $userIds)->paginate(5000);
 
         return view($viewName, [
             'groupUrl' => $groupUrl,
@@ -168,7 +168,7 @@ class SalarySystemSalaryCalculationController extends Controller
         $searchUserIds = $query->pluck('id')->toArray();
 
         $commonUserIds = array_intersect($searchUserIds, $userIds);
-        $users = User::whereIn('id',$commonUserIds)->paginate(20);
+        $users = User::whereIn('id',$commonUserIds)->paginate(5000);
 
         return view('groups.salary-system.salary.calculation.table-render.user-table', ['users' => $users])->render();
     }

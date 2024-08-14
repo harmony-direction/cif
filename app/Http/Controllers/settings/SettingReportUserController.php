@@ -28,7 +28,7 @@ class SettingReportUserController extends Controller
         // return $pdf->stream('document.pdf');
         $employeeTypes = EmployeeType::all();  // เรียกข้อมูลประเภทพนักงานทั้งหมดจากตาราง employee_types
         $companyDepartments = CompanyDepartment::all();  // เรียกข้อมูลแผนกบริษัททั้งหมดจากตาราง company_departments
-        $users = User::paginate(20);
+        $users = User::paginate(5000);
         return view('setting.report.user.index',[
             'users' => $users,
             'employeeTypes' => $employeeTypes,
@@ -69,7 +69,7 @@ class SettingReportUserController extends Controller
             }
         }
 
-        $users = $query->paginate(20);
+        $users = $query->paginate(5000);
         return view('setting.report.user.table-render.employee-table',['users' => $users])->render();
     }
 
@@ -126,7 +126,7 @@ class SettingReportUserController extends Controller
             $employeesQuery = $employeesQuery->whereIn('company_department_id', $departmentIds);
         }
 
-        $users = $employeesQuery->paginate(20);
+        $users = $employeesQuery->paginate(5000);
         return view('setting.report.user.table-render.employee-table',['users' => $users])->render();
         // return response()->json($users);
     }

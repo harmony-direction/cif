@@ -37,7 +37,7 @@ class TimeRecordingSystemSettingEmployeeGroupAssignmentController extends Contro
 
         $userGroup = UserGroup::find($id);
         
-        $users = $userGroup->users()->paginate(50);
+        $users = $userGroup->users()->paginate(5000);
         
         
         return view('groups.time-recording-system.setting.employee-group.assignment.index', [
@@ -60,7 +60,7 @@ class TimeRecordingSystemSettingEmployeeGroupAssignmentController extends Contro
         $roleGroupCollection = $this->updatedRoleGroupCollectionService->getUpdatedRoleGroupCollection($action);
         $updatedRoleGroupCollection = $roleGroupCollection['updatedRoleGroupCollection'];
         $permission = $roleGroupCollection['permission'];
-        $users = User::paginate(50);
+        $users = User::paginate(5000);
         $userGroup = UserGroup::find($id);
         
         return view('groups.time-recording-system.setting.employee-group.assignment.create', [
@@ -122,7 +122,7 @@ class TimeRecordingSystemSettingEmployeeGroupAssignmentController extends Contro
             }
         }
 
-        $users = $query->paginate(20);
+        $users = $query->paginate(5000);
         return view('groups.time-recording-system.setting.employee-group.assignment.table-render.user-table',['users' => $users])->render();
     }
 }
