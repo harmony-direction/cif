@@ -21,7 +21,7 @@ return new class extends Migration
             $table->date('to_date')->nullable();
             $table->time('start_time')->nullable();
             $table->time('end_time')->nullable();
-            $table->char('hour',2)->default(0);
+            $table->char('hour',10)->default(0);
             $table->char('status',1)->nullable();
             $table->timestamps();
         });

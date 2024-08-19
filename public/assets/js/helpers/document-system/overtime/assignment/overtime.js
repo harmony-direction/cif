@@ -129,6 +129,7 @@ $(document).on('change', '#hour', function () {
         'userId': userId,
         'val': value
     }
+    
     RequestApi.postRequest(dataSet, updateHourUrl, token).then(response => {
         Toast.fire({
             icon: 'success',
