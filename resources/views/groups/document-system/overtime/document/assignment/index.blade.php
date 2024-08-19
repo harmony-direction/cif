@@ -91,7 +91,7 @@
                                                             <div class="form-group mb-0">
                                                                 <input type="text" name="hour" id="hour"
                                                                     value="{{$user->getOvertimeHour($overtime->id)}}"
-                                                                    class="form-control integer" data-user="{{$user->id}}">
+                                                                    class="form-control" data-user="{{$user->id}}">
                                                             </div>
                                                         </td>
                                                         <td class="text-end">

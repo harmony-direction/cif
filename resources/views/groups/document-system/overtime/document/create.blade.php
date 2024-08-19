@@ -99,7 +99,7 @@
                                                 <div class="form-group">
                                                     <label>จำนวนชั่วโมง<span class="small text-danger">*</span></label>
                                                     <input type="text" name="hour_duration" id="hour_duration" value="6"
-                                                        class="form-control integer @error('hour_duration') is-invalid @enderror">
+                                                        class="form-control  @error('hour_duration') is-invalid @enderror">
                                                 </div>
                                             </div>
                                         </div>
