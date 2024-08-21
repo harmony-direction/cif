@@ -300,7 +300,7 @@
                                         <div class="form-group">
                                             <label>รหัสผ่าน (เว้นว่างถ้าใช้ default)</label>
                                             <input type="password" name="password" value="{{old('password')}}"
-                                                class="form-control" required>
+                                                class="form-control" >
                                         </div>
                                     </div>
                                 </div>
@@ -401,7 +401,7 @@
                                             <div class="form-group">
                                                 <label>ธนาคาร</label>
                                                 <input type="text" name="bank" value="{{old('bank')}}"
-                                                    class="form-control numericInputInt">
+                                                    class="form-control ">
                                             </div>
                                         </div>
                                     </div>
@@ -418,7 +418,7 @@
                                             <label>เลขที่ประกันสังคม</label>
                                             <input type="text" name="social_security_number"
                                                 value="{{old('social_security_number')}}"
-                                                class="form-control numericInputInt">
+                                                class="form-control ">
                                         </div>
                                     </div>
                                     <div class="col-md-4">

@@ -447,6 +447,32 @@
                                                 </select>
                                             </div>
                                         </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label>สถานะ <span class="fw-bold text-danger">*</span></label>
+                                                <select name="status"
+                                                    class="form-control select2 @error('status') is-invalid @enderror"
+                                                    style="width: 100%;">
+                                                    <option value="1" 
+                                                    @if ($user->status == '1')
+                                                        selected
+                                                    @endif
+                                                    
+                                                    >
+                                                        ปกติ
+                                                    </option>
+                                                    <option value="2"
+                                                    @if ($user->status != '1')
+                                                        selected
+                                                    @endif
+                                                    
+                                                    >
+                                                        ลาออก
+                                                    </option>
+                                                   
+                                                </select>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="card-footer card-create">

@@ -22,6 +22,7 @@ use App\Models\UserLeave;
 use App\Models\Punishment;
 use App\Models\LeaveDetail;
 use App\Models\Nationality;
+use App\Scopes\StatusScope;
 use App\Models\EmployeeType;
 use App\Models\SalaryRecord;
 use App\Models\UserPosition;
@@ -36,15 +37,26 @@ use App\Models\DiligenceAllowance;
 use App\Models\AssessmentGroupUser;
 use App\Models\UserDiligenceAllowance;
 use App\Models\WorkScheduleAssignment;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Scope;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Builder;
+
 use App\Models\DiligenceAllowanceClassify;
 use App\Models\WorkScheduleAssignmentUser;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
+
+
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
+
+    protected static function booted()
+    {
+        static::addGlobalScope(new StatusScope);
+    }
 
     /**
      * The attributes that are mass assignable.
@@ -89,7 +101,8 @@ class User extends Authenticatable
         'zip',
         'city',
         'country',
-        'is_foreigner'
+        'is_foreigner',
+        'status'
     ];
 
     /**

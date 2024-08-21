@@ -71,6 +71,7 @@
                                                         <th>ชื่อ-สกุล</th>
                                                         <th>แผนก</th>
                                                         <th>ตำแหน่ง</th>
+                                                        <th>สถานะ</th>
                                                         <th class="text-end">เพิ่มเติม</th>
                                                     </tr>
                                                 </thead>
@@ -83,6 +84,13 @@
                                                         <td>{{$user->prefix->name}}{{$user->name}} {{$user->lastname}}</td>
                                                         <td>{{isset($user->company_department->name) ? $user->company_department->name:''}}</td>
                                                         <td>{{isset($user->user_position->name) ? $user->user_position->name : "" }}</td>
+                                                        <td>
+                                                            @if ($user->status == '1')
+                                                                ปกติ
+                                                                @else
+                                                                ลาออก
+                                                            @endif
+                                                        </td>
                                                         <td class="text-end">
                                                             <a class="btn btn-action btn-edit btn-sm"
                                                                 href="{{route('setting.organization.employee.view',['id' => $user->id])}}">

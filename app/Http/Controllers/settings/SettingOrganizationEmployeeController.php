@@ -10,6 +10,7 @@ use App\Models\LeaveType;
 use App\Models\UserLeave;
 use App\Models\Nationality;
 use App\Models\SearchField;
+use App\Scopes\StatusScope;
 use App\Models\EmployeeType;
 use App\Models\SalaryRecord;
 use App\Models\UserPosition;
@@ -17,14 +18,14 @@ use Illuminate\Http\Request;
 use App\Models\LeaveIncrement;
 use App\Helpers\ActivityLogger;
 use App\Models\PositionHistory;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 use App\Models\CompanyDepartment;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Models\UserDiligenceAllowance;
-use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rules\Exists;
+use Illuminate\Support\Facades\Validator;
 
 class SettingOrganizationEmployeeController extends Controller
 {
@@ -55,7 +56,7 @@ class SettingOrganizationEmployeeController extends Controller
     }
     public function index()
     {
-        $users = User::paginate(5000);
+        $users = User::withoutGlobalScope(StatusScope::class)->paginate(5000);
         return view('setting.organization.employee.index',[
             'users' => $users
         ]);
@@ -86,7 +87,7 @@ class SettingOrganizationEmployeeController extends Controller
         $request->validate([
             'avatar' => 'required|file|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
-        $check = User::where('employee_no',$request->employee_no)->first();
+        $check = User::withoutGlobalScope(StatusScope::class)->where('employee_no',$request->employee_no)->first();
         $validator = $this->validateFormData($request);
 
         if ($validator->fails() || $check) {
@@ -303,7 +304,7 @@ class SettingOrganizationEmployeeController extends Controller
 
     public function view($id)
     {
-        $user = User::find($id);
+        $user = User::withoutGlobalScope(StatusScope::class)->find($id);
         $prefixes = Prefix::all();  // เรียกข้อมูลคำนำหน้าชื่อทั้งหมดจากตาราง prefixes
         $nationalities = Nationality::all();  // เรียกข้อมูลสัญชาติทั้งหมดจากตาราง nationalities
         $ethnicities = Ethnicity::all();  // เรียกข้อมูลเชื้อชาติทั้งหมดจากตาราง ethnicities
@@ -367,8 +368,8 @@ class SettingOrganizationEmployeeController extends Controller
         $city = $request->city;
         $country = $request->country;
         $is_foreigner = !is_null($request->is_foreigner) ? true : false;
-
-        $user = User::findOrFail($id);
+        $status = $request->status;
+        $user = User::withoutGlobalScope(StatusScope::class)->findOrFail($id);
         $filename = "";
         $this->activityLogger->log('อัปเดต', $user);
         if ($request->hasFile('avatar')) {
@@ -421,6 +422,7 @@ class SettingOrganizationEmployeeController extends Controller
             'city' => $city,
             'country' => $country,
             'is_foreigner' => $is_foreigner,
+            'status' => $status,
         ]);
 
         return redirect()->route('setting.organization.employee.index', [
@@ -429,10 +431,11 @@ class SettingOrganizationEmployeeController extends Controller
     }
     public function delete($id)
     {
-        $user = User::findOrFail($id);
+
+        $user = User::withoutGlobalScope(StatusScope::class)->findOrFail($id);
 
         $this->activityLogger->log('ลบ', $user);
-        Storage::disk('avatars')->delete($user->thumbnail);
+        // Storage::disk('avatars')->delete($user->thumbnail);
         $user->delete();
 
         return response()->json(['message' => 'ผู้ใช้งานได้ถูกลบออกเรียบร้อยแล้ว']);
@@ -444,7 +447,7 @@ class SettingOrganizationEmployeeController extends Controller
 
         $searchFields = SearchField::where('table','users')->where('status',1)->get();
 
-        $query = User::query();
+        $query = User::withoutGlobalScope(StatusScope::class)->query();
 
         foreach ($searchFields as $field) {
             $fieldName = $field['field'];

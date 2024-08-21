@@ -59,6 +59,7 @@ return new class extends Migration
             $table->char('time_record_require',1)->default(1);
             $table->char('diligence_allowance_id',1)->nullable()->default(1);
             $table->unsignedBigInteger('work_schedule_id')->nullable();
+            $table->char('status',1)->default(1);
             $table->rememberToken();
             $table->timestamps();
         });
