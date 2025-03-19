@@ -67,6 +67,7 @@
                                                     $approver =
                                                     $leave->user->approvers->where('document_type_id',1)->first()
                                                     @endphp
+@if($approver !== null)
                                                     <tr>
                                                         <td>{{$approver->code}}</td>
                                                         <td>{{$leave->user->employee_no}}</td>
@@ -122,7 +123,8 @@
 
                                                         </td>
                                                     </tr>
-                                                    @endforeach
+@endif                      
+                              @endforeach
                                                 </tbody>
                                             </table>
                                             {{$leaves->links()}}
